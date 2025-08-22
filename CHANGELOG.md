@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.3_250822-1301 - added a1, a2, cwrs, and testun and updated README.md with English usage details
+-  Amendments as per the release description
+
 ## 0.0.2_250816-1148 - additional changes
 -  Amendments as per the release description
 

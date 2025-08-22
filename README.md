@@ -47,3 +47,160 @@ GWALL! nid ydy'r gair Cymraeg ar gyfer 'phone' yn bodoli yn geirfa.txt!
 ```
 4) AMDRIN2.PHP: Mae'r awdur yn parod i redeg amdrin2.php pan mae'r rhestr o eiriau newydd yn cyrrhaedd hyd at 28.
 ...Felly, mae'n angen i ni i ychwanegu y gair saesneg phone i mewn i'r ffeil geirfa.txt. Y mae'r y gweddill o'r geiriau yn terfynu gyda'r arwyddnod acen drom (grave) "`" yn arwyddocau i'r amdriniaethwr, sef amdrin1.php y fod y gair hwn yn air newydd. Unrhyw air Cymraeg heb arddangoswyd  o'r blaen fe fydd e'n arddangos rhwng y tryphlyg seren. Yn amgen, mae'r pob gair Cymraeg defnyddio wedi'i ddysgwyd yn y gwersi o'r blaen.
+_____________________________
+
+//´´´´´´´´´´´´´´´´´´´´´´´´´=========================== \
+Usage Guide in English: \
+Example Usage: \
+Step 1: Open the file "testun" using vi in a bash shell. \
+Step 2: Write your text in English i.e. the source language that your student speaks, not the target language that your student wishes to learn i.e. Welsh. Below is an example: \
+Good morning! \
+How are you? \
+What is your name? \
+Step 3: NOTE!! All lines are ignored except lines that start with backtick (\`) or pipe (|). Add the line "|=====" (pipe followed by 5x or more equal signs) before and after the text  to indicate the section start and end. \
+Step 4: Start each line to be analyzed with the pipe symbol (|). \
+Step 5: Suffix each word that you want your student to the learn the Welsh translation of with a backtick (`). Your text should now look like this: \
+```
+ |================= 
+ |Good` morning`! 
+ |How` are_you`? 
+ |What` is` your` name`? 
+ |================= 
+```
+Step 6: In vi command mode go to the last line of the file (Shift+G) and run "r! a1". This will output a list of possible Welsh words for the English as shown below:
+```
+ !1) ydych~vbinf = are_you
+ !2) cymwynasgar~adj/da~adj/daiawn~adj/daioni~nm/daionus~adj/lles~nm/mad~adj = good
+ !3) cyn~adv/dychrymu~vbinf/mor~adv/mor~adv/pa_fodd~adv/pa_wedd~adv/sut~adv = how
+ !4) mae~vbinf/sy~vbinf/sydd~vbinf/ydyw~vbinf/ys~vbinf/yw~vbinf = is
+ !5) bore~nm/bore~nm/boregwaith~nm/boreol~adj/boreu~nm/boreuol~adj/dydd~nm = morning
+ !6) enw~nm/enw~nm/enwi~vbinf/henw~nm = name
+ !7) beth~pron/beth~pron/beth~pron/by~conj/nan~adv/pa~adj/peth~adj/py~adj = what
+ !8) 'ch~pron/eich~adj/eich~pron/eich~pron/eich~pron/'th~pron = your
+ *** *** (8 geiriau)
+```
+Step 7: In VI Command mode press "u" to undone the previous command to remove the list of Welsh words. Then continue expanding the English text with backticks as you did in steps 1 to 5. Keep on repeating steps 6 to 7 until you have 28 words. If the word does not exist in the vocab i.e. geirfa23.txt, you will be prompted in Welsh to add it in. If there is any word that does not exist in the list of already used words i.e. geiriau.txt you will also be notified in Welsh. When you have 28 new Welsh words, then your English text should look something like this:
+```
+ |=================
+ |Good` morning`!
+ |How` are_you`?
+ |What` is` your` name`?
+ |How` are_you` today`?
+ |Are_you` happy` or sad`?
+ |My` name` is` Peter.
+ |I` am` happy` today`.
+ |Who` is` he`? He` is` my` father`.
+ |What` is` his` name`? His` name` is` Jonathan.
+ |Who` is` she`? She` is` my` mother`.
+ |What` is` her` name`? Her` name` is` Margaret.
+ |Who` is` he`? He` is` my` brother`.
+ |What` is` his` name`? His` name` is` Mike.
+ |Who` is` she`? She` is` my` sister`.
+ |What` is` her` name`? Her` name` is` Marianne.
+ |How` old` is` your` brother`?
+ |See_you` later`!
+ |Bye` then`!
+ |=================
+```
+Step 8: Go to the end of the file (Shift+G) and then run "r! a1". This should append the following lines at the bottom of the file:
+```
+ !1) ydwyf~vbinf = am
+ !2) ydych~vbinf = are_you
+ !3) brawd~nm/brawd~nm/brawd~nm = brother
+ !4) hwyl~phrs = bye
+ !5) pab~nm/tad~nm/tad~nm/tadogi~vbinf = father
+ !6) cymwynasgar~adj/da~adj/daiawn~adj/daioni~nm/daionus~adj/lles~nm/mad~adj = good
+ !7) arwyn~nm/dedwydd~adj/gwynfydedig~adj/hapus~adj/hapus~adj = happy
+ !8) e~pron/e~pron/ef~pron/ef~pron/ef~pron/efe~pron/efo~pron/fe~pron/fe~pron/me~pron/mo~pron/o~pron = he
+ !9) ei~pron/ei~pron/ei~pron/hi~pron/'w~possprn = her
+ !10) e~pron/ei~pron/ei~pron/ei~pron/'w~possprn/ei_un_ef~adv = his
+ !11) cyn~adv/dychrymu~vbinf/mor~adv/mor~adv/pa_fodd~adv/pa_wedd~adv/sut~adv = how
+ !12) fi~pron/i~pron/mi~pron = i
+ !13) mae~vbinf/sy~vbinf/sydd~vbinf/ydyw~vbinf/ys~vbinf/yw~vbinf = is
+ !14) yn_hwyrach~adv/hwyrach~adj = later
+ !15) bore~nm/bore~nm/boregwaith~nm/boreol~adj/boreu~nm/boreuol~adj/dydd~nm = morning
+ !16) mam~nf/mam~nf/mam~nm = mother
+ !17) fy~adj/fy~adj/fy~pron/fy~pron/fy~pron/'m~pron/mau~pron/my~pron/ym~pron/ym~pron = my
+ !18) enw~nm/enw~nm/enwi~vbinf/henw~nm = name
+ !19) he^n~adj/hen~adj/hen~adj = old
+ !20) aele~adj/agro~adj/dienig~adj/dybryd~adj/dybyr~adj/galarus~adj/prudd~adj/trist~adj/trist~adj/trom~adj/trwm~adj = sad
+ !21) gwelwch_chi~phrs/gwela_di~phrs = see_you
+ !22) hi~pron/hi~pron/hi~pron = she
+ !23) chwaer~nf/chwaer~nf/chwaer~nm/chwaer~nm/chwiorydd~nm = sister
+ !24) acw~adv/chwedi~adv/minau~pron/te~adv/wedi~adv/wedin~adv/wedyn~adv/wedyn~adv/yna~adv/yna~adv/yna~conj = then
+ !25) heddiw~adv = today
+ !26) beth~pron/beth~pron/beth~pron/by~conj/nan~adv/pa~adj/peth~adj/py~adj = what
+ !27) a~pron/pwy~pron/pwy~pron/pwy~pron = who
+ !28) 'ch~pron/eich~adj/eich~pron/eich~pron/eich~pron/'th~pron = your
+ *** _ JONATHAN_  _ MARGARET_  _ MARIANNE_  _ MIKE_  or_brim~nm/if~conj/limit~nm/margin~nm`  _ PETER_  *** (92 geiriau)
+```
+Step 9: Now select the correct Welsh word for the English word in the text by suffixing the correct Welsh term with the backtick (\`). For example in the line "!6) cymwynasgar\~adj/da\~adj/daiawn\~adj/daioni\~nm/daionus\~adj/lles\~nm/mad\~adj = good" if the correct Welsh word is "da\~adj" then suffix this with "\`" e.g. "da\~adj\`" so that the line becomes "!6) cymwynasgar\~adj/da\~adj\`/daiawn\~adj/daioni\~nm/daionus\~adj/lles\~nm/mad\~adj = good". Repeat this for all 28 words.
+Step 10: Then go to the end of the file and run "r! a2". This will output the following lines as shown below:
+```
+ `ffeil=gwersxxx
+ `gwers=Welsh Lesson xxxb - Beginner-2 Dechreuwr
+ `teitl=Vocab Stanza xxx/Reading Vocab
+ `1) 'th =  your~pron
+ `2) 'w =  her~possprn
+ `3) brawd =  brother~nm
+ `4) chwiorydd =  sister~nm
+ `5) dydd =  morning~nm
+ `6) ei_un_ef =  his~adv
+ `7) gwela_di =  see_you~phrs
+ `8) hapus =  happy~adj
+ `9) heddiw =  today~adv
+ `10) hen =  old~adj
+ `11) henw =  name~nm
+ `12) hi =  she~pron
+ `13) hwyl =  bye~phrs
+ `14) hwyrach =  later~adj
+ `15) mad =  good~adj
+ `16) mam =  mother~nm
+ `17) mi =  i~pron
+ `18) o =  he~pron
+ `19) pwy =  who~pron
+ `20) py =  what~adj
+ `21) sut =  how~adv
+ `22) tadogi =  father~vbinf
+ `23) trwm =  sad~adj
+ `24) ydwyf =  am~vbinf
+ `25) ydych =  are_you~vbinf
+ `26) ym =  my~pron
+ `27) yna =  then~conj
+ `28) yw =  is~vbinf
+ `nodwch=1)
+ `nodwch=2)
+ `nodwch=3)
+ `maintcy=135
+ `llun1=grammadeg1/170/425/45
+ `llun2=cenhinen/80/503/390
+ `llun3=gwacter/1/3/7
+ `llun4=gwacter/80/495/325
+ `===========
+```
+Step 11: Amend the output filename accordingly from gwersxxx to something else. 
+Step 12: Then manually replace the English words with the Welsh words that you selected earlier in step 9. Make sure to add an output filename, e.g. gwers001c. Your text should now look like the text below. Note that the letters t, and h were used in front of letters in square brackets to indicate mutations from the unmutated forms in the vocab. These letters are m (soft), t (nasal), a (breathed), h (h-prefix), d (none), and c (mixed). Note also that multi-word terms when not hyphenated are joined by underscores in the English and the Welsh:
+```
+ |=================
+ |ffeil=gwers001c
+ |Boreu` da`!
+ |Sut` wyt_ti`?
+ |Beth` yw` dy` enw`?
+ |Sut` wyt_ti` heddiw`?
+ |Are_you` happy` or sad`?
+ |Fy` enw` yw` Peter.
+ |Fi'n` hapus` heddiw`.
+ |Pwy` yw` ef`? Ef` yw` fy` t[nh]ad`.
+ |Beth` yw` ei` enw`? Ei` enw` yw` Jonathan.
+ |Pwy` yw` hi`? Hi` yw` fy` mam`.
+ |Beth` yw` ei` h[h]enw`? Ei` h[h]enw` yw` Margaret.
+ |Pwy` yw` ef`? Ef` yw` fy` n[m]rawd`.
+ |Beth` yw` ei` enw`? Ei` enw` yw` Mike.
+ |Pwy` yw` hi`? Hi` yw` fy` chwaer`.
+ |Beth` yw` ei` h[h]enw`? Ei` h[h]enw` yw` Marianne.
+ |Wela_di` yn_hwyrach`!
+ |Hwyl` te`!
+ |=================
+```
+Step 13: Go to the end of the file and run "!cwrs". This will generate the HTML output files with the filename as specified with the "ffeil=" setting.  \
+Step 14: You are now ready to add the next lesson. This is simply a matter of adding the new lesson to the already existing lines in the testun file. Repeat steps 1 to 13 above, making to give each section a unique output filename so that the generated HTML files do not overwrite each other. You will know which new English words to avoid as running "r! a1" will advise you. You will also know which Welsh words you missed. The same command will advise you in Welsh. \

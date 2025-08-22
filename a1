@@ -1,0 +1,3 @@
+#!/bin/sh
+php ./amdrin1.php $1 $2 $3
+
