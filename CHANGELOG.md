@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.5_250822-1310 - changes to cwrs1a.php
+-  Amendments as per the release description
+
 ## 0.0.4_250822-1306 - changes to READNE.md
 -  Amendments as per the release description
 

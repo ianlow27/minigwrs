@@ -1,6 +1,8 @@
 #!/usr/bin/php
 <?php
 
+unlink('geiriau.txt');
+
 $LlTestun="testun";
 if(isset($argv[1])) $LlTestun = $argv[1];
 echo $LlTestun;
@@ -107,10 +109,10 @@ echo "<3___________________________".$d1a[1]."\n";
         $d1b[1] = preg_replace("/ /", "_", trim($d1b[1]));
         $d1b[0] = (int)$d1b[0];
 
-        if(!preg_match("/gwers00([125]{1,1})/", $LlFfeil)){
+        //if(!preg_match("/gwers00([125]{1,1})/", $LlFfeil)){
           if(substr($ll1a,0,1)=="`")
             $LlGeiriau .= strtolower(trim($d1b[1])). "/". strtolower(trim($d1a[1] )). "\n";
-        }
+        //}
 
         $d1b[1] = acenau($d1b[1]);
 
@@ -184,6 +186,7 @@ $DEn = preg_split("/<p>/", $LlEn);
 if(count($DEn)>=2){
 //echo "<<<<<____". $LlMaintEn."\n";
   //---------------------------------
+/*
   $DEn[1] = '<img src="./'. $DLlun3[0]. '.png" style="margin-top:'. $DLlun3[2] .'px;float:right;width:'.$DLlun3[1]. 'px; left:'. $DLlun3[2]. 'px;top:'.$DLlun3[3].'px;" />'
    .
    $DEn[1]
@@ -193,6 +196,7 @@ if(count($DEn)>=2){
    .
    $DEn[(count($DEn)-(int)$DLlun4[3])]
    ;
+ */
   $LlEn = "";
   $cRhif1=0;
   foreach($DEn as $l2a){
@@ -223,6 +227,7 @@ p {text-indent:-20px;padding-left:20px;margin-top:-18px;}
 </head>
 <body style="font-family:Arial;">
 '.
+/*
 (
   (substr($ll1a,0,1)=="|xxxx")
     ? ""
@@ -232,6 +237,8 @@ p {text-indent:-20px;padding-left:20px;margin-top:-18px;}
 
       '
 )
+ */
+""
 
 .'<div style="background-image:url(./'. $LlFfram.'.png);width:600px;height:600px;background-size:contain;border:1px solid blue;">
 
