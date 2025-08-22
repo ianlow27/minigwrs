@@ -51,6 +51,7 @@ file_put_contents("./0buff1.txt", $LlTestun);
 $LlGeiriau="";
 $BSylweb = 0;
 $DFfeil = explode("\n", $LlTestun);
+$LlGeirfa = "";
 foreach($DFfeil as $ll1a){
   $ll1a = trim($ll1a);
   if(substr($ll1a,0,2)=="/*"){ $BSylweb = 1; }
@@ -115,6 +116,7 @@ echo "<3___________________________".$d1a[1]."\n";
         //}
 
         $d1b[1] = acenau($d1b[1]);
+				$LlGeirfa .= acenau($ll1a). "<br/>";
 
         if      ( (($d1b[0] % 7) == 1) && (!preg_match("/Alphabet/", $LlTeitl)) ){
             $LlCy .= ucfirst(trim($d1b[1])). " ";
@@ -170,10 +172,10 @@ echo "<5__________________________".$ll1a."\n";
         }
         $LlCy = preg_replace("/ \/\/\//", ".<br/>", $LlCy);
         $LlCy = preg_replace("/ \/\//",   $llAtalnod."<br/>", $LlCy);
-        $LlCy = preg_replace("/ \//",     $llAtalnod."<br/> &emsp; ", $LlCy);
+				//xxx1   $LlCy = preg_replace("/ \//",     $llAtalnod."<br/>", trim($LlCy));
         $LlEn = $llCromfach. preg_replace("/ \/\/\//", ".)<br/>", $LlEn);
         $LlEn = preg_replace("/ \/\//",   $llAtalnod."<br/>", $LlEn);
-        $LlEn = preg_replace("/ \//",     $llAtalnod."<br/> &emsp; ", $LlEn);
+				//xxx1  $LlEn = preg_replace("/ \//",     $llAtalnod."<br/>", trim($LlEn));
         $LlNodwch = preg_replace("/\//",     "<br/>", $LlNodwch);
         //-----------------------------------------------------
 $DEn = preg_split("/<p>/", $LlEn);
@@ -201,7 +203,8 @@ if(count($DEn)>=2){
   $cRhif1=0;
   foreach($DEn as $l2a){
     if($cRhif1)
-    $LlEn .= "<p>". $l2a."\n";
+		$l2a = preg_replace("/ \/ /", "</span> <br/> <span class='p2'>", $l2a);
+    $LlEn .= "<p><span class='p1'>". $l2a."</span>\n";
     $cRhif1++;
   }//dforeach
 }
@@ -220,9 +223,23 @@ if      (preg_match("/gwers([0-9]+)b([0-9]*)/", $LlFfeil ) ){
 }else if(substr(strrev($LlFfeil),0,1)=="e"){
   $LlFfram = "ffram-gwyrdd1";
 }
+
+
+//============================================
+//============================================
+//============================================
+//============================================
+//============================================
+//============================================
+//============================================
+//============================================
+if(trim($LlCy) == ""){
 file_put_contents("./". $LlFfeil. ".html", "\xEF\xBB\xBF". '<!DOCTYPE html><html><head>
 <style>
-p {text-indent:-20px;padding-left:20px;margin-top:-18px;}
+xxxp {text-indent:-20px;padding-left:20px;margin-top:-18px;}
+p {xxtext-indent:-20px;padding:0px;margin:8px;}
+.p1 {font-size:150%;}
+.p2 {font-size:70%;}
 </style>
 </head>
 <body style="font-family:Arial;">
@@ -240,7 +257,7 @@ p {text-indent:-20px;padding-left:20px;margin-top:-18px;}
  */
 ""
 
-.'<div style="background-image:url(./'. $LlFfram.'.png);width:600px;height:600px;background-size:contain;border:1px solid blue;">
+.'<div style="background-image:url(./'. $LlFfram.'.png);width:600px;height:600px;background-size:contain;border:0px solid blue;">
 
 <div style="text-align:center;font-weight:bold;font-size:160%;color:#00f;font-style:italic;margin-top:10px;">'. $LlGwers. '</div>
 
@@ -304,6 +321,72 @@ $LlEn.
 </body>
 </html>
 ');
+//============================================
+//============================================
+//============================================
+}else {
+//============================================
+//============================================
+//============================================
+
+
+	$LlEn =  preg_replace("/ \//", "<br/>", $LlEn);
+	$LlCy =  preg_replace("/ \//", "<br/>", $LlCy);
+
+	$LlEn =  substr( substr( trim(preg_replace('/~(\w+)/', '($1)', $LlEn)), 0, -6 ), 1 );
+	$DEnx1 = explode("<br/>", $LlEn);
+	$LlCy =  substr( substr( trim(preg_replace('/~(\w+)/', '($1)', $LlCy)), 0, -6 ), 0 );
+	$DCyx1 = explode("<br/>", $LlCy);
+	$Ll1 = "";
+	for($i=0; $i < count($DCyx1); $i++){
+		$llmod = $i % 4;
+		$llNod = "";
+		if(($llmod == 1) || ($llmod == 3)){
+      $llNod.= "&emsp;"; 
+		}
+    
+	  $Ll1 .= $llNod. "<span style='font-weight:bold;font-size:150%;'>". $DCyx1[$i] . "</span><br/>";
+	  $Ll1 .= $llNod. "<span style='font-size:80%;color:#111;'>". preg_replace("/ /", "&emsp;", $DEnx1[$i]) . "</span><br/>";
+	}//endfor
+
+
+//file_put_contents("./". $LlFfeil. ".html", "". '<!DOCTYPE html><html><head>
+        
+	$LlGeirfa = preg_replace("/`/", "", $LlGeirfa);
+	$LlGeirfa = preg_replace("/=(\s+)([a-zA-z]+)~([a-zA-Z]+)/", "= $2 ($3)", $LlGeirfa);
+
+
+	
+file_put_contents("./". $LlFfeil. ".html", "\xEF\xBB\xBF". '<!DOCTYPE html><html><head>
+	<meta charset="UTF-8" />
+	</head><body>Cy WAS NOT BLANK<br/>'. 
+	$Ll1. '<hr/>'.
+  $LlGeirfa. '</body></html>
+	');
+
+	/*
+   $data = iconv("CP1257", "UTF-8", '<!DOCTYPE html><html><head>
+	<meta charset="UTF-8" />
+	</head><body>Cy WAS NOT BLANK<br/>'. 
+             $Ll1. '</body></html> ');
+
+file_put_contents("./". $LlFfeil. ".html", $data);
+	 */
+
+
+
+
+}//endif $LlCy == ""
+//============================================
+//============================================
+//============================================
+//============================================
+//============================================
+//============================================
+//============================================
+//============================================
+//============================================
+//============================================
         //-----------------------------------------------------
          file_put_contents("./geiriau.txt", $LlGeiriau);
         //-----------------------------------------------------

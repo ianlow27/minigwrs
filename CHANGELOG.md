@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.7_250822-2053 - additional changes to cwrs1a.php, gitignore, and testun
+-  Amendments as per the release description
+
 ## 0.0.6_250822-1314 - added geirfa23.txt
 -  Amendments as per the release description
 
