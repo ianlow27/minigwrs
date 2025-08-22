@@ -4,8 +4,9 @@
 *.log
 *.tmp
 *.old
-0*buff
-0*buf
+0*buff*
+0*buf*
+0*
 *.bck
 *.bkp
 *.bak

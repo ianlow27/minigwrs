@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.6_250822-1314 - added geirfa23.txt
+-  Amendments as per the release description
+
 ## 0.0.5_250822-1310 - changes to cwrs1a.php
 -  Amendments as per the release description
 
