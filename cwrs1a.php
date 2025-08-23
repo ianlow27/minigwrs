@@ -267,8 +267,8 @@ p {xxtext-indent:-20px;padding:0px;margin:8px;}
 (($LlLledYmylCy!="")?("margin-left:".$LlLledYmylCy."px;"):"")
 .'" >
 <tr>
-<td width=5%>
-</td>
+<!-- td width=5%>
+</td-->
 <td width=90% style="font-size:'. 
 ( ($LlMaintCy != "") ? $LlMaintCy : "160" )
 .'%;font-weight:bold;" ><nobr> '. $LlCy. ' </nobr> </td>
@@ -285,8 +285,8 @@ p {xxtext-indent:-20px;padding:0px;margin:8px;}
 (($LlLledYmylEn!="")?("margin-left:".$LlLledYmylEn."px;"):"")
 .'" >
 <tr style="max-height:200px;">
-<td width=5%>
-</td>
+<!--td width=5%>
+</td-->
 <td width=90% style="font-size:'. 
 ( ($LlMaintEn != "") ? $LlMaintEn : "110" )
 .'%;font-weightxx:bold;" >'.
@@ -302,15 +302,15 @@ $LlEn.
 //========================================================
 ' <table width=100% border=0 style="margin-top:-15px;" >
 <tr>
-<td width=49%>
-</td>
+<!-- td width=49%>
+</td -->
 <td width=2% style="font-size:88%;">'.
 (
    ($LlNodwch != "")
       ? '<b>Note:</b>'
       : ''
 )
-.'<br/><nobr> '. preg_replace("/\|/", "/", $LlNodwch). ' </nobr> </td>
+.'<br/><nobr>'. preg_replace("/\|/", "/", $LlNodwch). ' </nobr> </td>
 <td width=49%>
 </td>
 </tr>
@@ -360,10 +360,18 @@ $LlEn.
 file_put_contents("./". $LlFfeil. ".html", "\xEF\xBB\xBF". '<!DOCTYPE html><html><head>
 	<meta charset="UTF-8" />
 	</head><body>Cy WAS NOT BLANK<br/>'. 
-	$Ll1. '<hr/>'.
-  $LlGeirfa. '</body></html>
+	$Ll1. 
+	'<hr/>'.
+	$LlGeirfa. 
+	'<hr/>'.
+	$LlNodwch. 
+	
+	
+	'</body></html>
 	');
 
+	$Ll1 = "";
+	$LlGeirfa = "";
 	/*
    $data = iconv("CP1257", "UTF-8", '<!DOCTYPE html><html><head>
 	<meta charset="UTF-8" />

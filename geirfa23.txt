@@ -56679,5 +56679,37 @@ ar hugain	num	on twenty
 tyred	vbimptv	come@sg
 pego	vbinf	nod
 nogio	vbinf	nod
+===========================250818
+dy	pron	your
+hwyl	phrs	bye
+prynhawn_da	phrs	good_afternoon
+boreu_da	phrs	good_morning
+noswaith_dda	phrs	good_evening
+nos_da	phrs	good_night
+sut_mae	phrs	hi
+fi'n_iawn	phrs	i_am_fine
+diolch	phrs	thank_you
+sut_wyt_ti	phrs	how_are_you
+dw_i	phrs	i_am
+cael_cwrdd	vbinf	meet
+soon	adv	yn_fuan
+hefyd	adv	too
+di	pron	you
+ti	pron	you
+gweddol	adj	moderately_okay
+yn_fawr	adv	greatly
+yn_dda	adv	okay
+da_iawn	adj	very_good
+tithau	pron	you_too
+am	vbpres	am
+wyt_ti	phrs	are_you
+iawn	adj	fine
+fi'n	phrs	I_am
+mae_e'n	phrs	it_is
 pa_oed	phrs	how_old
 hwyl	phrs	bye
+dyma	dem	here's
+sut_mae	phrs	hi_there
+mae hi'n	phrs 	she is
+ni_all	phrs	she_cannot
+ffeindio	vbinf	find

@@ -51,8 +51,8 @@ _____________________________
 
 # Usage Guide in English:
 ## Example Usage: 
-Step 1: Open the file "testun" using vi in a bash shell. \
-Step 2: Write your text in English i.e. the source language that your student speaks, not the target language that your student wishes to learn i.e. Welsh. Below is an example: \
+__Step 1:__ Create a new blank file called "testun" using vi in a bash shell. \
+__Step 2:__ Write your text in English i.e. the source language that your student speaks, not the target language that your student wishes to learn i.e. Welsh. Below is an example: \
 Good morning! \
 How are you? \
 What is your name? \
@@ -66,7 +66,7 @@ Step 5: Suffix each word that you want your student to the learn the Welsh trans
  |What` is` your` name`? 
  |================= 
 ```
-Step 6: In vi command mode go to the last line of the file (Shift+G) and run "r! a1". This will output a list of possible Welsh words for the English as shown below:
+__Step 6:__ In vi command mode go to the last line of the file (Shift+G) and run "r! a1". This will output a list of possible Welsh words for the English as shown below:
 ```
  !1) ydych~vbinf = are_you
  !2) cymwynasgar~adj/da~adj/daiawn~adj/daioni~nm/daionus~adj/lles~nm/mad~adj = good
@@ -78,7 +78,7 @@ Step 6: In vi command mode go to the last line of the file (Shift+G) and run "r!
  !8) 'ch~pron/eich~adj/eich~pron/eich~pron/eich~pron/'th~pron = your
  *** *** (8 geiriau)
 ```
-Step 7: In VI Command mode press "u" to undone the previous command to remove the list of Welsh words. Then continue expanding the English text with backticks as you did in steps 1 to 5. Keep on repeating steps 6 to 7 until you have 28 words. If the word does not exist in the vocab i.e. geirfa23.txt, you will be prompted in Welsh to add it in. If there is any word that does not exist in the list of already used words i.e. geiriau.txt you will also be notified in Welsh. When you have 28 new Welsh words, then your English text should look something like this:
+__Step 7:__ In VI Command mode press "u" to undone the previous command to remove the list of Welsh words. Then continue expanding the English text with backticks as you did in steps 1 to 5. Keep on repeating steps 6 to 7 until you have 28 words. If the word does not exist in the vocab i.e. geirfa23.txt, you will be prompted in Welsh to add it in. If there is any word that does not exist in the list of already used words i.e. geiriau.txt you will also be notified in Welsh. When you have 28 new Welsh words, then your English text should look something like this:
 ```
  |=================
  |Good` morning`!
@@ -101,7 +101,7 @@ Step 7: In VI Command mode press "u" to undone the previous command to remove th
  |Bye` then`!
  |=================
 ```
-Step 8: Go to the end of the file (Shift+G) and then run "r! a1". This should append the following lines at the bottom of the file:
+__Step 8:__ Go to the end of the file (Shift+G) and then run "r! a1". This should append the following lines at the bottom of the file:
 ```
  !1) ydwyf~vbinf = am
  !2) ydych~vbinf = are_you
@@ -133,8 +133,8 @@ Step 8: Go to the end of the file (Shift+G) and then run "r! a1". This should ap
  !28) 'ch~pron/eich~adj/eich~pron/eich~pron/eich~pron/'th~pron = your
  *** _ JONATHAN_  _ MARGARET_  _ MARIANNE_  _ MIKE_  or_brim~nm/if~conj/limit~nm/margin~nm`  _ PETER_  *** (92 geiriau)
 ```
-Step 9: Now select the correct Welsh word for the English word in the text by suffixing the correct Welsh term with the backtick (\`). For example in the line "!6) cymwynasgar\~adj/da\~adj/daiawn\~adj/daioni\~nm/daionus\~adj/lles\~nm/mad\~adj = good" if the correct Welsh word is "da\~adj" then suffix this with "\`" e.g. "da\~adj\`" so that the line becomes "!6) cymwynasgar\~adj/da\~adj\`/daiawn\~adj/daioni\~nm/daionus\~adj/lles\~nm/mad\~adj = good". Repeat this for all 28 words.
-Step 10: Then go to the end of the file and run "r! a2". This will output the following lines as shown below:
+__Step 9:__ Now select the correct Welsh word for the English word in the text by suffixing the correct Welsh term with the backtick (\`). For example in the line "!6) cymwynasgar\~adj/da\~adj/daiawn\~adj/daioni\~nm/daionus\~adj/lles\~nm/mad\~adj = good" if the correct Welsh word is "da\~adj" then suffix this with "\`" e.g. "da\~adj\`" so that the line becomes "!6) cymwynasgar\~adj/da\~adj\`/daiawn\~adj/daioni\~nm/daionus\~adj/lles\~nm/mad\~adj = good". Repeat this for all 28 words.
+__Step 10:__ Then go to the end of the file and run "r! a2". This will output the following lines as shown below:
 ```
  `ffeil=gwersxxx
  `gwers=Welsh Lesson xxxb - Beginner-2 Dechreuwr
@@ -177,8 +177,8 @@ Step 10: Then go to the end of the file and run "r! a2". This will output the fo
  `llun4=gwacter/80/495/325
  `===========
 ```
-Step 11: Amend the output filename accordingly from gwersxxx to something else. 
-Step 12: Then manually replace the English words with the Welsh words that you selected earlier in step 9. Make sure to add an output filename, e.g. gwers001c. Your text should now look like the text below. Note that the letters t, and h were used in front of letters in square brackets to indicate mutations from the unmutated forms in the vocab. These letters are m (soft), t (nasal), a (breathed), h (h-prefix), d (none), and c (mixed). Note also that multi-word terms when not hyphenated are joined by underscores in the English and the Welsh:
+__Step 11:__ Amend the output filename accordingly from gwersxxx to something else. 
+__Step 12:__ Then manually replace the English words with the Welsh words that you selected earlier in step 9. Make sure to add an output filename, e.g. gwers001c. Your text should now look like the text below. Note that the letters t, and h were used in front of letters in square brackets to indicate mutations from the unmutated forms in the vocab. These letters are m (soft), t (nasal), a (breathed), h (h-prefix), d (none), and c (mixed). Note also that multi-word terms when not hyphenated are joined by underscores in the English and the Welsh:
 ```
  |=================
  |ffeil=gwers001c
@@ -201,5 +201,10 @@ Step 12: Then manually replace the English words with the Welsh words that you s
  |Hwyl` te`!
  |=================
 ```
-Step 13: Go to the end of the file and run "!cwrs". This will generate the HTML output files with the filename as specified with the "ffeil=" setting.  \
-Step 14: You are now ready to add the next lesson. This is simply a matter of adding the new lesson to the already existing lines in the testun file. Repeat steps 1 to 13 above, making to give each section a unique output filename so that the generated HTML files do not overwrite each other. You will know which new English words to avoid as running "r! a1" will advise you. You will also know which Welsh words you missed. The same command will advise you in Welsh. 
+__Step 13:__ Go to the end of the file and run "!cwrs". This will generate the HTML output files with the filename as specified with the "ffeil=" setting.  \
+__Step 14:__ You are now ready to add the next lesson. This is simply a matter of adding the new lesson to the already existing lines in the testun file. Repeat steps 1 to 13 above, making to give each section a unique output filename so that the generated HTML files do not overwrite each other. You will know which new English words to avoid as running "r! a1" will advise you. You will also know which Welsh words you missed. The same command will advise you in Welsh. 
+## NOTE:
+__1.__ To add notes at any point simply add a new line beginning with ``` "`nodwch="``` or ```"|nodwch="``` into the relevant section followed by the notes, e.g.
+```
+|nodwch=The C is always pronounced hard like K and never soft like an S.
+```
