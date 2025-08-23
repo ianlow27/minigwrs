@@ -56713,3 +56713,40 @@ sut_mae	phrs	hi_there
 mae hi'n	phrs 	she is
 ni_all	phrs	she_cannot
 ffeindio	vbinf	find
+ah	ltr	a
+buh	ltr	b
+kuh	ltr	c
+khuh	ltr	ch
+duh	ltr	d
+dhuh	ltr	dd
+air	ltr	e
+vuh	ltr	f
+fuh	ltr	ff
+guh	ltr	g
+nguh	ltr	ng
+huh	ltr	h
+ee	ltr	i
+luh	ltr	l
+hluh	ltr	ll
+muh	ltr	m
+nuh	ltr	n
+or	ltr	o
+puh	ltr	p
+phuh	ltr	ph
+r'ruh	ltr	r
+hruh	ltr	rh
+suh	ltr	s
+tuh	ltr	t
+thuh	ltr	th
+eeuh	ltr	u
+oo	ltr	w
+uh	ltr	y
+
+
+
+
+
+
+
+
+

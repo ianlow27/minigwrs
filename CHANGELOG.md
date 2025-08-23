@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.9_250823-2231 - additional changes to README.md, cwrs1a.php, and geirfa23.txt
+-  Amendments as per the release description
+
 ## 0.0.8_250823-1333 - amendments to README.md, cwrs1a.php, and geirfa23.txt
 -  Amendments as per the release description
 

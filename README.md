@@ -208,3 +208,19 @@ __1.__ To add notes at any point simply add a new line beginning with ``` "`nodw
 ```
 |nodwch=The C is always pronounced hard like K and never soft like an S.
 ```
+__2.__ To add an empty line simply add ```<br/>&emsp;<br/>``` at the end of the line. The first ```<br/>``` creates the new line. The wide space character ensures that the line actually contains a character. This causes the empty line to be retained when copying and pasting into other formats/platforms. The second ```<br/>``` terminates the empty line, e.g.
+```
+|Welsh Alphabet: <br/>&emsp;<br/>
+```
+__3.__ To add a subline underneath a bold line, e.g. Welsh sentence in bold followed by smaller English line in regular font, at the end of the Welsh sentence add a forward-slash (/)  and then on the same line add the English sentence, e.g.
+```
+|Bore da! / Good morning!
+```
+__4.__ To add a title, add the setting ```gwers=``` with the title after the equal sign (=), e.g.
+```
+|gwers=1-2 The Welsh Alphabet
+```
+__5.__ To add a subtitle, add the setting ```teitl=``` with the subtitle after the equal sign (=), e.g.
+```
+|teitl=1-2 Yr Egwyddor Cymraeg
+```
