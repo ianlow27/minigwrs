@@ -56248,8 +56248,8 @@ yth	pron	thee
 yth	pron	thy
 yth	pron	thy
 yth	nm	what stretches out
-yw	vbinf	is
-yw	vbinf	it is
+yw	vbprs	is
+yw	vbprs	it is
 yw	nm	what exists
 yw	nm	yew tree
 ywec	nm	yew tree
@@ -56741,6 +56741,12 @@ thuh	ltr	th
 eeuh	ltr	u
 oo	ltr	w
 uh	ltr	y
+ffrindiau	nm	friends
+nhw'n	phrs	they are
+maent_nhw'n	phrs	they are
+ni'n	phrs	we are
+ti'n	phrs	you are@sg
+ydy	phrs	is
 
 
 

@@ -7,6 +7,7 @@ $LlTestun="testun";
 if(isset($argv[1])) $LlTestun = $argv[1];
 echo $LlTestun;
   
+$LlCwrs="";
 $LlGwers="";
 $LlTeitl="";
 $LlNodwch="";
@@ -86,6 +87,8 @@ echo "<2___________________________[".$d1a[0]."]____[".$d1a[1]."]\n";
         $LlGwers=preg_replace("/\//", "<br>", $d1a[1]);
       }else if($d1a[0]=="teitl"){
         $LlTeitl=$d1a[1];
+      }else if($d1a[0]=="cwrs"){
+        $LlCwrs.=$d1a[1]. "/";
       }else if($d1a[0]=="cyfarwyddo"){
         $LlCyfarwyddo.=$d1a[1]. "/";
       }else if($d1a[0]=="nodwch"){
@@ -122,11 +125,11 @@ echo "<3___________________________".$d1a[1]."\n";
 				$LlGeirfa .= acenau($ll1a). "<br>";
 
         if      ( (($d1b[0] % 7) == 1) && (!preg_match("/Alphabet/", $LlTeitl)) ){
-            $LlCy .= ucfirst(trim($d1b[1])). " ";
-            $LlEn .= ucfirst(trim($d1a[1])). " ";
+            $LlCy .= uccyntaf(trim($d1b[1])). " ";
+            $LlEn .= uccyntaf(trim($d1a[1])). " ";
         }else if((($d1b[0] % 7) == 5) && (!preg_match("/Alphabet/", $LlTeitl) ) ){
-            $LlCy .= ucfirst(trim($d1b[1])). " ";
-            $LlEn .= ucfirst(trim($d1a[1])). " ";
+            $LlCy .= uccyntaf(trim($d1b[1])). " ";
+            $LlEn .= uccyntaf(trim($d1a[1])). " ";
         }else {
           $LlCy .= trim($d1b[1]). " ";
           $LlEn .= trim($d1a[1]). " ";
@@ -181,6 +184,7 @@ echo "<5__________________________".$ll1a."\n";
 				//xxx1  $LlEn = preg_replace("/ \//",     $llAtalnod."<br>", trim($LlEn));
         $LlNodwch = preg_replace("/\//",     "<br>", $LlNodwch);
         $LlCyfarwyddo = preg_replace("/\//", "<br>", $LlCyfarwyddo);
+        $LlCwrs = preg_replace("/\//", "<br>", $LlCwrs);
         //-----------------------------------------------------
 $DEn = preg_split("/<p>/", $LlEn);
 // print_r($DEn);
@@ -213,6 +217,7 @@ if(count($DEn)>=2){
   }//dforeach
 }
 //---------------------------------
+$LlEn = preg_replace("/\{__\}/", "&#91;&ensp;&ensp;&#93; <br><br>", $LlEn);
 //---------------------------------
 //---------------------------------
 //---------------------------------
@@ -230,6 +235,7 @@ if      (preg_match("/gwers([0-9]+)b([0-9]*)/", $LlFfeil ) ){
 
 
 //============================================
+
 //============================================
 //============================================
 //============================================
@@ -247,12 +253,14 @@ p {xxtext-indent:-20px;padding:0px;margin:0px;}
 $LlHtmlPenniad=
 '<div style="background-image:url(./'. $LlFfram.'.png);width:600px;height:600px;background-size:contain;border:0px solid blue;">
 
-<div style="xxtext-align:center;font-weight:bold;font-size:150%;xxcolor:#00f;xxfont-style:italic;text-decoration:underline;margin-top:10px;">'. $LlGwers. '</div>
+<div style="xxtext-align:center;font-weight:bold;font-size:250%;xxcolor:#00f;xxfont-style:italic;xxtext-decoration:underline;margin-top:10px;">'. acenau($LlCwrs). '</div>
 
-<div style="xxtext-align:center;font-weight:bold;font-size:150%;xxcolor:#0a0;font-style:italic;margin-top:0px;margin-bottom:15px;">'. preg_replace("/\//", "<br>", $LlTeitl). '</div>
+<div style="xxtext-align:center;font-weight:bold;font-size:150%;xxcolor:#00f;xxfont-style:italic;text-decoration:underline;margin-top:10px;">'. acenau($LlGwers)  . '</div>
+
+<div style="xxtext-align:center;font-weight:bold;font-size:150%;xxcolor:#0a0;font-style:italic;margin-top:0px;margin-bottom:15px;">'. preg_replace("/\//", "<br>", acenau($LlTeitl)  ). '</div>
 
 
-<div style="xxtext-align:center;xxfont-weight:bold;font-size:150%;xxcolor:#0a0;font-style:italic;margin-top:0px;margin-bottom:15px;">'. preg_replace("/\//", "<br>", $LlCyfarwyddo). '</div>';
+<div style="xxtext-align:center;xxfont-weight:bold;font-size:150%;xxcolor:#0a0;font-style:italic;margin-top:0px;margin-bottom:15px;">'. preg_replace("/\//", "<br>", acenau($LlCyfarwyddo)  ). '</div>';
 
 
 $LlHtmlGwaelod=
@@ -380,9 +388,9 @@ $LlHtmlGwaelod);
 	$LlEn =  preg_replace("/ \//", "<br>", $LlEn);
 	$LlCy =  preg_replace("/ \//", "<br>", $LlCy);
 
-	$LlEn =  substr( substr( trim(preg_replace('/~(\w+)/', '($1)', $LlEn)), 0, -6 ), 1 );
+	$LlEn =  substr( substr( trim(preg_replace('/~(\w+)/', '($1)', $LlEn)), 0, -5 ), 1 );
 	$DEnx1 = explode("<br>", $LlEn);
-	$LlCy =  substr( substr( trim(preg_replace('/~(\w+)/', '($1)', $LlCy)), 0, -6 ), 0 );
+	$LlCy =  substr( substr( trim(preg_replace('/~(\w+)/', '($1)', $LlCy)), 0, -4 ), 0 );
 	$DCyx1 = explode("<br>", $LlCy);
 	$Ll1 = "";
 	for($i=0; $i < count($DCyx1); $i++){
@@ -393,7 +401,7 @@ $LlHtmlGwaelod);
 		}
     
 	  $Ll1 .= $llNod. "<span style='font-weight:bold;font-size:170%;'>". $DCyx1[$i] . "</span><br>";
-	  $Ll1 .= $llNod. "<span style='font-size:150%;xxcolor:#111;'>". preg_replace("/ /", "&emsp;", $DEnx1[$i]) . "</span><br>";
+	  $Ll1 .= $llNod. "<span style='font-size:110%;xxcolor:#111;'>". preg_replace("/ /", "&emsp;", $DEnx1[$i]) . "</span><br>";
 	}//endfor
 
 
@@ -442,6 +450,7 @@ file_put_contents("./". $LlFfeil. ".html", $data);
          file_put_contents("./geiriau.txt", $LlGeiriau);
         //-----------------------------------------------------
         //-----------------------------------------------------
+$LlCwrs="";
 $LlGwers="";
 $LlTeitl="";
 $LlCyfarwyddo="";
@@ -470,8 +479,6 @@ echo "<6__________________________".substr($ll1a,1,5)."__". $ll1a."\n";
   }//dif 
 
 }//endforeach
-
-
 //------------------------------------------------------
 function acenau($pstr){
   $pstr = preg_replace("/a\^/", "â", $pstr);
@@ -485,18 +492,44 @@ function acenau($pstr){
   $pstr = preg_replace("/yxxxxx/",  "ỳ", $pstr);
   $pstr = preg_replace("/axxxxx/",  "à", $pstr);
   $pstr = preg_replace("/axxyxx/",  "ä", $pstr);
-  $pstr = preg_replace("/exxxxx/",  "è", $pstr);
+  //$pstr = preg_replace("/exxxxx/",  "è", $pstr);
+  $pstr = preg_replace("/exxxxx/",  "ë ", $pstr);
   $pstr = preg_replace("/ixxyxx/",  "ï", $pstr);
   $pstr = preg_replace("/oxxyxx/",  "ö", $pstr);
-
-
-
-
-
-
-    
 return $pstr;
 }//dfunc
+//------------------------------------------------------
+function uccyntaf($pstr){
+  $ch1 = $pstr[0];
+  //if(!preg_match("/gwers00([125]{1,1})/", $LlFfeil)){
+	if(preg_match("/([âêîôûŵŷáỳàäèëïö]+)/", $pstr[0])){
+    if($ch1 == "â") $ch1 = "Â";
+    else if($ch1 == "ê") $ch1 = "Ê";
+    else if($ch1 == "î") $ch1 = "Î";
+    else if($ch1 == "ô") $ch1 = "Ô";
+    else if($ch1 == "û") $ch1 = "Û";
+    else if($ch1 == "ŵ") $ch1 = "Ŵ";
+    else if($ch1 == "ŷ") $ch1 = "Ŷ";
+    else if($ch1 == "á") $ch1 = "Á";
+    else if($ch1 == "ỳ") $ch1 = "Ỳ";
+    else if($ch1 == "à") $ch1 = "À";
+    else if($ch1 == "ä") $ch1 = "Ä";
+    else if($ch1 == "è") $ch1 = "È";
+    else if($ch1 == "ë") $ch1 = "Ë";
+    else if($ch1 == "ï") $ch1 = "Ï";
+    else if($ch1 == "ö") $ch1 = "Ö";
+    // echo "XXXXX1__". $pstr[0]. "____". $pstr;
+	}else {
+    $ch1 = ucfirst($ch1);
+    //echo "XXXXX2__". $pstr[0]. "____". substr($pstr,1);
+	}
+
+return $ch1 . substr($pstr,1);
+
+}//dfunc
+//------------------------------------------------------
+//------------------------------------------------------
+//------------------------------------------------------
 
 
 
