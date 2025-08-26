@@ -6,6 +6,7 @@ unlink('geiriau.txt');
 $LlTestun="testun";
 if(isset($argv[1])) $LlTestun = $argv[1];
 echo $LlTestun;
+sleep(1);
   
 $LlCwrs="";
 $LlGwers="";
@@ -388,9 +389,9 @@ $LlHtmlGwaelod);
 	$LlEn =  preg_replace("/ \//", "<br>", $LlEn);
 	$LlCy =  preg_replace("/ \//", "<br>", $LlCy);
 
-	$LlEn =  substr( substr( trim(preg_replace('/~(\w+)/', '($1)', $LlEn)), 0, -5 ), 1 );
+	$LlEn =  substr( substr( trim(preg_replace('/~(\w+)/', '&ThinSpace;($1)', $LlEn)), 0, -5 ), 1 );
 	$DEnx1 = explode("<br>", $LlEn);
-	$LlCy =  substr( substr( trim(preg_replace('/~(\w+)/', '($1)', $LlCy)), 0, -4 ), 0 );
+	$LlCy =  substr( substr( trim(preg_replace('/~(\w+)/', '&ThinSpace;($1)', $LlCy)), 0, -4 ), 0 );
 	$DCyx1 = explode("<br>", $LlCy);
 	$Ll1 = "";
 	for($i=0; $i < count($DCyx1); $i++){
@@ -500,7 +501,7 @@ return $pstr;
 }//dfunc
 //------------------------------------------------------
 function uccyntaf($pstr){
-  $ch1 = $pstr[0];
+	$ch1 = mb_substr($pstr,0,1);
   //if(!preg_match("/gwers00([125]{1,1})/", $LlFfeil)){
 	if(preg_match("/([âêîôûŵŷáỳàäèëïö]+)/", $pstr[0])){
     if($ch1 == "â") $ch1 = "Â";
@@ -518,13 +519,13 @@ function uccyntaf($pstr){
     else if($ch1 == "ë") $ch1 = "Ë";
     else if($ch1 == "ï") $ch1 = "Ï";
     else if($ch1 == "ö") $ch1 = "Ö";
-    // echo "XXXXX1__". $pstr[0]. "____". $pstr;
+     echo "XXXXX1__". $ch1. "____". mb_strlen($pstr)."____". $pstr;
 	}else {
     $ch1 = ucfirst($ch1);
-    //echo "XXXXX2__". $pstr[0]. "____". substr($pstr,1);
+    echo "XXXXX2__". $ch1. "___". mb_strlen($pstr)."_____". mb_substr($pstr,1);
 	}
 
-return $ch1 . substr($pstr,1);
+return $ch1 . mb_substr($pstr,1);
 
 }//dfunc
 //------------------------------------------------------
