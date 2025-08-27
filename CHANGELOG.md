@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.12_250827-1307 - amendments to README.md and cwrs1a.php
+-  Amendments as per the release description
+
 ## 0.0.11_250826-0943 - amendments to gitignore, README.md, cwrs1a.php, and new file cwrs1
 -  Amendments as per the release description
 

@@ -225,3 +225,8 @@ __5.__ To add a subtitle, add the setting ```teitl=``` with the subtitle after t
 |teitl=1-2 Yr Egwyddor Cymraeg
 ```
 __6.__ To add a 1-char box for Y/N or T/F answers add "{__}" i.e. doble underscores enclosed in braces.
+
+__7.__ To make a text bold, enclose it in "{* text here *}"
+
+__8.__ To add a blank line append the following to the end of the line: "{/}"
+
