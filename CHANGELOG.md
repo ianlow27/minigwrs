@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.13_250828-1858 - new files nw and newydd.php and amendments to README.md, gitignore, and cwrs1a.php
+-  Amendments as per the release description
+
 ## 0.0.12_250827-1307 - amendments to README.md and cwrs1a.php
 -  Amendments as per the release description
 

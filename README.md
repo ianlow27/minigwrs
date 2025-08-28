@@ -52,13 +52,14 @@ _____________________________
 # Usage Guide in English:
 ## Example Usage: 
 __Step 1:__ Create a new blank file called "testun" using vi in a bash shell. \
-__Step 2:__ Write your text in English i.e. the source language that your student speaks, not the target language that your student wishes to learn i.e. Welsh. Below is an example: \
+__Step 2a:__ In command mode in VI enter the command "r! nw x" to insert the template for your first lesson where x is the number of your lesson, e.g. enter "r! nw 1" for your first lesson. Alternatively, if you wish to do this manually follow the steps below.
+__Step 2b:__ Write your text in English i.e. the source language that your student speaks, not the target language that your student wishes to learn i.e. Welsh. Below is an example: \
 Good morning! \
 How are you? \
 What is your name? \
-Step 3: NOTE!! All lines are ignored except lines that start with backtick (\`) or pipe (|). Add the line "|=====" (pipe followed by 5x or more equal signs) before and after the text  to indicate the section start and end. \
-Step 4: Start each line to be analyzed with the pipe symbol (|). \
-Step 5: Suffix each word that you want your student to the learn the Welsh translation of with a backtick (`). Your text should now look like this: \
+__Step 3:__ NOTE!! All lines are ignored except lines that start with backtick (\`) or pipe (|). Add the line "|=====" (pipe followed by 5x or more equal signs) before and after the text  to indicate the section start and end. \
+__Step 4:__ Start each line to be analyzed with the pipe symbol (|). \
+__Step 5:__ Suffix each word that you want your student to the learn the Welsh translation of with a backtick (`). Your text should now look like this: \
 ```
  |================= 
  |Good` morning`! 
@@ -229,4 +230,6 @@ __6.__ To add a 1-char box for Y/N or T/F answers add "{__}" i.e. doble undersco
 __7.__ To make a text bold, enclose it in "{* text here *}"
 
 __8.__ To add a blank line append the following to the end of the line: "{/}"
+
+__9.__ To format text to look like a link, enclose it in "{lnk: text here :}"
 
