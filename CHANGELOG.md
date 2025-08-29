@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.14_250829-1552 - amendments to README.md, amdrin2.php, and geirfa23.txt
+-  Amendments as per the release description
+
 ## 0.0.13_250828-1858 - new files nw and newydd.php and amendments to README.md, gitignore, and cwrs1a.php
 -  Amendments as per the release description
 

@@ -7312,8 +7312,8 @@ boreddydd	nm	dayspring
 borefwyd	nm	breakfast
 boregwaith	nm	morning
 boreol	adj	morning
-boreu	nm	dawning
-boreu	nm	morning
+bore	nm	dawning
+bore	nm	morning
 boreuedd	nm	earliness
 boreuo	vbinf	become day
 boreuol	adj	dawning
@@ -51139,6 +51139,7 @@ tisio	vbinf	sternutate
 titen	nm	very small fly
 tithau	pron	and thee
 tithau	pron	thee also
+tithau	pron	you also
 tithau	pron	thou also
 tithau	pron	thyself
 titiad	nm	small fly
@@ -55302,7 +55303,8 @@ ynysol	adj	insular
 ynysol	adj	island
 ynyswr	nm	islander
 yr	conj	that
-yr	adj	the
+yr	def	the
+y	def	the
 yr achlod iddo!	interj	shame on him!
 yr ail ddyn	phrs	the second man
 yr ail lyfr	phrs	the second book
@@ -56683,7 +56685,7 @@ nogio	vbinf	nod
 dy	pron	your
 hwyl	phrs	bye
 prynhawn_da	phrs	good_afternoon
-boreu_da	phrs	good_morning
+bore_da	phrs	good_morning
 noswaith_dda	phrs	good_evening
 nos_da	phrs	good_night
 sut_mae	phrs	hi
@@ -56747,6 +56749,21 @@ maent_nhw'n	phrs	they are
 ni'n	phrs	we are
 ti'n	phrs	you are@sg
 ydy	phrs	is
+ni_allaf	phrs	I_cannot
+cawn_ni	phrs	let_us
+gwnes	vbprt	did_I
+gwnest	vbprt	did_you	@sg
+ystafell fwyta	nf	dining_room
+sy'n_wedi_digwydd	phrs	has_happened
+amdano_fe	phrs	for_him
+yn_ddiweddaf	adv	last
+dywed	vbprs	says
+mae	vbprs	she_is
+mae	vbprs	he_is
+mae	vbprs	it_is
+astudfa	nf	study
+
+
 
 
 

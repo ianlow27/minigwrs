@@ -67,9 +67,9 @@ foreach($DFfeil as $ll1a){
 
 echo  '
 =====================================================
-`ffeil=gwersxxx
-`gwers=Welsh Lesson xxxb - Beginner-2 Dechreuwr
-`teitl=Vocab Stanza xxx/Reading Vocab
+`ffeil=gwersxxx-2
+`gwers=x-2 28 Words
+`teitl=x-2 28 Gair
 ';
 
 $DGeiriau = explode("\n", $LlGeiriau);
