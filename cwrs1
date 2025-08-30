@@ -1,3 +1,0 @@
-#!/bin/sh
-php ./cwrs1a.php testun1 $2 $3
-
