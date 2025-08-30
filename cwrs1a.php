@@ -549,6 +549,9 @@ return $ch1 . mb_substr($pstr,1);
 }//dfunc
 //------------------------------------------------------
 function ffurfweddu($pstr){
+$pstr = preg_replace("/\{lnkb:/", "<span style='font-weight:bold;color:blue;text-decoration:underline;'>", $pstr);
+
+$pstr = preg_replace("/:\}/", "</span>", $pstr);
 $pstr = preg_replace("/\{lnk:/", "<span style='color:blue;text-decoration:underline;'>", $pstr);
 $pstr = preg_replace("/:\}/", "</span>", $pstr);
 

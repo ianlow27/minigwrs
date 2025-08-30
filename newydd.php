@@ -6,19 +6,16 @@ if(!isset($argv[1])){
 	die();
 }
 
-
-
 if(!is_numeric($argv[1])){
-  echo "Course name is: ". $argv[1]. "\n";
+  echo "Cwrs newydd: ". $argv[1]. "\n";
   $LlTestun=$argv[1];
-  echo $LlTestun;
   sleep(1);
   $cwrs =  "./cwrs_". $LlTestun. "";
   if (file_exists( $cwrs)) {
-      echo "The directory $cwrs exists.";
+      echo "Mae'r isblygell $cwrs wedi yn bodoli.\n";
   } else {
       mkdir( $cwrs, 0755);
-      echo "The directory $cwrs was successfully created.";
+      echo "Mae'r isblygell $cwrs wedi cael ei chreuwyd yn llwyddiannus.\n";
   }
   //============================================
 	// a1
@@ -37,6 +34,9 @@ if(!is_numeric($argv[1])){
   $lessonNum = sprintf("%03d", $argv1);
   $output = mklession($lessonNum, $argv1);
 	file_put_contents($cwrs. "/". $LlTestun, $output);
+
+
+	echo "Nawr, y cam nesaf yw i 'cd ". $cwrs. "' ac wedyn adolygu y ffeil gyda'r enw '". $LlTestun."' trwy ddefnyddio y adolygydd VI neu VIM sef 'vi ". $LlTestun."', ac wedyn i mewn yn yr adolygydd i redeg 1) 'r! a1', ac wedyn 2) 'r! a2', ac wedyn 3) '!cwrs'.\nAc wedyn, ar ol y cyflawniad o'ch cyntaf modiwl, i ychwangeu y modiwl nesaf ar y gwaelod o'r ffeil trwy redeg y gorchymyn 'r! nw 2' i cydatodi yr ail modiwl, ac ar ol hynny y 3dd, 4dd, ayyb.\n ";
   die();
 }
 //===========================================

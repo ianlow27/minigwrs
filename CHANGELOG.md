@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.16_250830-2132 - additional changes to cwrs1a.php and newydd.php to help immersion learning
+-  Amendments as per the release description
+
 ## 0.0.15_250830-1346 - amendments to create and save different courses in their own individual subfolders instead of them all sharing the same parent folder
 -  Amendments as per the release description
 
