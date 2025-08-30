@@ -56762,6 +56762,8 @@ mae	vbprs	she_is
 mae	vbprs	he_is
 mae	vbprs	it_is
 astudfa	nf	study
+modwl	nm	module
+modiwl	nm	module
 
 
 

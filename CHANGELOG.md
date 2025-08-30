@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.15_250830-1346 - amendments to create and save different courses in their own individual subfolders instead of them all sharing the same parent folder
+-  Amendments as per the release description
+
 ## 0.0.14_250829-1552 - amendments to README.md, amdrin2.php, and geirfa23.txt
 -  Amendments as per the release description
 

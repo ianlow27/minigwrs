@@ -1,12 +1,29 @@
 #!/usr/bin/php
 <?php
-
-unlink('geiriau.txt');
-
 $LlTestun="testun";
 if(isset($argv[1])) $LlTestun = $argv[1];
 echo $LlTestun;
 sleep(1);
+//$cwrs =  "./". $LlTestun. "_cwrs";
+//if (file_exists( $cwrs)) {
+//    echo "The directory $cwrs exists.";
+//} else {
+//    mkdir( $cwrs, 0755);
+//    echo "The directory $cwrs was successfully created.";
+//}
+unlink('./geiriau.txt');
+//============================================
+//============================================
+//============================================
+//============================================
+//============================================
+//============================================
+//============================================
+//============================================
+//============================================
+//============================================
+//============================================
+//============================================
   
 $LlCwrs="";
 $LlGwers="";
@@ -72,7 +89,7 @@ foreach($DFfeil as $ll1a){
   if(  (substr($ll1a,0,1)=="`")
      ||(substr($ll1a,0,1)=="|")  ){
 
-    if( (!preg_match("/=/", $ll1a)) ){ //Y mae 'r hyn dim ond testun bur yn unig
+    if( (!preg_match("/=/", $ll1a)) ){ 
       //&&(!preg_match("/¬/", $ll1a)) ){ 
       if(substr($ll1a,0,1) =="|" ){
         $LlEn .= "<p>".  $ll1a."</p>";
@@ -84,7 +101,7 @@ echo "<1___________________________".$ll1a."\n";
      
       $d1a[1] = trim(preg_replace("/@/", "~",$d1a[1]) ); 
 echo "<2___________________________[".$d1a[0]."]____[".$d1a[1]."]\n";
-      if      ($d1a[0]=="gwers"){
+      if      ($d1a[0]=="modiwl"){
         $LlGwers=preg_replace("/\//", "<br>", $d1a[1]);
       }else if($d1a[0]=="teitl"){
         $LlTeitl=$d1a[1];
@@ -225,10 +242,10 @@ $LlEn = preg_replace("/\{__\}/", "&#91;&ensp;&ensp;&#93; <br><br>", $LlEn);
 //---------------------------------
 $LlFfram = "ffram-glas1";
 //if      (substr(strrev($LlFfeil),0,1)=="b"){
-if      (preg_match("/gwers([0-9]+)b([0-9]*)/", $LlFfeil ) ){
+if      (preg_match("/modiwl([0-9]+)b([0-9]*)/", $LlFfeil ) ){
   $LlFfram = "ffram-oren1";
 //}else if(substr(strrev($LlFfeil),0,1)=="c"){
-}else if      (preg_match("/gwers([0-9]+)c([0-9]*)/", $LlFfeil ) ){
+}else if      (preg_match("/modiwl([0-9]+)c([0-9]*)/", $LlFfeil ) ){
   $LlFfram = "ffram-gwyrdd1";
 }else if(substr(strrev($LlFfeil),0,1)=="e"){
   $LlFfram = "ffram-gwyrdd1";

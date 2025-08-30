@@ -51,8 +51,8 @@ _____________________________
 
 # Usage Guide in English:
 ## Example Usage: 
-__Step 1:__ Create a new blank file called "testun" using vi in a bash shell. \
-__Step 2a:__ In command mode in VI enter the command "r! nw x" to insert the template for your first lesson where x is the number of your lesson, e.g. enter "r! nw 1" for your first lesson. Alternatively, if you wish to do this manually follow the steps below. \
+__Step 1:__ Create a start project folder by entering "nw <course-short-name>" e.g. "nw course1". This will create a new folder called "cwrs_course1".
+__Step 2a:__ "cd" to your new project folder, e.g. "cd "cwrs_course1", and edit the file that is the same name as your course short name e.g. course1. This already contains a template lesson 1.
 __Step 2b:__ Write your text in English i.e. the source language that your student speaks, not the target language that your student wishes to learn i.e. Welsh. Below is an example: \
 Good morning! \
 How are you? \

@@ -1,11 +1,33 @@
 #!/usr/bin/php
 <?php
+$LlTestun="testun";
+if(isset($argv[1])) $LlTestun = $argv[1];
+echo $LlTestun;
+sleep(1);
+//$cwrs =  "./". $LlTestun. "_cwrs";
+//
+//if (file_exists( $cwrs)) {
+//    echo "The directory $cwrs exists.";
+//} else {
+//    mkdir( $cwrs, 0755);
+//    echo "The directory $cwrs was successfully created.";
+//}
+//============================================
+//============================================
+//============================================
+//============================================
+//======================================================
+//======================================================
+//======================================================
+//======================================================
+//======================================================
+//======================================================
 $CMwyafEiriau=1800;
 //=======================================================
 $DGeirfa = array();
 $DGeirfaCym = array();
 
-foreach(explode("\n", file_get_contents("./geirfa23.txt")) as $ll1a){
+foreach(explode("\n", file_get_contents("../geirfa23.txt")) as $ll1a){
   $d1a = explode("\t", $ll1a);
   if(!isset($d1a[2])) continue;
   $d1a[0] = preg_replace("/ /", "_", strtolower($d1a[0]) );
@@ -47,7 +69,7 @@ foreach(explode("\n", file_get_contents("./geiriau.txt")) as $ll1a){
 //echo $DSaesneg["and"]."\n";
 //die();
 //---------------------
-$DFfeil = explode("\n", file_get_contents("./testun"));
+$DFfeil = explode("\n", file_get_contents("./". $LlTestun));
 $LlRhestr="";
 $LlNewydd="";
 //print_r($DGeiriau);
