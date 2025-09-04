@@ -96,16 +96,21 @@ global $lswords;
         if(mb_substr($word, -1) == "`"){
           $lword="";
 					if($cluelevel == "`"){ //clue0
-			      $lword = mb_substr($word,0,1). "___ ";
+			      $lword = mb_substr($word,0,1). "___";
+						if(preg_match("/_/", $word)) $lword .= "___";
+						$lword .= " ";
 					  $lword = "{lnkb:". $lword. "&ensp;:}";
+					  $lswords .= mb_substr($word,0,-1). " ";
 					}else if($cluelevel == "|"){ //clue1
-			      $lword =  "____ ";
+			      $lword =  "____";
+						if(preg_match("/_/", $word)) $lword .= "___";
+						$lword .= " ";
 					  $lword = "{lnkb:". $lword. "&ensp;:}";
+					  $lswords .= mb_substr($word,0,-1). " ";
 					}else if($cluelevel == "¬"){ //bold
 					  $lword = "<u>{*". mb_substr($word,0,-1). "*}</u> ";
           }
           $lnout .= $lword;
-					$lswords .= mb_substr($word,0,-1). " ";
 				}else {
 			    $lnout .= $word. " ";
 				}

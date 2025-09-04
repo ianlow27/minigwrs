@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.20_250904-1921 - AMENDMENTS to cfai1.php
+-  Amendments as per the release description
+
 ## 0.0.19_250904-1909 - added NEW mjemojis.php and amended cfai1.php
 -  Amendments as per the release description
 
