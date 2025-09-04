@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.22_250904-2219 - further amendments to cfai1.php the input text crs_cfai1/cfai1 and htmlfmt.php
+-  Amendments as per the release description
+
 ## 0.0.21_250904-1953 - AMENDMENTS to cfai1.php and EXAMPLE folder crs_cfai1 with example input textfile cfai1
 -  Amendments as per the release description
 

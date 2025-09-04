@@ -32,6 +32,7 @@ include "../mjemojis.php";
 //============================================
 $outstr = "<!DOCTYPE><html><body>";
 $lswords="";
+htmlfmtinit();
 foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
 	if((mb_substr($line, 0, 1)=="|") 
 	 ||(mb_substr($line, 0, 1)=="`")
@@ -56,9 +57,10 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
       //echo $outstr;
 			$outstr = preg_replace("/\n/", "<br>", $outstr);
 			$outstr = acenau($outstr);
-			$outstr = ffurfweddu(setHtmlFmt($outstr));
+			$outstr = ffurfweddu(htmlfmtsetsections($outstr));
       file_put_contents("./". $LlFfeil. ".html", $outstr);
 			$outstr = "";
+			htmlfmtinit();
 		}else if(substr($line, 1, 4) == "----"){
        //$outstr .= $lswords."\n";
 			 $atmp1 = (explode(" ",strtolower($lswords)));
@@ -93,7 +95,7 @@ function parsewords($line, $cluelevel = "|"){
 global $lswords;
 
   if($cluelevel == "!"){
-    return "<em style='color:#888;'>". $line. "</em>";
+    return "<em style='color:#555;'>". resetpunc($line). "</em>";
 	}
 			$awords = explode(" ", $line);
 			$lnout = "";
@@ -121,12 +123,20 @@ global $lswords;
 				}
 
 			}//endforeach
+
+			$lnout = resetpunc($lnout);
   
+
+  return $lnout;
+}//endfunc
+
+
+function resetpunc($lnout){
 		  $lnout = preg_replace("/(\s*)\{\{(\s*)/", " \"", $lnout);
 		  $lnout = preg_replace("/(\s*)\}\}(\s*)/", "\" ", $lnout);
 		  $lnout = preg_replace("/ ([!?,\.;:])/", "$1", $lnout);
+			return $lnout;
 
-  return $lnout;
 }//endfunc
 
 

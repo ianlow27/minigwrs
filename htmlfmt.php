@@ -25,10 +25,29 @@ $DFfeil1 = explode("\n", file_get_contents("./". $LlTestun) );
 //---------------------------------------
 //---------------------------------------
 //---------------------------------------
+function htmlfmtinit(){
+global $LlCwrs; global $LlGwers; global $LlTeitl; global $LlNodwch; global $LlCyfarwyddo; global $LlLlun1; global $LlLlun2; global $LlFfeil; global $LlLledYmylCy; global $LlLledYmylEn; global $LlMaintCy; global $LlMaintEn; global $LlCy; global $LlEn; global $DLlun1; global $DLlun2; global $DLlun3; global $DLlun4; global $DFfeil1; global $LlTestun;
+$LlCwrs="";
+$LlGwers="";
+$LlTeitl="";
+$LlNodwch="";
+$LlCyfarwyddo="";
+$LlLlun1="";
+$LlLlun2="";
+$LlFfeil="";
+$LlLledYmylCy="";
+$LlLledYmylEn="";
+$LlMaintCy="";
+$LlMaintEn="";
+$LlFfram="";
+$LlCy="";
+$LlEn="";
+}//endfunc
 //---------------------------------------
 //---------------------------------------
 function htmlfmtsettings($ll1a){
 global $LlCwrs; global $LlGwers; global $LlTeitl; global $LlNodwch; global $LlCyfarwyddo; global $LlLlun1; global $LlLlun2; global $LlFfeil; global $LlLledYmylCy; global $LlLledYmylEn; global $LlMaintCy; global $LlMaintEn; global $LlCy; global $LlEn; global $DLlun1; global $DLlun2; global $DLlun3; global $DLlun4; global $DFfeil1; global $LlTestun;
+$bfound=false;
       //____$d1a = explode("=", substr($ll1a,1));
       $d1a = explode("=", substr($ll1a,0));
 
@@ -40,31 +59,44 @@ global $LlCwrs; global $LlGwers; global $LlTeitl; global $LlNodwch; global $LlCy
 echo "<2___________________________[".$d1a[0]."]____[".$d1a[1]."]\n";
       if      ($d1a[0]=="modiwl"){
         $LlGwers=preg_replace("/\//", "<br>", $d1a[1]);
+        $bfound=true;
       }else if($d1a[0]=="teitl"){
         $LlTeitl=$d1a[1];
+        $bfound=true;
       }else if($d1a[0]=="cwrs"){
         $LlCwrs.=$d1a[1]. "/";
+        $bfound=true;
       }else if($d1a[0]=="cyfarwyddo"){
         $LlCyfarwyddo.=$d1a[1]. "/";
+        $bfound=true;
       }else if($d1a[0]=="nodwch"){
         $LlNodwch.=$d1a[1]. "/";
+        $bfound=true;
       }else if($d1a[0]=="lledymylcy"){
         $LlLledYmylCy.=$d1a[1]. "";
+        $bfound=true;
       }else if($d1a[0]=="lledymylen"){
         $LlLledYmylEn.=$d1a[1]. "";
+        $bfound=true;
       }else if($d1a[0]=="maintcy"){
         $LlMaintCy.=$d1a[1]. "";
+        $bfound=true;
       }else if($d1a[0]=="mainten"){
         $LlMaintEn.=$d1a[1]. "";
 echo "<<<<<____". $LlMaintEn."\n";
+        $bfound=true;
       }else if($d1a[0]=="llun1"){
         $DLlun1=explode("/", $d1a[1]);
+        $bfound=true;
       }else if($d1a[0]=="llun2"){
         $DLlun2=explode("/", $d1a[1]);
+        $bfound=true;
       }else if($d1a[0]=="llun3"){
         $DLlun3=explode("/", $d1a[1]);
+        $bfound=true;
       }else if($d1a[0]=="llun4"){
         $DLlun4=explode("/", $d1a[1]);
+        $bfound=true;
       }else if(preg_match("/^([0-9]+)\)/", $d1a[0])){
 echo "<3___________________________".$d1a[1]."\n";
         $d1b = explode(")", $d1a[0]);
@@ -97,12 +129,16 @@ echo "<3___________________________".$d1a[1]."\n";
         }
      
 
+        $bfound=true;
       }else if($d1a[0]=="ffeil"){
         $LlFfeil=$d1a[1];
+        $bfound=true;
  		 }
+	 if($bfound == true) return "found!";
+	 else return "";
 }//endfunc
 //---------------------------------------
-function setHtmlFmt($outstr){
+function htmlfmtsetsections($outstr){
 global $LlCwrs;
 global $LlGwers;
 global $LlTeitl;

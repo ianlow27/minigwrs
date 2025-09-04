@@ -7,7 +7,7 @@
 
 
 |===========================
-|ffeil=modiwl001-4a
+|ffeil=modiwl001z
 |modiwl=1-4a EN_XXXXXXXX
 |teitl=1-4a CY_XXXXXXX
 |Sut_mae!
@@ -51,6 +51,8 @@
 |Fi` yn iawn`, diolch! A thi`?
 |Fi yn iawn hefyd, diolch!
 |------------------------------
+|==============================
+|ffeil=modiwl001b
 |{*Notes:*}
 meddwn = {mjperson}{mjself}{mjpointleft}{mjmouth}
 meddit = {mjperson}{mjpointleft}{mjmouth}
@@ -66,6 +68,11 @@ meddit = {mjperson}{mjpointleft}{mjmouth}
 `"Hwyl` te`!" meddai Bethan.
 `"Hwyl`! Wela` di` yn` fuan`!" meddai Adda.
 |------------------------------
+|===========================
+|ffeil=modiwl001a
+|modiwl=1-4a EN_XXXXXXXX
+|teitl=1-4a CY_XXXXXXX
+!Nodwch: Dysgwch yr ynganiad cywir o'r ymadrodd "Sut mae" fel "Siwmae" yn y De a "S'mae" yn y Gogledd.
 ¬Cerys: Helo! Sut` mae`!
 ¬Ifan: Helo! Sut` mae`!
 |------------------------------
@@ -74,7 +81,11 @@ meddit = {mjperson}{mjpointleft}{mjmouth}
 ¬Cerys: Neis` i` gael_cwrdd` a^` thi`!
 ¬Ifans: Neis` i` gael_cwrdd` a^` thi` hefyd`!
 |------------------------------
+`Cerys: Helo`! Sut` mae`!
+`Ifan: Helo`! Sut` mae`!
 |------------------------------
+|Cerys: Helo`! Sut` mae`!
+|Ifan: Helo`! Sut` mae`!
 |------------------------------
 |------------------------------
 |===========================
