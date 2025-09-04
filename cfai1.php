@@ -43,6 +43,9 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
 
 		$line = mb_substr($line, 1);
 		//echo "____". $line. "\n";
+		$line = preg_replace("/ \"/", " {{ ", $line);
+		$line = preg_replace("/^\"/", " {{ ", $line);
+		$line = preg_replace("/\" /", " }} ", $line);
 		$line = preg_replace("/([!?,\.;:])/", " $1", $line);
 
 
@@ -105,6 +108,8 @@ global $lswords;
 
 			}//endforeach
   
+		  $lnout = preg_replace("/(\s*)\{\{(\s*)/", " \"", $lnout);
+		  $lnout = preg_replace("/(\s*)\}\}(\s*)/", "\" ", $lnout);
 		  $lnout = preg_replace("/ ([!?,\.;:])/", "$1", $lnout);
 
   return $lnout;
