@@ -18,6 +18,7 @@ unlink('./geiriau.txt');
 //============================================
 include "../cyutils.php";
 include "../htmlfmt.php";
+include "../mjemojis.php";
 //============================================
 //============================================
 //============================================
@@ -75,6 +76,9 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
   	}else if(htmlfmtsettings($line) == ""){
 
 			$lnout = parsewords($line, $char1);
+			if(preg_match("/\{mj/", $lnout)){
+			  $lnout = mjemojis($lnout);
+			}
       $outstr .= $lnout."\n";
   
     }
