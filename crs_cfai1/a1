@@ -1,0 +1,2 @@
+#!/bin/sh
+     php ../amdrin1.php cfai1 $1 $2 $3

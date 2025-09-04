@@ -1,0 +1,80 @@
+1. Add teachers' notes starting with "!" 
+
+
+
+
+
+
+
+|===========================
+|ffeil=modiwl001-4a
+|modiwl=1-4a EN_XXXXXXXX
+|teitl=1-4a CY_XXXXXXX
+|Sut_mae!
+|Sut wyt ti?
+|Fi yn iawn diolch! Sut wyt tithau?
+|Fi yn iawn hefyd, diolch!
+|Beth yw dy enw di?
+|Fy enw i yw Adda. Beth yw dy enw dithau?
+|Fy enw i yw Bethan.
+|Mae ef yn neis i gael_cwrdd a^ thi.
+|Hwyl te!
+|Wela di yn_fuan!
+|-----------------------------
+!Noddwch: Mae’n angenrhaid i ddysgu bod y llefariad o’r gair “yn” yn wastad yn fyr iawn. Ar y cyfnod hwn nid ydym ni’n dysgu i dalfyrru y gair i ’n ar ol lafariad. Angen i ddefnyddio TPR (Total Physical Response)
+|Adda: Sut mae`!
+|Bethan: Sut` mae!
+|Adda: Sut wyt` ti?
+|Bethan: Fi` yn iawn`, diolch! Sut wyt`?
+|Adda: Fi yn` iawn hefyd, diolch`! Beth yw` dy enw` di?
+|Bethan: Fy` enw i yw` Bethan. Beth` yw dy' enw`?
+|Adda: Fy enw` i yw` Adda.
+|Bethan: Mae ef` yn neis i gael_cwrdd` a^` thi`, Adda.
+|Adda: Mae` ef yn` neis` i gael_cwrdd a^ thi hefyd`, Bethan.
+|Bethan: Hwyl` te!
+|Adda: Hwyl te`! Wela` di yn fuan`!
+!Noddwch: Mae’n angenrhaid i ddysgu bod y llefariad o’r gair “yn” yn wastad yn fyr iawn. Ar y cyfnod hwn nid ydym ni’n dysgu i dalfyrru y gair i ’n ar ol lafariad. Angen i ddefnyddio TPR (Total Physical Response)
+|------------------------------
+|Sut mae!
+|Sut mae!
+|Ti yn iawn?
+|Fi yn iawn, diolch!
+|--------------------------------
+¬Sut mae`!
+¬Sut` mae!
+¬Ti` yn iawn`?
+¬Fi yn` iawn, diolch`!
+|------------------------------
+|Sut mae`!
+|Sut` mae!
+|Sut wyt` ti?
+|Fi` yn iawn`, diolch! A thi`?
+|Fi yn iawn hefyd, diolch!
+|------------------------------
+|{*Notes:*}
+meddwn = {mjperson}{mjself}{mjpointleft}{mjmouth}
+meddit = {mjperson}{mjpointleft}{mjmouth}
+|meddai = {mjperson}{mjmouth}
+|
+`"Helo! Sut` mae`!" meddai Adda.
+`"Helo! Sut` mae`!" meddai Bethan.
+`"Ti` yn` iawn`?" meddai Adda.
+`"Fi` yn` iawn`, diolch`!" meddai Bethan, "a thi`?"
+`"Fi` yn` iawn` hefyd`, diolch`," meddai Adda.
+`"Neis` i` gael_cwrdd` a^` thi`!" meddai Bethan.
+`"Ti` hefyd`! Neis` i` gael_cwrdd` a^` thi`!" meddai Adda.
+`"Hwyl` te`!" meddai Bethan.
+`"Hwyl`! Wela` di` yn` fuan`!" meddai Adda.
+|------------------------------
+¬Cerys: Helo! Sut` mae`!
+¬Ifan: Helo! Sut` mae`!
+|------------------------------
+¬Cerys: Helo! Sut mae!
+¬Ifan: Helo! Sut mae!
+¬Cerys: Neis` i` gael_cwrdd` a^` thi`!
+¬Ifans: Neis` i` gael_cwrdd` a^` thi` hefyd`!
+|------------------------------
+|------------------------------
+|------------------------------
+|------------------------------
+|===========================

@@ -35,6 +35,7 @@ $lswords="";
 foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
 	if((mb_substr($line, 0, 1)=="|") 
 	 ||(mb_substr($line, 0, 1)=="`")
+	 ||(mb_substr($line, 0, 1)=="!")
 	 ||(mb_substr($line, 0, 1)=="¬")){
 	  $char1 = mb_substr($line, 0, 1);
 
@@ -90,6 +91,10 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
 
 function parsewords($line, $cluelevel = "|"){
 global $lswords;
+
+  if($cluelevel == "!"){
+    return "<em style='color:#888;'>". $line. "</em>";
+	}
 			$awords = explode(" ", $line);
 			$lnout = "";
 			foreach($awords as $word){

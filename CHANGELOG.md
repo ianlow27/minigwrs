@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.21_250904-1953 - AMENDMENTS to cfai1.php and EXAMPLE folder crs_cfai1 with example input textfile cfai1
+-  Amendments as per the release description
+
 ## 0.0.20_250904-1921 - AMENDMENTS to cfai1.php
 -  Amendments as per the release description
 

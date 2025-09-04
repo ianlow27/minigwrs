@@ -1,0 +1,2 @@
+#!/bin/sh
+     php ../transcy2kw.php cfai1 $1 $2 $3

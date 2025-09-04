@@ -1,0 +1,2 @@
+#!/bin/sh
+     php ../cwrs1a.php cfai1 $1 $2 $3
