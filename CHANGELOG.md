@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.17_250904-1754 - additional enhancements for NEW cfai modules
+-  Amendments as per the release description
+
 ## 0.0.16_250830-2132 - additional changes to cwrs1a.php and newydd.php to help immersion learning
 -  Amendments as per the release description
 

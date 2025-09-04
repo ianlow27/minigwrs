@@ -30,6 +30,22 @@ if(!is_numeric($argv[1])){
 	file_put_contents($cwrs. "/cwrs", "#!/bin/sh
      php ../cwrs1a.php ". $LlTestun. " $1 $2 $3");
   //============================================
+	// trns
+	file_put_contents($cwrs. "/trns", "#!/bin/sh
+     php ../transcy2kw.php ". $LlTestun. " $1 $2 $3");
+  //============================================
+	// cf3
+	file_put_contents($cwrs. "/cf1", "#!/bin/sh
+     php ../cfai_amdrin1.php ". $LlTestun. " $1 $2 $3");
+  //============================================
+	// cf2
+	file_put_contents($cwrs. "/cf2", "#!/bin/sh
+     php ../cfai_amdrin2.php ". $LlTestun. " $1 $2 $3");
+  //============================================
+	// cf3
+	file_put_contents($cwrs. "/cf3", "#!/bin/sh
+     php ../cfai1.php ". $LlTestun. " $1 $2 $3");
+  //============================================
   $argv1 = 1;
   $lessonNum = sprintf("%03d", $argv1);
   $output = mklession($lessonNum, $argv1);
