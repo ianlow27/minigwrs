@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.23_250906-2139 - additional amendments to amdrin1.php geirfa23.txt and newydd.php
+-  Amendments as per the release description
+
 ## 0.0.22_250904-2219 - further amendments to cfai1.php the input text crs_cfai1/cfai1 and htmlfmt.php
 -  Amendments as per the release description
 

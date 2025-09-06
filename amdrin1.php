@@ -2,8 +2,8 @@
 <?php
 $LlTestun="testun";
 if(isset($argv[1])) $LlTestun = $argv[1];
-echo $LlTestun;
-sleep(1);
+//echo $LlTestun;
+//sleep(1);
 //$cwrs =  "./". $LlTestun. "_cwrs";
 //
 //if (file_exists( $cwrs)) {

@@ -6125,6 +6125,7 @@ balasarn	nm	ballast
 balc	nm	break in furrow land
 balc	nm	mistake
 balch	adj	pleased
+balch	adj	glad
 balch	adj	proud
 balch	adj	towering
 balch o	adj	glad of
@@ -6871,7 +6872,7 @@ blaw	nm	flow
 blawd	nm	flour
 blawd	nm	flour
 blawd	nm	meal
-ble	adv	where
+ble	qstn	where
 ble	pron	where
 ble´r	adj	untidy
 bleiddag	nm	wolf bane
@@ -8556,6 +8557,7 @@ bydd e	vbpers	he will
 bydd hi	vbpers	she will
 byddaf	vbfut1sg	i shall be
 byddaf i	vbpers	I will
+byddaf	vbprs	I will
 byddag	nm	snare
 byddag	nm	spring
 byddagliad	nm	taking in a snare
@@ -21395,6 +21397,7 @@ dwyreol	adj	surgent
 dwys	adj	dense
 dwys	adj	grave
 dwys	adj	heavy
+dwys	adj	serious
 dwys	adj	intense
 dwysa´u	vbinf	deepen
 dwysa´u	vbinf	intensify
@@ -22201,7 +22204,7 @@ dyna	adv	that is
 dyna	adv	there
 dyna	adv	there are
 dyna	adv	there is
-dyna	pron	there it is
+dyna	phrs	there it is
 dyna	adv	those are
 dynan	nm	lass
 dynan	nm	little woman
@@ -39797,7 +39800,7 @@ meddygiad	nm	doctoring
 meddygiad	nm	making a cure
 meddygin	adj	curative
 meddygin	adj	medicinal
-meddyginiaeth	nm	medicine
+meddyginiaeth	nf	medicine
 meddyginiaeth	nf	remedy
 meddyginiaethol	adj	belonging to healing
 meddyginiaethol	adj	medicinal
@@ -42552,10 +42555,9 @@ oed	nm	age
 oed	nm	process of time
 oed	nm	set time
 oed	nm	time to come
-oedd	vbinf	did exist
 oedd	vbimprf3sg	he was
 oedd	conj	that was
-oedd	vbinf	was
+oedd	vbimprf	was
 oeddet	vbimprf	you were
 oeddech	vbimprf	you were
 oeddem	vbimprf	we were
@@ -56764,6 +56766,23 @@ mae	vbprs	it_is
 astudfa	nf	study
 modwl	nm	module
 modiwl	nm	module
+ystafell wely	nf	bedroom
+blaendramwyfa	nf	fronthall
+blaendramwyfa	nf	hallway
+tramwyfa	nf	corridor
+llofft	nm	attic
+trychydd llawnt	nm	lawnmower
+a	qstn	is_it
+y	dem	it_is
+cwt	nm	shed
+bod	vbinf	to be
+o^lgoesau	nm	hindlegs
+blaengoesau	nm	frontlegs
+blaengoes	nm	frontleg
+milfeddyg	nm	vet
+ymddengys	vbprs	it seems
+sydd	vbprs	that_is
+'r	def	the
 
 
 
