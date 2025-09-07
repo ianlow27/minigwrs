@@ -233,3 +233,9 @@ __8.__ To add a blank line append the following to the end of the line: "{/}"
 
 __9.__ To format text to look like a link, enclose it in "{lnk: text here :}"
 
+
+_____________________________
+## TO DO LIST:
+1. Document use of at sign "@" e.g. in geirfa23.txt "gelli    vbprs   you can@sg"
+2. In cwrs1a.php amend so that it handles @ sign as in you@sg when generating the HTML output
+

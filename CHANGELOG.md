@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.25_250907-1006 - amendments to README.md
+-  Amendments as per the release description
+
 ## 0.0.24_250907-1002 - further amendments to geirfa23.txt and newydd.php
 -  Amendments as per the release description
 
