@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.24_250907-1002 - further amendments to geirfa23.txt and newydd.php
+-  Amendments as per the release description
+
 ## 0.0.23_250906-2139 - additional amendments to amdrin1.php geirfa23.txt and newydd.php
 -  Amendments as per the release description
 

@@ -5555,7 +5555,7 @@ ateb	nm	reply
 ateb	vbinf	answer
 atebais	vbinf	I replied
 ateb	vbinf	reply
-atebodd	nm	replied
+atebodd	vbpret	replied
 atebiad	nm	answering
 atebion	nm	replies
 atebol	adj	accountable
@@ -9513,7 +9513,7 @@ canllaw	nm	hand-rail
 canllaw	nm	parapet
 canllaw	nm	railing
 canllawiaeth	nm	supportation
-canlyn	vbinf	follow
+canlyn	vbimptv	follow
 canlyn	vbinf	follow
 canlyn	vbinf	pursue
 canlyniad	nm	consequence
@@ -31193,6 +31193,7 @@ gwnaent	vbimprf3pl	they were making
 gwnaer	vbpressubjimpers	may there be made
 gwnaer	vbprespart	there be made
 gwnaer	vbpastpart	there will be made
+gwnaeth	vbpret	he did
 gwnaeth	vbpret3sg	he made
 gwnaeth	vbpret3sg	he made
 gwnaeth e	vbpers	he made
@@ -34697,7 +34698,7 @@ hwyr	adj	late
 hwyr	nm	lateness
 hwyr	adj	slow
 hwyr	adj	tedious
-hwyr 	adj	late
+hwyr	adj	late
 hwyra^ad	nm	growing late
 hwyra^u	vbinf	become late
 yn hwyrach	adv	later
@@ -56783,6 +56784,15 @@ milfeddyg	nm	vet
 ymddengys	vbprs	it seems
 sydd	vbprs	that_is
 'r	def	the
+stribedi	nmp	stripes
+dilladwyd	vbpprt	dressed
+'i	poss	his
+dieithryn	nm	stranger
+gelli	vbprs	you can@sg
+amdanat	prep	for you@sg
+di	pron	you@sg
+gallu	vbinf	can
+ydw	phrs	yes@pres1sg
 
 
 

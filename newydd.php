@@ -154,7 +154,7 @@ $output .=  "|==================================
 |modiwl=". $argv1. "-4a EN_XXXXXXXX
 |teitl=". $argv1. "-4a CY_XXXXXXX
 |Hi_there`! Sut wyt_ti? 
-`=================================
+|=================================
 ";
 
 return $output;
