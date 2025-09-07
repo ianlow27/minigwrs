@@ -233,6 +233,9 @@ __8.__ To add a blank line append the following to the end of the line: "{/}"
 
 __9.__ To format text to look like a link, enclose it in "{lnk: text here :}"
 
+__10.__ Note that newydd.php (called using 'r! nw <num>') adds output file settings lines starting with '***^a2>' which are then picked up by the 'r! a2' process for the population of the output file settings such as filename, title, etc.
+
+__11.___ The '@??' suffix in the English column of geirfa23.txt allows for the further differentation of entries, e.g. '@sg' as used in 'you@sg' represents you singular instead of the archaic word 'thou'.  In the output file, the 'sg' is added together with the speechpart details following a hyphen. e.g. "di   pron    you@sg" is rendered in the output HTML as "di = you (pron-sg)".
 
 _____________________________
 ## TO DO LIST:

@@ -2,50 +2,9 @@
 <?php
 $LlTestun="testun";
 if(isset($argv[1])) $LlTestun = $argv[1];
-echo $LlTestun;
-sleep(1);
-//$cwrs =  "./". $LlTestun. "_cwrs";
-//
-//if (file_exists( $cwrs)) {
-//    echo "The directory $cwrs exists.";
-//} else {
-//    mkdir( $cwrs, 0755);
-//    echo "The directory $cwrs was successfully created.";
-//}
-////============================================
-//============================================
-//============================================
-//============================================
-//===============================================
-//===============================================
-//===============================================
-//===============================================
-//===============================================
-//===============================================
-//===============================================
-//===============================================
-/*
-$DGeirfa = array();
+echo "y ffeil hwn: ". $LlTestun;
 
-foreach(explode("\n", file_get_contents("./geirfa23.txt")) as $ll1a){
-  $d1a = explode("\t", $ll1a);
-  if(!isset($d1a[2])) continue;
-  if(!isset($DGeirfa[$d1a[2]])){
-    $DGeirfa[$d1a[2]] = $d1a[0]."_".$d1a[1];
-  }else {
-    $DGeirfa[$d1a[2]] .= "/". $d1a[0]."_".$d1a[1];
-  }
-}//dforeach
-//echo count($DGeirfa);
-//---------------------
-$DGeiriau = array();
-foreach(explode(" ", file_get_contents("./geiriau.txt")) as $ll1a){
-  $ll1a = trim($ll1a);
-  $DGeiriau[$ll1a] = 1;
-}
-//---------------------
-*/
-
+include "../htmlfmt.php";
 
 $cyRhif=0;
 $DFfeil = explode("\n", file_get_contents("./". $LlTestun));
@@ -62,6 +21,11 @@ foreach($DFfeil as $ll1a){
 
   if(substr($ll1a,0,7)=="|ffeil="){
     $LlGeiriau="";
+  }
+
+  if(substr($ll1a,0,7)=="***^a2>"){
+    $lsettings1=mb_substr($ll1a,7);
+    htmlfmtsettings($lsettings1);
   }
 
   if(substr($ll1a,0,1)=="!"){
@@ -89,15 +53,16 @@ foreach($DFfeil as $ll1a){
   $cynllinell=$ll1a;
 }//dforeach
 
+echo "___[". mb_substr($LlFfeil,6,3)."]";
 echo  '
 =====================================================
-`ffeil=gwersxxx-2
-`gwers=x-2 28 Words
-`teitl=x-2 28 Gair
+`ffeil='. $LlFfeil . '
+`gwers='. $LlGwers .'
+`teitl='. $LlTeitl .'
 ';
 
 $DGeiriau = explode("\n", $LlGeiriau);
-sort($DGeiriau);
+if(mb_substr($LlFfeil,6,3)!="001") sort($DGeiriau); // DO NOT SORT EGWYDDOR IN MODIWL001!!
 $cyRhif=0;
 foreach($DGeiriau as $ll1a){
   if(trim($ll1a)=="") continue;

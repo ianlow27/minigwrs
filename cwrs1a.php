@@ -408,9 +408,9 @@ $LlHtmlGwaelod);
 	$LlEn =  preg_replace("/ \//", "<br>", $LlEn);
 	$LlCy =  preg_replace("/ \//", "<br>", $LlCy);
 
-	$LlEn =  substr( substr( trim(preg_replace('/~(\w+)/', '&ThinSpace;($1)', $LlEn)), 0, -5 ), 1 );
+	$LlEn =  substr( substr( trim(preg_replace('/~([\w\-]+)/', '&ThinSpace;($1)', $LlEn)), 0, -5 ), 1 );
 	$DEnx1 = explode("<br>", $LlEn);
-	$LlCy =  substr( substr( trim(preg_replace('/~(\w+)/', '&ThinSpace;($1)', $LlCy)), 0, -4 ), 0 );
+	$LlCy =  substr( substr( trim(preg_replace('/~([\w\-]+)/', '&ThinSpace;($1)', $LlCy)), 0, -4 ), 0 );
 	$DCyx1 = explode("<br>", $LlCy);
 	$Ll1 = "";
 	for($i=0; $i < count($DCyx1); $i++){
@@ -428,7 +428,7 @@ $LlHtmlGwaelod);
 //file_put_contents("./". $LlFfeil. ".html", "". '<!DOCTYPE html><html><head>
         
 	$LlGeirfa = preg_replace("/`/", "", $LlGeirfa);
-	$LlGeirfa = preg_replace("/=(\s+)([a-zA-z]+)~([a-zA-Z]+)/", "= $2 ($3)", $LlGeirfa);
+	$LlGeirfa = preg_replace("/=(\s+)([a-zA-z]+)~([a-zA-Z\-]+)/", "= $2 ($3)", $LlGeirfa);
 
 
 	

@@ -56,7 +56,7 @@ $bfound=false;
       $d1a[0] = trim($d1a[0]);
      
       $d1a[1] = trim(preg_replace("/@/", "~",$d1a[1]) ); 
-echo "<2___________________________[".$d1a[0]."]____[".$d1a[1]."]\n";
+//echo "<2___________________________[".$d1a[0]."]____[".$d1a[1]."]\n";
       if      ($d1a[0]=="modiwl"){
         $LlGwers=preg_replace("/\//", "<br>", $d1a[1]);
         $bfound=true;
@@ -83,7 +83,7 @@ echo "<2___________________________[".$d1a[0]."]____[".$d1a[1]."]\n";
         $bfound=true;
       }else if($d1a[0]=="mainten"){
         $LlMaintEn.=$d1a[1]. "";
-echo "<<<<<____". $LlMaintEn."\n";
+//echo "<<<<<____". $LlMaintEn."\n";
         $bfound=true;
       }else if($d1a[0]=="llun1"){
         $DLlun1=explode("/", $d1a[1]);
@@ -98,7 +98,7 @@ echo "<<<<<____". $LlMaintEn."\n";
         $DLlun4=explode("/", $d1a[1]);
         $bfound=true;
       }else if(preg_match("/^([0-9]+)\)/", $d1a[0])){
-echo "<3___________________________".$d1a[1]."\n";
+//echo "<3___________________________".$d1a[1]."\n";
         $d1b = explode(")", $d1a[0]);
         $d1b[1] = preg_replace("/ /", "_", trim($d1b[1]));
         $d1b[0] = (int)$d1b[0];

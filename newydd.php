@@ -145,9 +145,10 @@ $output .=  "|==================================
 //|teitl=". $argv1. "-4b CY_XXXXXXX
 //|Sut_mae`! Sut wyt_ti? 
 //|==================================
-//`ffeil=modiwl". $lessonNum. "-2
-//`modiwl=". $argv1. "-2 28 Words
-//`teitl=". $argv1. "-2 28 Gair
+Note: ***^a2> prefix allows settings to be read by r! a2
+***^a2>ffeil=modiwl". $lessonNum. "-2
+***^a2>modiwl=". $argv1. "-2 28 Words
+***^a2>teitl=". $argv1. "-2 28 Gair
 //`1) achos =  because~conj
 |==================================
 |ffeil=modiwl". $lessonNum. "-4a

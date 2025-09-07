@@ -8596,6 +8596,7 @@ bydder	vbfutpluppart	there shall have been
 byddet ti	vbpers	you were
 byddi	vbfut2sg	thou shalt be
 byddi di	vbpers	you will
+byddi	vbfut	you will@sg
 byddid	vbimprfsubjimpers	might there be
 byddid	vbimpers	there would be
 byddin	nm	ambush
@@ -56320,7 +56321,7 @@ cynnigwyd	adj	offered	``
 gorllawen	adj	overjoyed	``
 fy mod i	phrs	that I be	``
 bod	vbinf	be	``
-meddai	phrs	said	``
+meddai	vbimprf	said	``
 o wel	phrs	oh well	``
 bawdheglo	vbinf	hitchhike	``221110
 beth bynnag	adv	anyway	``221110
@@ -56706,7 +56707,7 @@ yn_fawr	adv	greatly
 yn_dda	adv	okay
 da_iawn	adj	very_good
 tithau	pron	you_too
-am	vbpres	am
+yw	vbpres	am
 wyt_ti	phrs	are_you
 iawn	adj	fine
 fi'n	phrs	I_am
@@ -56743,6 +56744,34 @@ hruh	ltr	rh
 suh	ltr	s
 tuh	ltr	t
 thuh	ltr	th
+eeuh	ltr	u
+oo	ltr	w
+uh	ltr	y
+aa	ltr	a
+bee	ltr	b
+eck	ltr	c
+eckh	ltr	ch
+dee	ltr	d
+eddh	ltr	dd
+air	ltr	e
+ev	ltr	f
+ef	ltr	ff
+eg	ltr	g
+eng	ltr	ng
+aitch	ltr	h
+ee	ltr	i
+el	ltr	l
+ehhl	ltr	ll
+em	ltr	m
+en	ltr	n
+or	ltr	o
+pi	ltr	p
+phee	ltr	ph
+er'r	ltr	r
+hhree	ltr	rh
+es	ltr	s
+tee	ltr	t
+etth	ltr	th
 eeuh	ltr	u
 oo	ltr	w
 uh	ltr	y
