@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.27_250909-2048 - changes to amdrin2.php and htmlfmt.php
+-  Amendments as per the release description
+
 ## 0.0.26_250907-2040 - additional amendments to README.md, amdrin2.php, cwrs1a.php, geirfa23.txt, htmlfmt.php, and newydd.php
 -  Amendments as per the release description
 
