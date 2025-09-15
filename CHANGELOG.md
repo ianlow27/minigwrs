@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.28_250915-2042 - changes to geirfa23.txt and newydd.php
+-  Amendments as per the release description
+
 ## 0.0.27_250909-2048 - changes to amdrin2.php and htmlfmt.php
 -  Amendments as per the release description
 

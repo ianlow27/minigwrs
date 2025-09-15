@@ -20,34 +20,42 @@ if(!is_numeric($argv[1])){
   //============================================
 	// a1
 	file_put_contents($cwrs. "/a1", "#!/bin/sh
-     php ../amdrin1.php ". $LlTestun. " $1 $2 $3");
+     file=$(echo \"$(pwd)\" | awk -F'/' '{print \$NF}' | cut -d'_' -f2 )
+     php ../amdrin1.php \$file $1 $2 $3");
   //============================================
 	// a2
 	file_put_contents($cwrs. "/a2", "#!/bin/sh
-     php ../amdrin2.php ". $LlTestun. " $1 $2 $3");
+     file=$(echo \"$(pwd)\" | awk -F'/' '{print \$NF}' | cut -d'_' -f2 )
+     php ../amdrin2.php \$file $1 $2 $3");
   //============================================
 	// cwrs
 	file_put_contents($cwrs. "/cwrs", "#!/bin/sh
-     php ../cwrs1a.php ". $LlTestun. " $1 $2 $3");
+     file=$(echo \"$(pwd)\" | awk -F'/' '{print \$NF}' | cut -d'_' -f2 )
+     php ../cwrs1a.php \$file $1 $2 $3");
   //============================================
 	// trns
 	file_put_contents($cwrs. "/trns", "#!/bin/sh
-     php ../transcy2kw.php ". $LlTestun. " $1 $2 $3");
+     file=$(echo \"$(pwd)\" | awk -F'/' '{print \$NF}' | cut -d'_' -f2 )
+     php ../transcy2kw.php \$file $1 $2 $3");
   //============================================
 	// cf3
 	file_put_contents($cwrs. "/cf1", "#!/bin/sh
-     php ../cfai_amdrin1.php ". $LlTestun. " $1 $2 $3");
+     file=$(echo \"$(pwd)\" | awk -F'/' '{print \$NF}' | cut -d'_' -f2 )
+     php ../cfai_amdrin1.php \$file $1 $2 $3");
   //============================================
 	// cf2
 	file_put_contents($cwrs. "/cf2", "#!/bin/sh
-     php ../cfai_amdrin2.php ". $LlTestun. " $1 $2 $3");
+     file=$(echo \"$(pwd)\" | awk -F'/' '{print \$NF}' | cut -d'_' -f2 )
+     php ../cfai_amdrin2.php \$file $1 $2 $3");
   //============================================
 	// cf3
 	file_put_contents($cwrs. "/cf3", "#!/bin/sh
-     php ../cfai1.php ". $LlTestun. " $1 $2 $3");
+     file=$(echo \"$(pwd)\" | awk -F'/' '{print \$NF}' | cut -d'_' -f2 )
+     php ../cfai1.php \$file $1 $2 $3");
   //============================================
 	// cf3
 	file_put_contents($cwrs. "/nw", "#!/bin/sh
+     file=$(echo \"$(pwd)\" | awk -F'/' '{print \$NF}' | cut -d'_' -f2 )
      php ../newydd.php  $1 $2 $3");
   //============================================
   $argv1 = 1;

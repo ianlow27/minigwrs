@@ -42359,6 +42359,7 @@ o flaen	prep	ahead
 o flaen	prep	before
 o flaen	prep	in front
 tu flaen	prep	in front
+tu flaen i	prep	in front of
 o fore tan nos	prep	from dawn to dusk
 o fwriad	prep	intentionally
 o gam i gam	prep	step by step
