@@ -9567,6 +9567,7 @@ canolddydd	nm	mid-day
 canolddydd	nm	noon
 canoldir	nm	inland region
 canolfan	nf	centre
+canolfannau	nfp	centres
 canoli	vbinf	centre
 canoliad	nm	what is central
 canolig	adj	middling
@@ -49062,6 +49063,7 @@ siopau	nf	shops
 siop	nf	shop
 siop	nf	shop
 siopa	vbinf	go shopping
+siopa	nm	shopping
 siopwr	nm	shopkeeper
 siopwr	nm	shopkeeper
 siopwr	nm	shopman
@@ -54246,7 +54248,9 @@ wythongl	nf	octagon
 wythor	adj	of eight borders
 wythran	adj	of eight shares
 wythryw	adj	of eight kinds
+y	conj	that@befcns
 y	conj	that
+yr	conj	that@befvwl
 y	art	the
 y	letter	uh
 y dorth	phrs	and the loaf
@@ -56814,6 +56818,7 @@ milfeddyg	nm	vet
 ymddengys	vbprs	it seems
 sydd	vbprs	that_is
 'r	def	the
+'r	def	the@aftvwl
 stribedi	nmp	stripes
 dilladwyd	vbpprt	dressed
 'i	poss	his
@@ -56823,6 +56828,8 @@ amdanat	prep	for you@sg
 di	pron	you@sg
 gallu	vbinf	can
 ydw	phrs	yes@pres1sg
+Caerdydd	pnf	Cardiff
+Abertawe	pnf	Swansea
 
 
 

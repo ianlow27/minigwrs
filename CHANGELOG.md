@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.29_250916-1112 - changes to amdrin1.php and amdrin2.php to allow specification of speechpart e.g. work~vbinf, changes to newydd.php to allow easy copy of project folders 'cwrs_', and additions to geirfa23.txt
+-  Amendments as per the release description
+
 ## 0.0.28_250915-2042 - changes to geirfa23.txt and newydd.php
 -  Amendments as per the release description
 

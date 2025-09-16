@@ -56,7 +56,7 @@ foreach($DFfeil as $ll1a){
     $cyRhif++;
     $dGair = explode("~", $llGair);
     //echo "`". $cyRhif. ") ". $dGair[0]. " = ".  $d1a[2]."~".$dGair[1]."\n";
-    $LlGeiriau .= $dGair[0]. " = ".  $d1a[2]."~".$dGair[1]."\n";
+    $LlGeiriau .= $dGair[0]. " = ".  explode("~",$d1a[2])[0]."~".$dGair[1]."\n";
   }//dif
 
   $cynllinell=$ll1a;

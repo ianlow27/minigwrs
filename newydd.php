@@ -31,7 +31,10 @@ if(!is_numeric($argv[1])){
 	// cwrs
 	file_put_contents($cwrs. "/cwrs", "#!/bin/sh
      file=$(echo \"$(pwd)\" | awk -F'/' '{print \$NF}' | cut -d'_' -f2 )
-     php ../cwrs1a.php \$file $1 $2 $3");
+     php ../cwrs1a.php \$file $1 $2 $3
+     echo \"Note the following modifiers after English words in geirfa23.txt e.g. 'ti	pron	you@sg' that can be specified in stage 'r! a1':\"
+     grep @ ../geirfa23.txt |cut -f2 -d@|sed \"s/ //g\" | sed \"s/^/@/g\"| sort|uniq | tr '\n' ' '
+     ");
   //============================================
 	// trns
 	file_put_contents($cwrs. "/trns", "#!/bin/sh

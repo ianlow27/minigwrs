@@ -99,8 +99,8 @@ foreach($DFfeil as $ll1a){
 
 //u´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´/
     $ll1a = preg_replace("/\[\"([a-z]{1,1})/", "[xxzzxx$1", $ll1a);
-    $ll1a = preg_replace("/([\[\]a-zA-Z@\^`´'%\-_]+)([^\[\]a-zA-Z@\^`'´%\-_]+)/", "$1 $2", $ll1a);
-    $ll1a = preg_replace("/([^\[\]a-zA-Z@\^`´%'\-_]+)([\[\]a-zA-Z@\^`'´%\-_]+)/", "$1 $2", $ll1a);
+    $ll1a = preg_replace("/([\[\]a-zA-Z@~\^`´'%\-_]+)([^\[\]a-zA-Z@~\^`'´%\-_]+)/", "$1 $2", $ll1a);
+    $ll1a = preg_replace("/([^\[\]a-zA-Z@~\^`´%'\-_]+)([\[\]a-zA-Z@~\^`'´%\-_]+)/", "$1 $2", $ll1a);
 
     $d1a = explode(" ", substr($ll1a,1));
     foreach($d1a as $ll1b){
@@ -108,21 +108,27 @@ foreach($DFfeil as $ll1a){
       $ll1b = datdreiglo($ll1b);
 //echo "__[".$ll1b."\n";
 
-if(preg_match("/([a-zA-Z@]+)/", $ll1b)) $CGeiriau++;
+if(preg_match("/([a-zA-Z@~]+)/", $ll1b)) $CGeiriau++;
 //echo "__".$CGeiriau."__".$ll1b."\n";
 
 //echo "__\n";
       if(substr(strrev($ll1b),0,1) == "`"){
+//echo "___1>". $ll1b. "\n";
         $ll2a = strtolower(strrev(substr(strrev($ll1b),1)));
     
         if(isset($DSaesneg[$ll2a] )){
+//echo "___2>". $ll2a. "\n";
           $LlRhestr.=$ll2a."xxx(".$DSaesneg[$ll2a] .") ";
         }else {
+//echo "___3>". $ll1b. "\n";
           $LlRhestr.=strtolower(strrev(substr(strrev($ll1b),1)))." ";
+//echo "___3A>". $LlRhestr. "\n";
         }
       }else {
+//echo "___4>". $ll1b. "\n";
         if(!isset($DGeiriau[strtolower($ll1b)])){
-          if(preg_match("/[a-zA-Z@\^%´'\-_]/", strtolower($ll1b) )){
+          if(preg_match("/[a-zA-Z@~\^%´'\-_]/", strtolower($ll1b) )){
+//echo "___5>". $ll1b. "\n";
             $LlNewydd .= strtolower($ll1b). " ";
           }
         }
@@ -149,8 +155,9 @@ foreach($DRhestr as $ll1a){
   $ll1a = trim(strtolower($ll1a));
   if($ll1a == "") continue;
   $CyRhif++;
+  $aEng = explode("~", $ll1a);
  
-  if(!isset($DGeirfa[$ll1a])){
+  if(!isset($DGeirfa[$aEng[0]])){ //ll1a])){
     if(preg_match("/xxx/", $ll1a)){
       $d2b = explode("xxx", $ll1a);
       $ll1a = $d2b[0];
@@ -163,6 +170,7 @@ foreach($DRhestr as $ll1a){
   if(preg_match("/xxx/", $ll1a)){
     $ll1a = preg_replace("/xxx/", "", $ll1a);
     echo "!".$CyRhif.") !!!". $DSaesneg[$ll1a]. " = ". $ll1a."\n";
+    //echo "!".$CyRhif.") ". $DGeirfa[$ll1a]. " = ". $atmp1[0]."\n";
   }else {
     $atmp1 = explode("@", $ll1a);
     if(isset($atmp1[1])){
@@ -170,7 +178,21 @@ foreach($DRhestr as $ll1a){
     }else {
       $atmp1[1] = "";
     }
-    echo "!".$CyRhif.") ". $DGeirfa[$ll1a].$atmp1[1]. " = ". $atmp1[0]."\n";
+    //echo "!".$CyRhif.") ". $DGeirfa[$ll1a].$atmp1[1]. " = ". $atmp1[0]."\n";
+    $loutputln = "";
+    if(isset($aEng[1])){
+      $loutputln = "";
+      foreach(explode("/",$DGeirfa[$aEng[0]]) as $lentry){
+        $aentry = explode("~", $lentry);
+        if($aentry[1] == $aEng[1]){
+          if($loutputln != "") $loutputln .= "/";
+          $loutputln .= $lentry;
+        }
+      }//endforeach
+    }else {
+      $loutputln = $DGeirfa[$ll1a];
+    }
+    echo "!".$CyRhif.") ". $loutputln.$atmp1[1]. " = ". $atmp1[0]."\n";
   }
 }//dforeach
 $dLlNewydd = explode(" ", $LlNewydd);
