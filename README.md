@@ -237,7 +237,7 @@ __10.__ Note that newydd.php (called using 'r! nw <num>') adds output file setti
 
 __11.___ The '@??' suffix in the English column of geirfa23.txt allows for the further differentation of entries, e.g. '@sg' as used in 'you@sg' represents you singular instead of the archaic word 'thou'.  In the output file, the 'sg' is added together with the speechpart details following a hyphen. e.g. "di   pron    you@sg" is rendered in the output HTML as "di = you (pron-sg)".
 
-__12.___ From version 0.0.29 onwards in the 'r! a1' stage English words can be specified using the tilde '~' symbol after the word and before the backtick, e.g. work~nm selects only the masculine nouns e.g. gwaith, and work~vbinf selects only the verb infinitives e.g. gweithio
+__12.___ From version 0.0.29 onwards in the 'r! a1' stage English words can be specified using the tilde '\~' symbol after the word and before the backtick, e.g. work\~nm selects only the masculine nouns e.g. gwaith, and work\~vbinf selects only the verb infinitives e.g. gweithio
 _____________________________
 ## TO DO LIST:
 1. Document use of at sign "@" e.g. in geirfa23.txt "gelli    vbprs   you can@sg"

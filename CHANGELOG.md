@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.31_250916-1119 - amendments to README.md
+-  Amendments as per the release description
+
 ## 0.0.30_250916-1116 - additions to README.md
 -  Amendments as per the release description
 
