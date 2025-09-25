@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.32_250925-1841 - added new utility dewisiadau1.php for the generation of html pages with selection option lists for homework
+-  Amendments as per the release description
+
 ## 0.0.31_250916-1119 - amendments to README.md
 -  Amendments as per the release description
 
@@ -50,7 +53,10 @@
 -  Amendments as per the release description
 
 ## 0.0.17_250904-1754 - additional enhancements for NEW cfai modules
--  Amendments as per the release description
+-  The new modules of cfai1.php and cfai_amdrin1.php and cfai_amdrin2.php are an attempt to develop an immersive course where the language of instruction is purely in the language taught.
+- cfai1.php: This generates texts where the student is required to select from a list of words for blanks in the sentence. These words are marked by the back-tick. Lines that begin with the not symbol (¬) are processed where the correct words are displayed with no blanks. Lines that begin with the backtick (`) are processed where the blanks are displayed with the answers listed below. but the first letter of each word is provided as a clue. Lines that begin with the pipe symbol (|) are processed whereby the blanks are displayed without any clues except for the list of selection words below the text.
+- cfai_amdrin1.php and cfai_amdrin2.php: These are the immersive course equivalents to geiriau23.txt. However instead of looking up the Welsh entries for English words, these lookup the emoji entries for Welsh words using the vocab list in geirfaemj.txt.
+- Note: cfai1.php works similar to cwrs.php in that it iterates through all the modules in the single cwrs file e.g. testun for cwrs_testun. However, it uses the line "|-----------" with hyphens as the demarcator between each unit.
 
 ## 0.0.16_250830-2132 - additional changes to cwrs1a.php and newydd.php to help immersion learning
 -  Amendments as per the release description

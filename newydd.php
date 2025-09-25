@@ -56,6 +56,11 @@ if(!is_numeric($argv[1])){
      file=$(echo \"$(pwd)\" | awk -F'/' '{print \$NF}' | cut -d'_' -f2 )
      php ../cfai1.php \$file $1 $2 $3");
   //============================================
+	// dws
+	file_put_contents($cwrs. "/dws", "#!/bin/sh
+     file=$(echo \"$(pwd)\" | awk -F'/' '{print \$NF}' | cut -d'_' -f2 )
+     php ../dewisiadau1.php \$file $1 $2 $3");
+  //============================================
 	// cf3
 	file_put_contents($cwrs. "/nw", "#!/bin/sh
      file=$(echo \"$(pwd)\" | awk -F'/' '{print \$NF}' | cut -d'_' -f2 )
