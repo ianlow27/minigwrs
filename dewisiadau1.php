@@ -101,7 +101,7 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
 
 
       //$outstr = ffurfweddu(dewisiadausetsections($outstr));
-      $outstr = (dewisiadausetsections($outstr, $outstr2));
+      $outstr = (dewisiadausetsections($outstr, $outstr2, $LlFfeil ));
 
       file_put_contents("./". $LlFfeil. ".html", $outstr);
 
@@ -267,7 +267,7 @@ function resetpunc($lnout){
 }//endfunc
 
 
-function dewisiadausetsections($outstr, $outstr2){
+function dewisiadausetsections($outstr, $outstr2, $pmod="test1"){
 
 global $LlCwrs;
 global $LlGwers;
@@ -294,8 +294,58 @@ $LlHtmlBrig='
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>ESL Grammar Activity</title>
+  <title>Ian\'s Welsh Class Homework</title>
   <style>
+
+
+
+
+
+
+
+    #lock-screen {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #111;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+    #content {
+      display: none;
+      padding: 20px;
+    }
+    input[type="password"] {
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 10px;
+    }
+    button {
+      padding: 10px 15px;
+      margin-top: 10px;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
@@ -330,11 +380,11 @@ $LlHtmlBrig='
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 2.5em;
-  color: #28a745;
+  font-size: 160%;
+  color: #188715;
   background-color: white;
   padding: 20px 40px;
-  border: 3px solid #28a745;
+  border: 3px solid #188715;
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   z-index: 9999;
@@ -343,6 +393,16 @@ $LlHtmlBrig='
   </style>
 </head>
 <body>
+<div id="lock-screen">
+  <h2>'.  $pmod. '
+  <br/>Enter \'pass\' and then click on Submit to access page</h2>
+  <input type="password" id="password-input" placeholder="Password">
+  <button onclick="checkPassword()">Submit</button>
+  <p id="error" style="color: red; display: none;">Incorrect password. Try again.</p>
+</div>
+
+<div id="content">
+
 ';
 
 $LlHtmlPenniad=
@@ -360,6 +420,7 @@ $LlHtmlPenniad=
 
 $LlHtmlGwaelod=
 '</div>
+</div>
 </body>
 </html>
 ';
@@ -377,8 +438,11 @@ $LlCyn='
   <div id="sentences"></div>
 
   <button onclick="checkAnswers()">Check Answers</button>
+  <button id="reset-btn">Reset</button>
 
-  <div id="goodJob">🎉 Good Job! 🎉<br/>Success Code: <br/><b>M1U5-BK84</b></div>
+
+  <div id="goodJob">🎉 Good Job! 🎉<br/><span style="font-size:70%;">Success Code: <b>M1U5-BK84</b> <br>Time taken: <span id="spsecs"></span> secs</span></div>
+
 
   <!-- Include canvas-confetti via CDN -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -495,6 +559,13 @@ $LlWedi='
     function showSuccess() {
       // Show message
       const message = document.getElementById("goodJob");
+
+      const now = Date.now();
+      const secondsElapsed = Math.floor((now - loadTime) / 1000);
+      const spsecs = document.getElementById("spsecs");
+      spsecs.innerHTML = secondsElapsed;
+
+
       message.style.display = "block";
 
       // Trigger confetti explosion
@@ -508,6 +579,37 @@ $LlWedi='
     // Initialize
     renderSentences();
   </script>
+
+
+
+<script>
+  let loadTime = "";
+
+   document.getElementById("password-input").focus();
+   document.getElementById("reset-btn").addEventListener("click", () => {
+      location.reload();
+    });
+
+  const correctPassword = "pass"; // Change this to your desired password
+
+  function checkPassword() {
+    const input = document.getElementById("password-input").value;
+    const error = document.getElementById("error");
+
+    if (input === correctPassword) {
+      document.getElementById("lock-screen").style.display = "none";
+      document.getElementById("content").style.display = "block";
+      loadTime = Date.now();
+
+    } else {
+      error.style.display = "block";
+    }
+  }
+</script>
+
+
+
+
 ';
 
 

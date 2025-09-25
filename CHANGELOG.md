@@ -7,8 +7,11 @@
 
 ## NOTES
 
-## 0.0.32_250925-1841 - added new utility dewisiadau1.php for the generation of html pages with selection option lists for homework
+## 0.0.33_250925-1947 - additional amendments to dewisiadau1.txt and CHANGELOG.md
 -  Amendments as per the release description
+
+## 0.0.32_250925-1841 - added new utility dewisiadau1.php for the generation of html pages with selection option lists for homework
+- This is the 'homework' generator. For lines beginning with "|" and Welsh words suffixed with backtick (`) followed by the word type, which is 1 of the following 12: it (initiator), rs (response), iv (infinitive), nu (noun), ex (excalamation), pn (pronoun), ix (inflexion), ct (connector), av (adverb), ps (preposition), id (idiom), or aj (adjective) then it generates a selection list for that word in the HTML. A new word can be specified using the not symbol (¬) followed by the English for the Welsh e.g. "music¬cerddoriaeth". This uses the library at CDN https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js to create a confetti effect when the student selects all the correct options.
 
 ## 0.0.31_250916-1119 - amendments to README.md
 -  Amendments as per the release description
