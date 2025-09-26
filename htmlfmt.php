@@ -88,6 +88,7 @@ $bfound=false;
 //echo "<<<<<____". $LlMaintEn."\n";
         $bfound=true;
       }else if($d1a[0]=="llun1"){
+        $LlLlun1 = preg_replace("/ /", "", $d1a[1]);
         $DLlun1=explode("/", $d1a[1]);
         $bfound=true;
       }else if($d1a[0]=="llun2"){

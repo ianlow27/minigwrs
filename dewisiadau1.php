@@ -36,19 +36,7 @@ include "../mjemojis.php";
 //============================================
 //============================================
 $outstr = "<!DOCTYPE><html><body>";
-$lswords="";
-$lsitwords="";
-$lsrswords="";
-$lsixwords="";
-$lsnuwords="";
-$lsexwords="";
-$lspnwords="";
-$lsivwords="";
-$lsctwords="";
-$lsavwords="";
-$lspswords="";
-$lsidwords="";
-$lsajwords="";
+$lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnuwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lspswords=""; $lsidwords=""; $lsajwords="";
 htmlfmtinit();
 foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
   if((mb_substr($line, 0, 1)=="|") 
@@ -120,7 +108,9 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
       file_put_contents("./". $LlFfeil. ".html", $outstr);
 
       $outstr = "";
+      $lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnuwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lspswords=""; $lsidwords=""; $lsajwords="";
       htmlfmtinit();
+      
     }else if(substr($line, 1, 4) == "----"){
        /*
        //$outstr .= $lswords."\n";
@@ -286,6 +276,7 @@ function dewisiadausetsections($outstr, $outstr2, $pmod="test1"){
 global $LlCwrs;
 global $LlGwers;
 global $LlTeitl;
+global $LlLlun1;
 global $LlCyfarwyddo;
 global $LlFfram;
 
@@ -424,8 +415,9 @@ $LlHtmlBrig='
 ';
 
 $LlHtmlPenniad=
-'<div style="background-image:url(./'. $LlFfram.'.png);width:600px;height:600px;background-size:contain;border:0px solid blue;">
+'<div xxstyle="background-image:url(./'. $LlFfram.'.png);width:600px;height:600px;background-size:contain;border:0px solid blue;">
 
+<!--
 <div style="xxtext-align:center;font-weight:bold;font-size:250%;xxcolor:#00f;xxfont-style:italic;xxtext-decoration:underline;margin-top:10px;">'. acenau($LlCwrs). '</div>
 
 <div style="xxtext-align:center;font-weight:bold;font-size:150%;xxcolor:#00f;xxfont-style:italic;text-decoration:underline;margin-top:10px;">'. acenau($LlGwers)  . '</div>
@@ -433,7 +425,7 @@ $LlHtmlPenniad=
 <div style="xxtext-align:center;font-weight:bold;font-size:150%;xxcolor:#0a0;font-style:italic;margin-top:0px;margin-bottom:15px;">'. preg_replace("/\//", "<br>", acenau($LlTeitl)  ). '</div>
 
 
-<div style="xxtext-align:center;xxfont-weight:bold;font-size:150%;xxcolor:#0a0;font-style:italic;margin-top:0px;margin-bottom:15px;">'. preg_replace("/\//", "<br>", acenau($LlCyfarwyddo)  ). '</div>';
+<div style="xxtext-align:center;xxfont-weight:bold;font-size:150%;xxcolor:#0a0;font-style:italic;margin-top:0px;margin-bottom:15px;">'. preg_replace("/\//", "<br>", acenau($LlCyfarwyddo)  ). '</div> -->';
 
 
 $LlHtmlGwaelod=
@@ -445,16 +437,16 @@ $LlHtmlGwaelod=
 
 
 
-$LlCyn='
-  <span style="font-size:140%;font-weight:bold;">M1U5 - Choose the correct words for each sentence</span><br/>
+$LlCyn= '
+  <span style="font-size:140%;font-weight:bold;">'. $LlGwers .' - Choose the correct words for each sentence</span><br/>
   <span style="font-size:90%;xxfont-weight:bold;">
-   Once you have completed all the correct words make a note of the "Success code" and paste it into the Preply chat at <u>https://preply.com/en/messages</u>. <span style="color:red;">If you are having difficulties, please take a screenshot and we will discuss it in class.</span> <b>Note: it=initiator, rs=response, ix=inflexion, nu=noun, ex=exclamation, pn=pronoun, iv=infinitive, ct=connector, av=adverb, ps=preposition, id=idiom, aj=adjective.</b>
+   Once you have completed all the correct words make a note of the "Success code" and time taken in seconds, and paste them into the Preply chat at <u>https://preply.com/en/messages</u>. <span style="color:red;">If you are having difficulties, please take a screenshot and we will discuss it in class.</span> <!-- b>Note: init=initiator, rs=response, ix=inflexion, nu=noun, ex=exclamation, pn=pronoun, iv=infinitive, ct=connector, av=adverb, ps=preposition, id=idiom, aj=adjective.</b -->
 
   </span><br/>
   <!--
   <img style="height:300px;" src="file://C:/Users/user/downloads/Copilot_20250925_110423.png"></img> 
   -->
-  <img style="height:300px;" src="file://C:/Users/user/downloads/Gemini_Generated_Image_o2mwxvo2mwxvo2mw_A.jpg"></img>
+  <img style="height:300px;" src="./'.$LlLlun1. '"></img>
 
   <div id="sentences"></div>
 
@@ -462,7 +454,10 @@ $LlCyn='
   <button id="reset-btn">Reset</button>
 
 
-  <div id="goodJob">🎉 Good Job! 🎉<br/><span style="font-size:70%;">Success Code: <b>M1U5-BK84</b> <br>Time taken: <span id="spsecs"></span> secs</span></div>
+  <div id="goodJob">🎉 Good Job! 🎉<br/><span style="font-size:70%;">Success Code: <b>' . 
+
+    strtoupper( preg_replace("/\-/", "", $LlGwers . $LlTeitl ))
+    .'</b> <br>Time taken: <span id="spsecs"></span> secs</span></div>
 
 
   <!-- Include canvas-confetti via CDN -->

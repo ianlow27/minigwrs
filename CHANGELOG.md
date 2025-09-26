@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.35_250926-1957 - bugfixes to dewisiadau1.php and htmlfmt.php
+-  Amendments as per the release description
+
 ## 0.0.34_250926-1004 - amendments and enhancements to dewisiadau1.php
 -  Amendments as per the release description
 
