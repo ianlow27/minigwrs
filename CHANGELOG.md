@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.34_250926-1004 - amendments and enhancements to dewisiadau1.php
+-  Amendments as per the release description
+
 ## 0.0.33_250925-1947 - additional amendments to dewisiadau1.txt and CHANGELOG.md
 -  Amendments as per the release description
 

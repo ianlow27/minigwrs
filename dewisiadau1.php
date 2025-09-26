@@ -83,7 +83,6 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
     const pronOptions = ["_p_", "i","ti","ef","hi","ni","chi","nhw","yna"];
     const prepOptions = ["_ps_", "yn", "ar", "o dan"];
     const nounOptions = ["_n_", "tad cu", "mam gu", "girl", "boy"];
-*/
     $outstr2 = 
       "\nconst initOptions = [". dwsfmt($lsitwords, "it"). "];\n".
       "\nconst respOptions = [". dwsfmt($lsrswords, "rs"). "];\n".
@@ -98,7 +97,22 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
       "\nconst idimOptions = [". dwsfmt($lsidwords, "id"). "];\n".
       "\nconst adjvOptions = [". dwsfmt($lsajwords, "aj"). "];\n".
       "";
-
+*/
+    $outstr2 = 
+      "\nconst initOptions = [". dwsfmt($lsitwords, "init"). "];\n".
+      "\nconst respOptions = [". dwsfmt($lsrswords, "resp"). "];\n".
+      "\nconst infxOptions = [". dwsfmt($lsixwords, "vifx"). "];\n".
+      "\nconst nounOptions = [". dwsfmt($lsnuwords, "noun"). "];\n".
+      "\nconst exclOptions = [". dwsfmt($lsexwords, "excl"). "];\n".
+      "\nconst pronOptions = [". dwsfmt($lspnwords, "pron"). "];\n".
+      "\nconst infvOptions = [". dwsfmt($lsivwords, "vinf"). "];\n".
+      "\nconst cnctOptions = [". dwsfmt($lsctwords, "cnct"). "];\n".
+      "\nconst advbOptions = [". dwsfmt($lsavwords, "adv"). "];\n".
+      "\nconst prepOptions = [". dwsfmt($lspswords, "prep"). "];\n".
+      "\nconst idimOptions = [". dwsfmt($lsidwords, "idm"). "];\n".
+      "\nconst adjvOptions = [". dwsfmt($lsajwords, "adj"). "];\n".
+      "";
+      $outstr2 = acenau($outstr2);
 
       //$outstr = ffurfweddu(dewisiadausetsections($outstr));
       $outstr = (dewisiadausetsections($outstr, $outstr2, $LlFfeil ));
@@ -305,12 +319,14 @@ $LlHtmlBrig='
 
     #lock-screen {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: #111;
-      color: #fff;
+      xxtop: 0; left: 0; right: 0; bottom: 0;
+      top: 50px; left: 0; right: 0; bottom: 0;
+      xxbackground: #111;
+      xxcolor: #fff;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      //justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       z-index: 9999;
     }
@@ -394,11 +410,13 @@ $LlHtmlBrig='
 </head>
 <body>
 <div id="lock-screen">
-  <h2>'.  $pmod. '
-  <br/>Enter \'pass\' and then click on Submit to access page</h2>
+  <center>
+  <h2>Ian\'s Welsh Class - Homework<br/>'.  $pmod. '
+  <br/>Enter the password to access the page</h2>
+  </center>
   <input type="password" id="password-input" placeholder="Password">
-  <button onclick="checkPassword()">Submit</button>
-  <p id="error" style="color: red; display: none;">Incorrect password. Try again.</p>
+  <!-- button onclick="checkPassword()">Submit</button -->
+  <p id="error" style="color: red; display: none;"></p>
 </div>
 
 <div id="content">
@@ -433,7 +451,10 @@ $LlCyn='
    Once you have completed all the correct words make a note of the "Success code" and paste it into the Preply chat at <u>https://preply.com/en/messages</u>. <span style="color:red;">If you are having difficulties, please take a screenshot and we will discuss it in class.</span> <b>Note: it=initiator, rs=response, ix=inflexion, nu=noun, ex=exclamation, pn=pronoun, iv=infinitive, ct=connector, av=adverb, ps=preposition, id=idiom, aj=adjective.</b>
 
   </span><br/>
-  <img style="height:300px;" src="file://C:/Users/user/downloads/Copilot_20250925_110423.png"></img>
+  <!--
+  <img style="height:300px;" src="file://C:/Users/user/downloads/Copilot_20250925_110423.png"></img> 
+  -->
+  <img style="height:300px;" src="file://C:/Users/user/downloads/Gemini_Generated_Image_o2mwxvo2mwxvo2mw_A.jpg"></img>
 
   <div id="sentences"></div>
 
@@ -594,21 +615,37 @@ $LlWedi='
 
   function checkPassword() {
     const input = document.getElementById("password-input").value;
-    const error = document.getElementById("error");
+    //const error = document.getElementById("error");
 
-    if (input === correctPassword) {
+    console.log (String(input).toLowerCase()  == String(correctPassword).toLowerCase() ); 
+    if (String(input).toLowerCase()  == String(correctPassword).toLowerCase() ) {
       document.getElementById("lock-screen").style.display = "none";
       document.getElementById("content").style.display = "block";
       loadTime = Date.now();
 
     } else {
-      error.style.display = "block";
+     //error.style.display = "block";
     }
   }
 </script>
 
-
-
+<script>
+    (function () {
+      const inputpw = document.getElementById("password-input");
+      inputpw.addEventListener("input", checkPassword, { passive: true });
+      inputpw.addEventListener("paste", () => setTimeout(checkPassword, 0));
+    })();
+/*
+  const inputBox = document.getElementById("password-input");
+  inputBox.addEventListener("input", function() {
+    checkPassword();
+    //if (inputBox.value == correctPassword){
+    //    showSuccess();
+    //}
+    //console.log("Current value:", inputBox.value, "___", correctPassword);
+  });
+*/
+</script>
 
 ';
 
