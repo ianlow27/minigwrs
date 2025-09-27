@@ -11,15 +11,19 @@ function acenau($pstr){
   $pstr = preg_replace("/o\^/", "ô", $pstr);
   $pstr = preg_replace("/u\^/", "û", $pstr);
   $pstr = preg_replace("/w\^/", "ŵ", $pstr);
+  $pstr = preg_replace("/W\^/", "Ŵ", $pstr);
   $pstr = preg_replace("/y\^/", "ŷ", $pstr);
   $pstr = preg_replace("/a´/",  "á", $pstr);
+  $pstr = preg_replace("/A´/",  "Á", $pstr);
   $pstr = preg_replace("/yxxxxx/",  "ỳ", $pstr);
   $pstr = preg_replace("/axxxxx/",  "à", $pstr);
   $pstr = preg_replace("/axxyxx/",  "ä", $pstr);
   //$pstr = preg_replace("/exxxxx/",  "è", $pstr);
   $pstr = preg_replace("/exxxxx/",  "ë ", $pstr);
   $pstr = preg_replace("/ixxyxx/",  "ï", $pstr);
+  $pstr = preg_replace("/Ixxyxx/",  "Ï", $pstr);
   $pstr = preg_replace("/oxxyxx/",  "ö", $pstr);
+  $pstr = preg_replace("/Oxxyxx/",  "Ö", $pstr);
 return $pstr;
 }//dfunc
 //------------------------------------------------------

@@ -36,7 +36,7 @@ include "../mjemojis.php";
 //============================================
 //============================================
 $outstr = "<!DOCTYPE><html><body>";
-$lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnuwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lspswords=""; $lsidwords=""; $lsajwords="";
+$lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnuwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lspswords=""; $lsidwords=""; $lsajwords=""; $lsltwords="";
 htmlfmtinit();
 foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
   if((mb_substr($line, 0, 1)=="|") 
@@ -63,31 +63,12 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
       //$outstr = preg_replace("/\n/", "<br>", $outstr);
       $outstr = acenau($outstr);
 
+      $outstr = preg_replace("/plysnd_([a-zA-Z0-9]+)/",
+         "<plysnd>$1</plysnd>", $outstr);
 
-/*
-    const initOptions = ["_it_", "beth", "yr"];
-    const vifxOptions = ["_ix_", "ydw", "ydwyt", "ydy","ydym","ydych","ydynt","ydys" ];
-    const vinfOptions = ["_iv_", "hoffi", "licio", "caru"];
-    const pronOptions = ["_p_", "i","ti","ef","hi","ni","chi","nhw","yna"];
-    const prepOptions = ["_ps_", "yn", "ar", "o dan"];
-    const nounOptions = ["_n_", "tad cu", "mam gu", "girl", "boy"];
-    $outstr2 = 
-      "\nconst initOptions = [". dwsfmt($lsitwords, "it"). "];\n".
-      "\nconst respOptions = [". dwsfmt($lsrswords, "rs"). "];\n".
-      "\nconst infxOptions = [". dwsfmt($lsixwords, "ix"). "];\n".
-      "\nconst nounOptions = [". dwsfmt($lsnuwords, "nu"). "];\n".
-      "\nconst exclOptions = [". dwsfmt($lsexwords, "ex"). "];\n".
-      "\nconst pronOptions = [". dwsfmt($lspnwords, "pn"). "];\n".
-      "\nconst infvOptions = [". dwsfmt($lsivwords, "iv"). "];\n".
-      "\nconst cnctOptions = [". dwsfmt($lsctwords, "ct"). "];\n".
-      "\nconst advbOptions = [". dwsfmt($lsavwords, "av"). "];\n".
-      "\nconst prepOptions = [". dwsfmt($lspswords, "ps"). "];\n".
-      "\nconst idimOptions = [". dwsfmt($lsidwords, "id"). "];\n".
-      "\nconst adjvOptions = [". dwsfmt($lsajwords, "aj"). "];\n".
-      "";
-*/
-    $outstr2 = 
+      $outstr2 = 
       "\nconst initOptions = [". dwsfmt($lsitwords, "init"). "];\n".
+      "\nconst lttrOptions = [". dwsfmt($lsltwords, "lttr"). "];\n".
       "\nconst respOptions = [". dwsfmt($lsrswords, "resp"). "];\n".
       "\nconst infxOptions = [". dwsfmt($lsixwords, "vifx"). "];\n".
       "\nconst nounOptions = [". dwsfmt($lsnuwords, "noun"). "];\n".
@@ -108,7 +89,7 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
       file_put_contents("./". $LlFfeil. ".html", $outstr);
 
       $outstr = "";
-      $lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnuwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lspswords=""; $lsidwords=""; $lsajwords="";
+      $lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnuwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lspswords=""; $lsidwords=""; $lsajwords=""; $lsltwords="";
       htmlfmtinit();
       
     }else if(substr($line, 1, 4) == "----"){
@@ -147,6 +128,7 @@ function parsewords($line, $cluelevel = "|"){
 //irinepicapia;
 global $lswords;
 global $lsitwords;
+global $lsltwords;
 global $lsrswords;
 global $lsixwords;
 global $lsnuwords;
@@ -196,6 +178,8 @@ global $lsajwords;
             $lswords .= mb_substr($word,0,-1). " ";
             if      ($type == "it"){
               $lsitwords .= mb_substr($word,0,-1). " ";
+            }else if($type == "lt"){
+              $lsltwords .= mb_substr($word,0,-1). " ";
             }else if($type == "rs"){
               $lsrswords .= mb_substr($word,0,-1). " ";
             }else if($type == "ix"){
@@ -275,6 +259,7 @@ function dewisiadausetsections($outstr, $outstr2, $pmod="test1"){
 
 global $LlCwrs;
 global $LlGwers;
+global $LlDidoli;
 global $LlTeitl;
 global $LlLlun1;
 global $LlCyfarwyddo;
@@ -445,8 +430,11 @@ $LlCyn= '
   </span><br/>
   <!--
   <img style="height:300px;" src="file://C:/Users/user/downloads/Copilot_20250925_110423.png"></img> 
-  -->
-  <img style="height:300px;" src="./'.$LlLlun1. '"></img>
+  -->'.
+
+($LlLlun1 == "" ? "" : '<img style="height:300px;" src="./'.$LlLlun1. '"></img>')
+
+.'
 
   <div id="sentences"></div>
 
@@ -464,7 +452,7 @@ $LlCyn= '
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <script>
-    const sentences = [
+    const sentences1 = [
 ';
 
 
@@ -474,6 +462,22 @@ $LlCyn= '
 
 $LlRhwng='
     ];
+
+    // Shuffle function using Fisher-Yates
+    function shuffleArray(array) {
+      const copy = [...array]; // Make a shallow copy to avoid modifying original
+'.
+( $LlDidoli != "hapnam" ? '' : '
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]]; }'
+) 
+. '
+      return copy;
+    }
+    
+    // Generate the randomized sentences
+    const sentences = shuffleArray(sentences1);
 
     // Options for dropdowns
     ';
@@ -529,6 +533,9 @@ $LlWedi='
           } else if (initOptions.includes(word)) {
             const select = createSelect(initOptions, s.answers[answerIndex++]);
             div.appendChild(select);
+          } else if (lttrOptions.includes(word)) {
+            const select = createSelect(lttrOptions, s.answers[answerIndex++]);
+            div.appendChild(select);
           } else if (pronOptions.includes(word)) {
             const select = createSelect(pronOptions, s.answers[answerIndex++]);
             div.appendChild(select);
@@ -539,9 +546,21 @@ $LlWedi='
             const select = createSelect(nounOptions, s.answers[answerIndex++]);
             div.appendChild(select);
           } else {
+            //const span = document.createElement("span");
+            //span.textContent = word + " ";
+            //div.appendChild(span);
+
             const span = document.createElement("span");
-            span.textContent = word + " ";
+            if(word.charAt(0) == "<"){
+               if(word.substring(0,8) == "<plysnd>"){
+                 word = word.replace(/<plysnd>/, "<button style=\'font-size: 18px; cursor: pointer; background: none; border: none; padding:0px; margin:0px;\' onclick=\"playSound(\'./mp3/");
+                 word = word.replace(/<\/plysnd>/, ".mp3\')\">▶️</button>");
+               }
+               span.innerHTML = word;
+            }else                      span.textContent = word + " ";
             div.appendChild(span);
+
+
           }
         }
 
@@ -642,6 +661,16 @@ $LlWedi='
 */
 </script>
 
+<script>
+    function playSound(pstr) {
+      const audio = new Audio(pstr);
+
+console.log(pstr);
+      audio.pause();
+      audio.currentTime = 0;
+      audio.play();
+    }
+</script>
 ';
 
 

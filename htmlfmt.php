@@ -4,6 +4,7 @@ $LlGwers="";
 $LlTeitl="";
 $LlNodwch="";
 $LlCyfarwyddo="";
+$LlDidoli="";
 $LlLlun1="";
 $LlLlun2="";
 $LlFfeil="";
@@ -27,13 +28,14 @@ $DFfeil1 = explode("\n", file_get_contents("./". $LlTestun) );
 //---------------------------------------
 //---------------------------------------
 function htmlfmtinit(){
-global $LlCwrs; global $LlGwers; global $LlTeitl; global $LlNodwch; global $LlCyfarwyddo; global $LlLlun1; global $LlLlun2; global $LlFfeil; global $LlFfeilPrev; global $LlLledYmylCy; global $LlLledYmylEn; global $LlMaintCy; global $LlMaintEn; global $LlCy; global $LlEn; global $DLlun1; global $DLlun2; global $DLlun3; global $DLlun4; global $DFfeil1; global $LlTestun;
+global $LlCwrs; global $LlGwers; global $LlTeitl; global $LlNodwch; global $LlCyfarwyddo; global $LlLlun1; global $LlLlun2; global $LlFfeil; global $LlFfeilPrev; global $LlLledYmylCy; global $LlLledYmylEn; global $LlMaintCy; global $LlMaintEn; global $LlCy; global $LlEn; global $DLlun1; global $DLlun2; global $DLlun3; global $DLlun4; global $DFfeil1; global $LlTestun; global $LlDidoli;
 $LlCwrs="";
 $LlGwers="";
 $LlTeitl="";
 $LlNodwch="";
 $LlCyfarwyddo="";
 $LlLlun1="";
+$LlDidoli="";
 $LlLlun2="";
 $LlFfeil="";
 $LlFfeilPrev="";
@@ -48,7 +50,7 @@ $LlEn="";
 //---------------------------------------
 //---------------------------------------
 function htmlfmtsettings($ll1a){
-global $LlCwrs; global $LlGwers; global $LlTeitl; global $LlNodwch; global $LlCyfarwyddo; global $LlLlun1; global $LlLlun2; global $LlFfeil; global $LlFfeil;  global $LlLledYmylCy; global $LlLledYmylEn; global $LlMaintCy; global $LlMaintEn; global $LlCy; global $LlEn; global $DLlun1; global $DLlun2; global $DLlun3; global $DLlun4; global $DFfeil1; global $LlTestun;
+global $LlCwrs; global $LlGwers; global $LlTeitl; global $LlNodwch; global $LlCyfarwyddo; global $LlLlun1; global $LlLlun2; global $LlFfeil; global $LlFfeil;  global $LlLledYmylCy; global $LlLledYmylEn; global $LlMaintCy; global $LlMaintEn; global $LlCy; global $LlEn; global $DLlun1; global $DLlun2; global $DLlun3; global $DLlun4; global $DFfeil1; global $LlTestun; global $LlDidoli;
 $bfound=false;
       //____$d1a = explode("=", substr($ll1a,1));
       $d1a = explode("=", substr($ll1a,0));
@@ -86,6 +88,9 @@ $bfound=false;
       }else if($d1a[0]=="mainten"){
         $LlMaintEn.=$d1a[1]. "";
 //echo "<<<<<____". $LlMaintEn."\n";
+        $bfound=true;
+      }else if($d1a[0]=="didoli"){
+        $LlDidoli = preg_replace("/ /", "", $d1a[1]);
         $bfound=true;
       }else if($d1a[0]=="llun1"){
         $LlLlun1 = preg_replace("/ /", "", $d1a[1]);
