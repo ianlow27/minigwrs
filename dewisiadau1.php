@@ -265,19 +265,6 @@ global $LlLlun1;
 global $LlCyfarwyddo;
 global $LlFfram;
 
-$xxLlHtmlBrig=
-"\xEF\xBB\xBF". '<!DOCTYPE html><html><head>
-<style>
-xxxp {text-indent:-20px;padding-left:20px;margin-top:-18px;}
-p {xxtext-indent:-20px;padding:0px;margin:0px;}
-.p1 {font-size:150%;}
-.p2 {font-size:70%;}
-</style>
-</head>
-<body style="font-family:Arial;">';
-
-
-
 
 $LlHtmlBrig='
 <!DOCTYPE html>
@@ -286,6 +273,27 @@ $LlHtmlBrig='
   <meta charset="UTF-8">
   <title>Ian\'s Welsh Class Homework</title>
   <style>
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between; /* Distribute columns evenly across the width xxv5 */
+      gap: 10px;
+    }
+    .column {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1 1 20%; /* Make columns grow and shrink equally, taking up 20% of available width xxv5 */
+      min-width: 200px; /* Ensure columns do not get too small */
+    }
+
+    /* Style for each individual div inside the column xxv5 */
+    .xxxxitem {
+      xxxxpadding: 10px;
+      xxxborder: 1px solid #ccc;
+      xxxxborder-radius: 5px;
+      xxxxbackground-color: lightgray;
+    }
 
 
 
@@ -436,7 +444,7 @@ $LlCyn= '
 
 .'
 
-  <div id="sentences"></div>
+  <div class="container" xxv5 id="sentences"></div>
 
   <button onclick="checkAnswers()">Check Answers</button>
   <button id="reset-btn">Reset</button>
@@ -450,6 +458,16 @@ $LlCyn= '
 
   <!-- Include canvas-confetti via CDN -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+  
+      function createColumn() { //xxv5
+        const column = document.createElement("div");
+        column.classList.add("column");
+        return column;
+      }
+  
+  </script>
 
   <script>
     const sentences1 = [
@@ -502,7 +520,20 @@ $LlWedi='
       const container = document.getElementById("sentences");
       container.innerHTML = "";
 
+      let columnIndex = 0; // To keep track of which column we are on xxv5
+      let currentColumn = createColumn(); // Create the first column xxv5
+
+      let index = -1; //xxv5
+
       for (let s of sentences) {
+
+        index++; //xxv5
+
+        if(index % 10  === 0 && index !== 0){  //xxv5
+          container.appendChild(currentColumn);
+          currentColumn = createColumn();
+        }
+        
         const div = document.createElement("div");
         div.className = "sentence";
 
@@ -561,12 +592,16 @@ $LlWedi='
             div.appendChild(span);
 
 
-          }
-        }
+          }//endif
+        }//endfor
 
-        container.appendChild(div);
-      }
-    }
+        //xxv5 container.appendChild(div);
+        currentColumn.appendChild(div);
+
+      }//endfor
+      container.appendChild(currentColumn);
+
+    }//endfunc
 
     function checkAnswers() {
       const selects = document.querySelectorAll("select");
@@ -625,7 +660,7 @@ $LlWedi='
       location.reload();
     });
 
-  const correctPassword = "pass"; // Change this to your desired password
+  let correctPassword = "K\.?s{4(:@(3613~,?45!KJd^%$@£!)0{{1(Jksi3(*!%$@:"; // Change this to your desired password
 
   function checkPassword() {
     const input = document.getElementById("password-input").value;
@@ -671,6 +706,56 @@ console.log(pstr);
       audio.play();
     }
 </script>
+
+
+<script>
+// Function to shift each character by 2 positions backwards in the alphabet
+function shiftCharacter(char) {
+    // ASCII codes for lowercase letters: "a" = 97, "z" = 122
+    const charCode = char.charCodeAt(0);
+
+    if (charCode >= 97 && charCode <= 122) {
+        // For "a" to "z", shift by 2 positions backwards
+        return String.fromCharCode((charCode - 97 - 2 + 26) % 26 + 97);
+    }
+
+    // For any other character (non-alphabetic), return as is
+    return char;
+}
+
+// Function to encrypt the string by shifting each character
+function encryptString(str) {
+    return str.split("").map(shiftCharacter).join("");
+}
+
+// Function to get the URL parameter "u" and encrypt it
+function getEncryptedParameter() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const u = urlParams.get("u");  // Get the parameter "u" from the URL
+
+    if (u) {
+        // Encrypt the parameter
+        const encryptedValue = encryptString(u);
+        // Store the result in the passwd variable
+        const passwd = encryptedValue;
+        //console.log("Encrypted value:", passwd);
+        //alert("Encrypted Password: " + passwd);
+        correctPassword = passwd + "111";
+    } else {
+        //alert("No \"u\" parameter in the URL!");
+    }
+}
+
+// Run the function when the page loads
+window.onload = getEncryptedParameter;
+</script>
+
+
+
+
+
+
+
 ';
 
 

@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.37_250928-1045 - enhancements to dewisiadau1.php
+-  Amendments as per the release description
+
 ## 0.0.36_250927-2020 - enhancements to dewisiadau1.php, htmlfmt.php, and cyutils.php
 -  Amendments as per the release description
 
