@@ -68,13 +68,13 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
 
       $outstr2 = 
       "\nconst initOptions = [". dwsfmt($lsitwords, "init"). "];\n".
-      "\nconst lttrOptions = [". dwsfmt($lsltwords, "lttr"). "];\n".
-      "\nconst respOptions = [". dwsfmt($lsrswords, "resp"). "];\n".
+      "\nconst lttrOptions = [". dwsfmt($lsltwords, "ltr"). "];\n".
+      "\nconst respOptions = [". dwsfmt($lsrswords, "rsp"). "];\n".
       "\nconst infxOptions = [". dwsfmt($lsixwords, "vifx"). "];\n".
       "\nconst nounOptions = [". dwsfmt($lsnuwords, "noun"). "];\n".
       "\nconst exclOptions = [". dwsfmt($lsexwords, "excl"). "];\n".
       "\nconst pronOptions = [". dwsfmt($lspnwords, "pron"). "];\n".
-      "\nconst infvOptions = [". dwsfmt($lsivwords, "vinf"). "];\n".
+      "\nconst infvOptions = [". dwsfmt($lsivwords, "vifv"). "];\n".
       "\nconst cnctOptions = [". dwsfmt($lsctwords, "cnct"). "];\n".
       "\nconst advbOptions = [". dwsfmt($lsavwords, "adv"). "];\n".
       "\nconst prepOptions = [". dwsfmt($lspswords, "prep"). "];\n".
@@ -261,6 +261,7 @@ global $LlCwrs;
 global $LlGwers;
 global $LlDidoli;
 global $LlTeitl;
+global $LlPlygellSain;
 global $LlLlun1;
 global $LlCyfarwyddo;
 global $LlFfram;
@@ -431,9 +432,16 @@ $LlHtmlGwaelod=
 
 
 $LlCyn= '
-  <span style="font-size:140%;font-weight:bold;">'. $LlGwers .' - Choose the correct words for each sentence</span><br/>
+  <span style="font-size:140%;font-weight:bold;">'. $LlGwers. ' - Choose the correct answer for all selections.</span><br/>
   <span style="font-size:90%;xxfont-weight:bold;">
-   Once you have completed all the correct words make a note of the "Success code" and time taken in seconds, and paste them into the Preply chat at <u>https://preply.com/en/messages</u>. <span style="color:red;">If you are having difficulties, please take a screenshot and we will discuss it in class.</span> <!-- b>Note: init=initiator, rs=response, ix=inflexion, nu=noun, ex=exclamation, pn=pronoun, iv=infinitive, ct=connector, av=adverb, ps=preposition, id=idiom, aj=adjective.</b -->
+   You can check your answers by clicking on the \'Check Answers\' button. When you have completed all selections correctly, a message will appear. Make a note of the "Success code" and time taken in seconds, and paste them into my Preply chat at <u>https://preply.com/en/messages</u>. <span xxstyle="color:red;">If you are having difficulties, please take a screenshot and we can look at it in class. Repeat this exercise as often as you like by clicking the \'Reset\' button to gain speed and familiarity. Best of luck!</span> <!-- b>Note: init=initiator, rs=response, ix=inflexion, nu=noun, ex=exclamation, pn=pronoun, iv=infinitive, ct=connector, av=adverb, ps=preposition, id=idiom, aj=adjective.</b -->
+
+
+
+
+
+
+
 
   </span><br/>
   <!--
@@ -584,7 +592,11 @@ $LlWedi='
             const span = document.createElement("span");
             if(word.charAt(0) == "<"){
                if(word.substring(0,8) == "<plysnd>"){
-                 word = word.replace(/<plysnd>/, "<button style=\'font-size: 18px; cursor: pointer; background: none; border: none; padding:0px; margin:0px;\' onclick=\"playSound(\'./mp3/");
+                 word = word.replace(/<plysnd>/, "<button style=\'font-size: 18px; cursor: pointer; background: none; border: none; padding:0px; margin:0px;\' onclick=\"playSound(\'./'.
+
+(($LlPlygellSain == "") ? "mp3" : $LlPlygellSain)
+
+.'/");
                  word = word.replace(/<\/plysnd>/, ".mp3\')\">▶️</button>");
                }
                span.innerHTML = word;
@@ -635,7 +647,6 @@ $LlWedi='
       const spsecs = document.getElementById("spsecs");
       spsecs.innerHTML = secondsElapsed;
 
-
       message.style.display = "block";
 
       // Trigger confetti explosion
@@ -644,6 +655,8 @@ $LlWedi='
         spread: 100,
         origin: { y: 0.6 }
       });
+
+      sendMessage(correctPassword, secondsElapsed);
     }
 
     // Initialize
@@ -751,6 +764,34 @@ window.onload = getEncryptedParameter;
 </script>
 
 
+<script>
+    // JavaScript function to send the Ajax request
+    function sendMessage(correctPassword, secondsElapsed) {
+        // Create a new XMLHttpRequest object
+        var xhr = new XMLHttpRequest();
+        
+        // Open a POST request to the PHP page
+        xhr.open("POST", "send_email.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        
+        // The message to be sent to the PHP page
+        var message = "The module is '. $LlGwers. ', the passcode code is " + correctPassword  + ", the time taken is " + secondsElapsed + " seconds";
+        var subject = "Welsh Homework Student Results";
+        
+        // Send the request
+        // xhr.send("message=" + encodeURIComponent(message));
+        xhr.send("message=" + encodeURIComponent(message) + "&subject=" + encodeURIComponent(subject));
+
+        // Handle the response
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                console.log("Message sent successfully!");
+            } else {
+                console.log("Failed to send message.");
+            }
+        };
+    }
+</script>
 
 
 

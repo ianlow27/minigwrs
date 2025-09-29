@@ -66,13 +66,48 @@ if(!is_numeric($argv[1])){
      file=$(echo \"$(pwd)\" | awk -F'/' '{print \$NF}' | cut -d'_' -f2 )
      php ../newydd.php  $1 $2 $3");
   //============================================
+	// send_email.php for posting test results using dws (dewisiadau1.php)
+	file_put_contents($cwrs. "/send_email.php", 
+"
+<?php
+// Check if the 'message' is passed
+if(isset(\$_POST['message'])) {
+    \$message = \$_POST['message'];
+    
+    // The recipient email address
+    \$to = \"<ENTER EMAIL HERE!!>\";
+    
+    // Subject of the email
+    \$subject = \$_POST['subject'];
+    
+    // Additional headers
+    \$headers = \"From: no-reply@test.com\" . \"\\r\\n\" .
+               \"Reply-To: no-reply@test.com\" . \"\\r\\n\" .
+               \"X-Mailer: PHP/\" . phpversion();
+
+    // Send the email
+    if(mail(\$to, \$subject, \$message, \$headers)) {
+        echo \"Email sent successfully!\";
+    } else {
+        echo \"Failed to send email.\";
+    }
+} else {
+    echo \"No message received.\";
+}
+?>
+
+");
+  //============================================
+  //============================================
+  //============================================
+  //============================================
   $argv1 = 1;
   $lessonNum = sprintf("%03d", $argv1);
   $output = mklession($lessonNum, $argv1);
 	file_put_contents($cwrs. "/". $LlTestun, $output);
 
 
-	echo "Nawr, y cam nesaf yw i 'cd ". $cwrs. "' ac wedyn adolygu y ffeil gyda'r enw '". $LlTestun."' trwy ddefnyddio y adolygydd VI neu VIM sef 'vi ". $LlTestun."', ac wedyn i mewn yn yr adolygydd i redeg 1) 'r! a1', ac wedyn 2) 'r! a2', ac wedyn 3) '!cwrs'.\nAc wedyn, ar ol y cyflawniad o'ch cyntaf modiwl, i ychwangeu y modiwl nesaf ar y gwaelod o'r ffeil trwy redeg y gorchymyn 'r! nw 2' i cydatodi yr ail modiwl, ac ar ol hynny y 3dd, 4dd, ayyb.\n ";
+	echo "Nawr, y cam nesaf yw i 'cd ". $cwrs. "' ac wedyn adolygu y ffeil gyda'r enw '". $LlTestun."' trwy ddefnyddio y adolygydd VI neu VIM sef 'vi ". $LlTestun."', ac wedyn i mewn yn yr adolygydd i redeg 1) 'r! a1', ac wedyn 2) 'r! a2', ac wedyn 3) '!cwrs'.\nAc wedyn, ar ol y cyflawniad o'ch cyntaf modiwl, i ychwangeu y modiwl nesaf ar y gwaelod o'r ffeil trwy redeg y gorchymyn 'r! nw 2' i cydatodi yr ail modiwl, ac ar ol hynny y 3dd, 4dd, ayyb. Peidiwch ag anghofio i ddiweddaru send_mail.php yn y blygell newydd gyda'ch ebost gwirioneddol. \n ";
   die();
 }
 //===========================================
