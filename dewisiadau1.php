@@ -434,7 +434,10 @@ $LlHtmlGwaelod=
 $LlCyn= '
   <span style="font-size:140%;font-weight:bold;">'. $LlGwers. ' - Choose the correct answer for all selections.</span><br/>
   <span style="font-size:90%;xxfont-weight:bold;">
-   You can check your answers by clicking on the \'Check Answers\' button. When you have completed all selections correctly, a message will appear. Make a note of the "Success code" and time taken in seconds, and paste them into my Preply chat at <u>https://preply.com/en/messages</u>. <span xxstyle="color:red;">If you are having difficulties, please take a screenshot and we can look at it in class. Repeat this exercise as often as you like by clicking the \'Reset\' button to gain speed and familiarity. Best of luck!</span> <!-- b>Note: init=initiator, rs=response, ix=inflexion, nu=noun, ex=exclamation, pn=pronoun, iv=infinitive, ct=connector, av=adverb, ps=preposition, id=idiom, aj=adjective.</b -->
+   You can check your answers by clicking on the \'Check Answers\' button. When you have completed all selections correctly, a message will appear. Make a note of the "Success code" and time taken in seconds. ' .
+    //', and paste them into my Preply chat at <u>https://preply.com/en/messages</u>. 
+    '<span xxstyle="color:red;">If you are having difficulties, please take a screenshot and we can look at it in class. Repeat this exercise as often as you like by clicking the \'Reset\' button to gain better familiarity and timing. Best of luck!</span> 
+    <!-- b>Note: init=initiator, rs=response, ix=inflexion, nu=noun, ex=exclamation, pn=pronoun, iv=infinitive, ct=connector, av=adverb, ps=preposition, id=idiom, aj=adjective.</b -->
 
 
 
@@ -478,6 +481,7 @@ $LlCyn= '
   </script>
 
   <script>
+    let selwordcount = 0;
     const sentences1 = [
 ';
 
@@ -548,6 +552,7 @@ $LlWedi='
         let answerIndex = 0;
 
         for (let word of s.text) {
+          let bselectword = true;
           if (infxOptions.includes(word)) {
             const select = createSelect(infxOptions, s.answers[answerIndex++]);
             div.appendChild(select);
@@ -585,6 +590,7 @@ $LlWedi='
             const select = createSelect(nounOptions, s.answers[answerIndex++]);
             div.appendChild(select);
           } else {
+            bselectword = false;
             //const span = document.createElement("span");
             //span.textContent = word + " ";
             //div.appendChild(span);
@@ -605,6 +611,7 @@ $LlWedi='
 
 
           }//endif
+          if(bselectword) selwordcount++;
         }//endfor
 
         //xxv5 container.appendChild(div);
@@ -775,7 +782,20 @@ window.onload = getEncryptedParameter;
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         
         // The message to be sent to the PHP page
-        var message = "The module is '. $LlGwers. ', the passcode code is " + correctPassword  + ", the time taken is " + secondsElapsed + " seconds";
+        var xxmessage = "The module is '. $LlGwers. ', the passcode code is " + correctPassword  + ", the time taken is " + secondsElapsed + " seconds";
+
+        var message = 
+        "Passcode: " + correctPassword + "\\r\\n" +
+        "Module: '. $LlGwers. '\\r\\n" +
+        "Total Selections: " + selwordcount  + "\\r\\n" +
+        "Total time: " + secondsElapsed + " seconds\\r\\n" +
+        "Average time: " + (secondsElapsed/selwordcount).toFixed(2) + " seconds\\r\\n";
+        //alert(message);
+
+
+
+
+
         var subject = "Welsh Homework Student Results";
         
         // Send the request

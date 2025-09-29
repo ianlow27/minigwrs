@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.39_250929-1155 - enhancements to dewisiadau1.php
+-  Amendments as per the release description
+
 ## 0.0.38_250929-0914 - amendements to htmlfmt.php, dewisiadau1.php, and newydd.php for new playsound (plysnd), and email (send_email.php) functionalities
 -  Amendments as per the release description
 
