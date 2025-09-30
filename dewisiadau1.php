@@ -36,7 +36,7 @@ include "../mjemojis.php";
 //============================================
 //============================================
 $outstr = "<!DOCTYPE><html><body>";
-$lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnuwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lspswords=""; $lsidwords=""; $lsajwords=""; $lsltwords="";
+$lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnuwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lspswords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords="";
 htmlfmtinit();
 foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
   if((mb_substr($line, 0, 1)=="|") 
@@ -63,10 +63,12 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
       //$outstr = preg_replace("/\n/", "<br>", $outstr);
       $outstr = acenau($outstr);
 
-      $outstr = preg_replace("/plysnd_([a-zA-Z0-9]+)/",
-         "<plysnd>$1</plysnd>", $outstr);
+      //$outstr = preg_replace("/plysnd_([a-zA-Z0-9]+)(_([a-zA-Z0-9\^\´]+)*)/", "<plysnd>$1</plysnd> ", $outstr);
+      $outstr = preg_replace( "/plysnd_([´âêîôûŵŴŷáÁỳàäëïÏöÖëa-zA-Z0-9^_]+)/", "<plysnd>$1</plysnd>", $outstr);
+      $outstr = preg_replace("/plyssnd_([´âêîôûŵŴŷáÁỳàäëïÏöÖëa-zA-Z0-9^_]+)/", "<plyssnd>$1</plyssnd>", $outstr);
 
       $outstr2 = 
+      "\nconst ansrOptions = [". dwsfmt($lsanswords, "ans"). "];\n".
       "\nconst initOptions = [". dwsfmt($lsitwords, "init"). "];\n".
       "\nconst lttrOptions = [". dwsfmt($lsltwords, "ltr"). "];\n".
       "\nconst respOptions = [". dwsfmt($lsrswords, "rsp"). "];\n".
@@ -89,7 +91,7 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
       file_put_contents("./". $LlFfeil. ".html", $outstr);
 
       $outstr = "";
-      $lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnuwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lspswords=""; $lsidwords=""; $lsajwords=""; $lsltwords="";
+      $lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnuwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lspswords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords="";
       htmlfmtinit();
       
     }else if(substr($line, 1, 4) == "----"){
@@ -129,6 +131,7 @@ function parsewords($line, $cluelevel = "|"){
 global $lswords;
 global $lsitwords;
 global $lsltwords;
+global $lsanswords;
 global $lsrswords;
 global $lsixwords;
 global $lsnuwords;
@@ -178,6 +181,8 @@ global $lsajwords;
             $lswords .= mb_substr($word,0,-1). " ";
             if      ($type == "it"){
               $lsitwords .= mb_substr($word,0,-1). " ";
+            }else if($type == "ans"){
+              $lsanswords .= mb_substr($word,0,-1). " ";
             }else if($type == "lt"){
               $lsltwords .= mb_substr($word,0,-1). " ";
             }else if($type == "rs"){
@@ -577,6 +582,9 @@ $LlWedi='
           } else if (initOptions.includes(word)) {
             const select = createSelect(initOptions, s.answers[answerIndex++]);
             div.appendChild(select);
+          } else if (ansrOptions.includes(word)) {
+            const select = createSelect(ansrOptions, s.answers[answerIndex++]);
+            div.appendChild(select);
           } else if (lttrOptions.includes(word)) {
             const select = createSelect(lttrOptions, s.answers[answerIndex++]);
             div.appendChild(select);
@@ -596,6 +604,7 @@ $LlWedi='
             //div.appendChild(span);
 
             const span = document.createElement("span");
+            let wrdtmp = "";
             if(word.charAt(0) == "<"){
                if(word.substring(0,8) == "<plysnd>"){
                  word = word.replace(/<plysnd>/, "<button style=\'font-size: 18px; cursor: pointer; background: none; border: none; padding:0px; margin:0px;\' onclick=\"playSound(\'./'.
@@ -604,8 +613,19 @@ $LlWedi='
 
 .'/");
                  word = word.replace(/<\/plysnd>/, ".mp3\')\">▶️</button>");
-               }
-               span.innerHTML = word;
+               } else if(word.substring(0,9) == "<plyssnd>"){
+                 wrdtmp = " " + word;
+                 wrdtmp = wrdtmp.replace(/<plyssnd>/, "");
+                 wrdtmp = wrdtmp.replace(/<\/plyssnd>/, "");
+                 word = word.replace(/<plyssnd>/, "<button style=\'font-size: 18px; cursor: pointer; background: none; border: none; padding:0px; margin:0px;\' onclick=\"playSound(\'./'.
+
+(($LlPlygellSain == "") ? "mp3" : $LlPlygellSain)
+
+.'/");
+                 word = word.replace(/<\/plyssnd>/, ".mp3\')\">▶️</button>");
+                 word = removeAccents(word);
+               } 
+               span.innerHTML = word + ""+wrdtmp;
             }else                      span.textContent = word + " ";
             div.appendChild(span);
 
@@ -619,6 +639,31 @@ $LlWedi='
 
       }//endfor
       container.appendChild(currentColumn);
+
+    }//endfunc
+
+    function removeAccents(pstr){
+        if (pstr.match(/[âêîôûŵŴŷáÁỳàäëïÏöÖë]+/)){
+          pstr = pstr.replace(/â/, "a");
+          pstr = pstr.replace(/ê/, "e");
+          pstr = pstr.replace(/î/, "i");
+          pstr = pstr.replace(/ô/, "o");
+          pstr = pstr.replace(/û/, "u");
+          pstr = pstr.replace(/ŵ/, "w");
+          pstr = pstr.replace(/Ŵ/, "W");
+          pstr = pstr.replace(/ŷ/, "y");
+          pstr = pstr.replace(/á/, "a");
+          pstr = pstr.replace(/Á/, "A");
+          pstr = pstr.replace(/ỳ/, "y");
+          pstr = pstr.replace(/à/, "a");
+          pstr = pstr.replace(/ä/, "a");
+          pstr = pstr.replace(/ë/, "e");
+          pstr = pstr.replace(/ï/, "i");
+          pstr = pstr.replace(/Ï/, "I");
+          pstr = pstr.replace(/ö/, "o");
+          pstr = pstr.replace(/ë/, "e");
+        }
+        return pstr;
 
     }//endfunc
 
@@ -760,7 +805,7 @@ function getEncryptedParameter() {
         const passwd = encryptedValue;
         //console.log("Encrypted value:", passwd);
         //alert("Encrypted Password: " + passwd);
-        correctPassword = passwd + "111";
+        correctPassword = passwd + "123";
     } else {
         //alert("No \"u\" parameter in the URL!");
     }

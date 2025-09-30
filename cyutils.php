@@ -19,7 +19,7 @@ function acenau($pstr){
   $pstr = preg_replace("/axxxxx/",  "à", $pstr);
   $pstr = preg_replace("/axxyxx/",  "ä", $pstr);
   //$pstr = preg_replace("/exxxxx/",  "è", $pstr);
-  $pstr = preg_replace("/exxxxx/",  "ë ", $pstr);
+  $pstr = preg_replace("/exxxxx/",  "ë", $pstr);
   $pstr = preg_replace("/ixxyxx/",  "ï", $pstr);
   $pstr = preg_replace("/Ixxyxx/",  "Ï", $pstr);
   $pstr = preg_replace("/oxxyxx/",  "ö", $pstr);

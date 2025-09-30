@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.40_250930-1455 - enhancements to cyutils.php and dewisiadau1.php
+-  Amendments as per the release description
+
 ## 0.0.39_250929-1155 - enhancements to dewisiadau1.php
 -  Amendments as per the release description
 
