@@ -1,6 +1,6 @@
 #!/usr/bin/php
 <?php
-/* This is the 'homework' generator. For lines beginning with "|" and Welsh words suffixed with backtick (`) followed by the word type, which is 1 of the following 12: it (initiator), rs (response), iv (infinitive), nu (noun), ex (excalamation), pn (pronoun), ix (inflexion), ct (connector), av (adverb), ps (preposition), id (idiom), or aj (adjective) then it generates a selection list for that word in the HTML. A new word can be specified using the not symbol (¬) followed by the English for the Welsh e.g. "music¬cerddoriaeth". This uses the library at CDN https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js to create a confetti effect when the student selects all the correct options.
+/* This is the 'homework' generator. For lines beginning with "|" and Welsh words suffixed with backtick (`) followed by the word type, which is 1 of the following 12: it (initiator), rs (response), iv (infinitive), nn (noun), ex (excalamation), pn (pronoun), ix (inflexion), ct (connector), av (adverb), ps (preposition), id (idiom), or aj (adjective) then it generates a selection list for that word in the HTML. A new word can be specified using the not symbol (¬) followed by the English for the Welsh e.g. "music¬cerddoriaeth". This uses the library at CDN https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js to create a confetti effect when the student selects all the correct options.
  *
  *
  *
@@ -36,7 +36,7 @@ include "../mjemojis.php";
 //============================================
 //============================================
 $outstr = "<!DOCTYPE><html><body>";
-$lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnuwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lspswords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords="";
+$lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lspswords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords="";
 htmlfmtinit();
 foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
   if((mb_substr($line, 0, 1)=="|") 
@@ -63,9 +63,15 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
       //$outstr = preg_replace("/\n/", "<br>", $outstr);
       $outstr = acenau($outstr);
 
-      //$outstr = preg_replace("/plysnd_([a-zA-Z0-9]+)(_([a-zA-Z0-9\^\´]+)*)/", "<plysnd>$1</plysnd> ", $outstr);
       $outstr = preg_replace( "/plysnd_([´âêîôûŵŴŷáÁỳàäëïÏöÖëa-zA-Z0-9^_]+)/", "<plysnd>$1</plysnd>", $outstr);
       $outstr = preg_replace("/plyssnd_([´âêîôûŵŴŷáÁỳàäëïÏöÖëa-zA-Z0-9^_]+)/", "<plyssnd>$1</plyssnd>", $outstr);
+      $outstr = preg_replace( "/shwjpg_([´âêîôûŵŴŷáÁỳàäëïÏöÖëa-zA-Z0-9^_\.\,\-]+)/", "<shwjpg>$1</shwjpg>", $outstr);
+      $outstr = preg_replace( "/shwpng_([´âêîôûŵŴŷáÁỳàäëïÏöÖëa-zA-Z0-9^_\.\,\-]+)/", "<shwpng>$1</shwpng>", $outstr);
+
+
+
+
+
 
       $outstr2 = 
       "\nconst ansrOptions = [". dwsfmt($lsanswords, "ans"). "];\n".
@@ -73,7 +79,7 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
       "\nconst lttrOptions = [". dwsfmt($lsltwords, "ltr"). "];\n".
       "\nconst respOptions = [". dwsfmt($lsrswords, "rsp"). "];\n".
       "\nconst infxOptions = [". dwsfmt($lsixwords, "vifx"). "];\n".
-      "\nconst nounOptions = [". dwsfmt($lsnuwords, "noun"). "];\n".
+      "\nconst nounOptions = [". dwsfmt($lsnnwords, "noun"). "];\n".
       "\nconst exclOptions = [". dwsfmt($lsexwords, "excl"). "];\n".
       "\nconst pronOptions = [". dwsfmt($lspnwords, "pron"). "];\n".
       "\nconst infvOptions = [". dwsfmt($lsivwords, "vifv"). "];\n".
@@ -91,7 +97,7 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
       file_put_contents("./". $LlFfeil. ".html", $outstr);
 
       $outstr = "";
-      $lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnuwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lspswords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords="";
+      $lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lspswords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords="";
       htmlfmtinit();
       
     }else if(substr($line, 1, 4) == "----"){
@@ -134,7 +140,7 @@ global $lsltwords;
 global $lsanswords;
 global $lsrswords;
 global $lsixwords;
-global $lsnuwords;
+global $lsnnwords;
 global $lsexwords;
 global $lspnwords;
 global $lsivwords;
@@ -154,7 +160,7 @@ global $lsajwords;
         if(trim($word)=="") continue;
         if(preg_match("/`/", $word)){
           $atmp1 = explode("`", $word);
-          $type = "nu";
+          $type = "nn";
           if(isset($atmp1[1])){ $type = $atmp1[1]; }
           $word = $atmp1[0]. "`";
           $lword="";
@@ -189,8 +195,8 @@ global $lsajwords;
               $lsrswords .= mb_substr($word,0,-1). " ";
             }else if($type == "ix"){
               $lsixwords .= mb_substr($word,0,-1). " ";
-            }else if($type == "nu"){
-              $lsnuwords .= mb_substr($word,0,-1). " ";
+            }else if($type == "nn"){
+              $lsnnwords .= mb_substr($word,0,-1). " ";
             }else if($type == "ex"){
               $lsexwords .= mb_substr($word,0,-1). " ";
             }else if($type == "pn"){
@@ -208,7 +214,7 @@ global $lsajwords;
             }else if($type == "aj"){
               $lsajwords .= mb_substr($word,0,-1). " ";
             }else {
-              $lsnuwords .= mb_substr($word,0,-1). " ";
+              $lsnnwords .= mb_substr($word,0,-1). " ";
             }
 
 
@@ -442,7 +448,7 @@ $LlCyn= '
    You can check your answers by clicking on the \'Check Answers\' button. When you have completed all selections correctly, a message will appear. Make a note of the "Success code" and time taken in seconds. ' .
     //', and paste them into my Preply chat at <u>https://preply.com/en/messages</u>. 
     '<span xxstyle="color:red;">If you are having difficulties, please take a screenshot and we can look at it in class. Repeat this exercise as often as you like by clicking the \'Reset\' button to gain better familiarity and timing. Best of luck!</span> 
-    <!-- b>Note: init=initiator, rs=response, ix=inflexion, nu=noun, ex=exclamation, pn=pronoun, iv=infinitive, ct=connector, av=adverb, ps=preposition, id=idiom, aj=adjective.</b -->
+    <!-- b>Note: init=initiator, rs=response, ix=inflexion, nn=noun, ex=exclamation, pn=pronoun, iv=infinitive, ct=connector, av=adverb, ps=preposition, id=idiom, aj=adjective.</b -->
 
 
 
@@ -451,7 +457,9 @@ $LlCyn= '
 
 
 
-  </span><br/>
+  </span>
+<br/>
+<br/>
   <!--
   <img style="height:300px;" src="file://C:/Users/user/downloads/Copilot_20250925_110423.png"></img> 
   -->'.
@@ -518,6 +526,7 @@ $LlRhwng='
     ';
 
 
+$LlPlygellSain = "mp3_". $LlGwers;
 
 
 $LlWedi='
@@ -585,6 +594,9 @@ $LlWedi='
           } else if (ansrOptions.includes(word)) {
             const select = createSelect(ansrOptions, s.answers[answerIndex++]);
             div.appendChild(select);
+          } else if (respOptions.includes(word)) {
+            const select = createSelect(respOptions, s.answers[answerIndex++]);
+            div.appendChild(select);
           } else if (lttrOptions.includes(word)) {
             const select = createSelect(lttrOptions, s.answers[answerIndex++]);
             div.appendChild(select);
@@ -623,6 +635,16 @@ $LlWedi='
 
 .'/");
                  word = word.replace(/<\/plyssnd>/, ".mp3\')\">▶️</button>");
+                 word = removeAccents(word);
+               } else if(word.substring(0,8) == "<shwjpg>"){
+                 wrdtmp = "";
+                 word = word.replace(/<shwjpg>/, "<img style=\'width:90%;\' src=\'./img_'. $LlGwers. '/");
+                 word = word.replace(/<\/shwjpg>/, ".jpg\' />");
+                 word = removeAccents(word);
+               } else if(word.substring(0,8) == "<shwpng>"){
+                 wrdtmp = "";
+                 word = word.replace(/<shwpng>/, "<img style=\'width:90%;\' src=\'./img_'. $LlGwers. '/");
+                 word = word.replace(/<\/shwpng>/, ".jpg\' />");
                  word = removeAccents(word);
                } 
                span.innerHTML = word + ""+wrdtmp;
