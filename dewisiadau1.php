@@ -464,24 +464,17 @@ $LlHtmlGwaelod=
 ';
 
 
-
 $LlCyn= '
   <span style="font-size:140%;font-weight:bold;">'. $LlGwers. ' - Choose the correct answer for all selections.</span><br/>
   <span style="font-size:90%;xxfont-weight:bold;">
-   You can check your answers by clicking on the \'Check Answers\' button. When you have completed all selections correctly, a message will appear. Make a note of the "Success code" and time taken in seconds. ' .
+   <!-- You can check your answers by clicking on the \'Check Answers\' button. -->
+   When you have completed all selections correctly, a message will appear. Make a note of the "Success code" and time taken in seconds. ' .
     //', and paste them into my Preply chat at <u>https://preply.com/en/messages</u>. 
     '<span xxstyle="color:red;">If you are having difficulties, please take a screenshot and we can look at it in class. Repeat this exercise as often as you like by clicking the \'Reset\' button to gain better familiarity and timing. Best of luck!</span> 
-    <!-- b>Note: init=initiator, rs=response, ix=inflexion, nn=noun, ex=exclamation, pn=pronoun, iv=infinitive, ct=connector, av=adverb, ps=preposition, id=idiom, aj=adjective.</b -->
-
-
-
-
-
-
-
-
   </span>
-<br/>
+
+  <div style="margin-top:2px;" ><span id="correctAnsMsg" xxstyle="font-weight:bold;color:red;background-color:#ffff00;">&emsp;</span></div>
+
 <br/>
   <!--
   <img style="height:300px;" src="file://C:/Users/user/downloads/Copilot_20250925_110423.png"></img> 
@@ -493,7 +486,7 @@ $LlCyn= '
 
   <div class="container" xxv5 id="sentences"></div>
 
-  <button onclick="checkAnswers()">Check Answers</button>
+  <button style="display:none;" onclick="checkAnswers()">Check Answers</button>
   <button id="reset-btn">Reset</button>&emsp;<a id="nextlnk" href="./modiwl00'. $LlNesaf. '.html" style="display:'.
 
 
@@ -508,7 +501,10 @@ $LlCyn= '
   <div id="goodJob">'
     .'🎉 <b>Good Job! </b>🎉'.
    '<br/><span style="font-size:70%;">Please make a note of your success code and module number as you will need it later:<br/>Success Code: <b>' .  strtolower($LlTeitl ). '</b><br/>Module: <b>'. strtolower($LlGwers)
-    .'</b> <br>Time taken: <span id="spsecs"></span> secs</span></div>
+    .'</b> <br>Time taken: <span id="spsecs"></span> secs
+       <br>Average time: <span id="avgSecs"></span> secs
+       <br><span style="font-size:350%;" id="speedEmoji"></span>
+       <br><span id="speedMsg"></span></div>
 
 
   <!-- Include canvas-confetti via CDN -->
@@ -751,6 +747,40 @@ $LlWedi='
       const secondsElapsed = Math.floor((now - loadTime) / 1000);
       const spsecs = document.getElementById("spsecs");
       spsecs.innerHTML = secondsElapsed;
+      
+      const avgSecs =  (secondsElapsed/selwordcount).toFixed(2);
+      const repeatMsg = "Repeat this activity as often as you like to see whether you can be a faster animal.";
+      let speedStr = "You are a squirrel! You are the 8th fastest!" + " " + repeatMsg;
+      let speedEmoji = "🐿";
+    
+      //alert(avgSecs);
+      if      (avgSecs < 1.5){
+         speedStr = "You are a cheetah! You are the fastest!";
+         speedEmoji = "🐆";
+      }else if(avgSecs < 1.7){
+         speedStr = "You are a lion! You are the 2ns fastest!" + " " + repeatMsg;
+         speedEmoji = "🦁";
+      }else if(avgSecs < 1.9){
+         speedStr = "You are a horse! You are the 3rd fastest!" + " " + repeatMsg;
+         speedEmoji = "🐎";
+      }else if(avgSecs < 2.1){
+         speedStr = "You are a hare! You are the 4th fastest!" + " " + repeatMsg;
+         speedEmoji = "🐇";
+      }else if(avgSecs < 2.5){
+         speedStr = "You are an elk! You are the 5th fastest!" + " " + repeatMsg;
+         speedEmoji = "🫎";
+      }else if(avgSecs < 3){
+         speedStr = "You are a zebra! You are the 6th fastest!" + " " + repeatMsg;
+         speedEmoji = "🦓";
+      }else if(avgSecs < 3.5){
+         speedStr = "You are a kangaroo! You are the 7th fastest!" + " " + repeatMsg;
+         speedEmoji = "🦘";
+      }
+      document.getElementById("avgSecs").innerHTML = avgSecs;
+      document.getElementById("speedMsg").innerHTML = speedStr;
+      document.getElementById("speedEmoji").innerHTML = speedEmoji;
+
+
 
       message.style.display = "block";
 
@@ -919,6 +949,81 @@ window.onload = getEncryptedParameter;
             }
         };
     }
+</script>
+
+
+
+<script>
+  const messageDiv = document.getElementById("correctAnsMsg");
+
+  let fadeTimeout, resetTimeout;
+
+  //btn.addEventListener("click", () => {
+  function dispCorrectAnsMsg(pmsg){
+    // Clear any previous timeouts to reset fade
+    clearTimeout(fadeTimeout);
+    clearTimeout(resetTimeout);
+
+    pmsg = pmsg.replace(/_/g, " ");
+    // Show message and make it fully opaque
+    messageDiv.innerHTML = "<span style=\"font-weight:bold;color:red;background-color:#ffff88;border:2px solid red;padding:2px;\">Answer: " + pmsg + "</span>";
+    messageDiv.style.transition = "none";  // reset transition to show immediately
+    messageDiv.style.opacity = "1";
+
+    // Force reflow to apply the style without transition
+    messageDiv.offsetWidth;
+
+    // After 2 seconds, fade out over 2 seconds
+    resetTimeout = setTimeout(() => {
+      messageDiv.style.transition = "opacity 0.3s linear";
+      messageDiv.style.opacity = "0";
+    }, 300);
+
+    // After fade completes (4s total), clear the message text
+    fadeTimeout = setTimeout(() => {
+      messageDiv.innerHTML = "____ ";
+    }, 4000);
+  //});
+  }//endfunc
+</script>
+
+
+<script>
+// Assuming this code is inside a change event handler for a select element
+function handleSelectChange(event) {
+  const select = event.target;
+  const userAnswer = select.value;
+  const correctAnswer = select.dataset.correct;
+
+  if (userAnswer === correctAnswer) {
+    select.classList.add("correct");
+    select.classList.remove("incorrect");
+  } else {
+    dispCorrectAnsMsg(correctAnswer);
+    select.classList.add("incorrect");
+    select.classList.remove("correct");
+  }
+
+  // Optional: If you want to check if all selects are correct after this change
+  const selects = document.querySelectorAll("select");
+  let allCorrect = true;
+  selects.forEach(s => {
+    if (s.value !== s.dataset.correct) {
+      allCorrect = false;
+    }
+  });
+
+  if (allCorrect) {
+    showSuccess();
+  }
+}
+
+// Attach event listener to all selects (do this once)
+document.querySelectorAll("select").forEach(select => {
+  select.addEventListener("change", handleSelectChange);
+});
+
+
 </script>
 
 

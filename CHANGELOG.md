@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.43_251003-1730 - enhancements to dewisiadau1.php - Added automatic correct answer check and hint to correct answer if incorrect
+-  Amendments as per the release description
+
 ## 0.0.42_251003-1304 - enhancements in dewisiadau1.php and htmlfmt.php - new variables LlNesaf, LlCynModiwl, and LlCynTeitl
 -  Amendments as per the release description
 
