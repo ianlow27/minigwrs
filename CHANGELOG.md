@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.42_251003-1304 - enhancements in dewisiadau1.php and htmlfmt.php - new variables LlNesaf, LlCynModiwl, and LlCynTeitl
+-  Amendments as per the release description
+
 ## 0.0.41_251001-2255 - added shwpng and shwjpg functionality to dewisiadau1.php to show images within the texts
 -  Amendments as per the release description
 

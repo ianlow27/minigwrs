@@ -92,7 +92,7 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
       $outstr2 = acenau($outstr2);
 
       //$outstr = ffurfweddu(dewisiadausetsections($outstr));
-      $outstr = (dewisiadausetsections($outstr, $outstr2, $LlFfeil ));
+      $outstr = ffurfweddu((dewisiadausetsections($outstr, $outstr2, $LlFfeil )));
 
       file_put_contents("./". $LlFfeil. ".html", $outstr);
 
@@ -272,6 +272,9 @@ global $LlCwrs;
 global $LlGwers;
 global $LlDidoli;
 global $LlTeitl;
+global $LlCynModiwl;
+global $LlCynTeitl;
+global $LlNesaf;
 global $LlPlygellSain;
 global $LlLlun1;
 global $LlCyfarwyddo;
@@ -389,9 +392,13 @@ $LlHtmlBrig='
 #goodJob {
   display: none;
   position: fixed;
-  top: 50%;
   left: 50%;
+  /*
+  top: 50%;
   transform: translate(-50%, -50%);
+  */
+  top: 50px;
+  transform: translate(-50%);
   font-size: 160%;
   color: #188715;
   background-color: white;
@@ -407,12 +414,28 @@ $LlHtmlBrig='
 <body>
 <div id="lock-screen">
   <center>
-  <h2>Ian\'s Welsh Class - Homework<br/>'.  $pmod. '
-  <br/>Enter the password to access the page</h2>
-  </center>
+  <h2>Ian\'s Welsh Class - Homework<br/>'.  $pmod. '<br/>
+
+
+  <div style=display:'.
+
+
+  ($LlCynTeitl == "" ? "none" : "block" )
+
+
+
+.';""><br/>Enter your success code from modiwl00' . $LlCynModiwl     .'<br/>
+  <input type="password" id="successcode" placeholder="Success Code">
+
+  </div>Enter your password to access the page<br/>
   <input type="password" id="password-input" placeholder="Password">
-  <!-- button onclick="checkPassword()">Submit</button -->
   <p id="error" style="color: red; display: none;"></p>
+
+  </h2>
+
+
+
+  </center>
 </div>
 
 <div id="content">
@@ -471,12 +494,20 @@ $LlCyn= '
   <div class="container" xxv5 id="sentences"></div>
 
   <button onclick="checkAnswers()">Check Answers</button>
-  <button id="reset-btn">Reset</button>
+  <button id="reset-btn">Reset</button>&emsp;<a id="nextlnk" href="./modiwl00'. $LlNesaf. '.html" style="display:'.
 
 
-  <div id="goodJob">🎉 Good Job! 🎉<br/><span style="font-size:70%;">Success Code: <b>' . 
 
-    strtoupper( preg_replace("/\-/", "", $LlGwers . $LlTeitl ))
+
+   ( $LlNesaf == "" ? "none" : "inline" )
+
+
+
+  .';" >Next Assignment - '. $LlNesaf. '</a>
+
+  <div id="goodJob">'
+    .'🎉 <b>Good Job! </b>🎉'.
+   '<br/><span style="font-size:70%;">Please make a note of your success code and module number as you will need it later:<br/>Success Code: <b>' .  strtolower($LlTeitl ). '</b><br/>Module: <b>'. strtolower($LlGwers)
     .'</b> <br>Time taken: <span id="spsecs"></span> secs</span></div>
 
 
@@ -526,7 +557,7 @@ $LlRhwng='
     ';
 
 
-$LlPlygellSain = "mp3_". $LlGwers;
+($LlPlygellSain == "" ?  "mp3_". $LlGwers : $LlPlygellSain);
 
 
 $LlWedi='
@@ -634,7 +665,7 @@ $LlWedi='
 (($LlPlygellSain == "") ? "mp3" : $LlPlygellSain)
 
 .'/");
-                 word = word.replace(/<\/plyssnd>/, ".mp3\')\">▶️</button>");
+                 word = word.replace(/<\/plyssnd>/, ".mp3\')\">▶️</button> ");
                  word = removeAccents(word);
                } else if(word.substring(0,8) == "<shwjpg>"){
                  wrdtmp = "";
@@ -647,7 +678,7 @@ $LlWedi='
                  word = word.replace(/<\/shwpng>/, ".jpg\' />");
                  word = removeAccents(word);
                } 
-               span.innerHTML = word + ""+wrdtmp;
+               span.innerHTML = word + "<b>" + wrdtmp + "</b> ";
             }else                      span.textContent = word + " ";
             div.appendChild(span);
 
@@ -742,7 +773,13 @@ $LlWedi='
 <script>
   let loadTime = "";
 
-   document.getElementById("password-input").focus();
+  '.
+
+   ($LlCynTeitl == "" 
+    ?  'document.getElementById("password-input").focus();' 
+    :  'document.getElementById("successcode").focus();' )
+
+  .'
    document.getElementById("reset-btn").addEventListener("click", () => {
       location.reload();
     });
@@ -750,14 +787,17 @@ $LlWedi='
   let correctPassword = "K\.?s{4(:@(3613~,?45!KJd^%$@£!)0{{1(Jksi3(*!%$@:"; // Change this to your desired password
 
   function checkPassword() {
-    const input = document.getElementById("password-input").value;
+    const input = document.getElementById("password-input").value.toLowerCase();;
+    const successcode = document.getElementById("successcode").value.toLowerCase();;
     //const error = document.getElementById("error");
 
     console.log (String(input).toLowerCase()  == String(correctPassword).toLowerCase() ); 
     if (String(input).toLowerCase()  == String(correctPassword).toLowerCase() ) {
-      document.getElementById("lock-screen").style.display = "none";
-      document.getElementById("content").style.display = "block";
-      loadTime = Date.now();
+      if (successcode == String("'. $LlCynTeitl. '").toLowerCase() ){
+        document.getElementById("lock-screen").style.display = "none";
+        document.getElementById("content").style.display = "block";
+        loadTime = Date.now();
+      }
 
     } else {
      //error.style.display = "block";
@@ -827,6 +867,7 @@ function getEncryptedParameter() {
         const passwd = encryptedValue;
         //console.log("Encrypted value:", passwd);
         //alert("Encrypted Password: " + passwd);
+        document.getElementById("nextlnk").href="./modiwl00'. $LlNesaf. '.html?u=" + u; 
         correctPassword = passwd + "123";
     } else {
         //alert("No \"u\" parameter in the URL!");
