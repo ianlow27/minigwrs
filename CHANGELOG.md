@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.44_251003-1928 - enhancements to dewisiadau1.php - Added more emojis to encourage incorrect answers and cheer correct answers
+-  Amendments as per the release description
+
 ## 0.0.43_251003-1730 - enhancements to dewisiadau1.php - Added automatic correct answer check and hint to correct answer if incorrect
 -  Amendments as per the release description
 

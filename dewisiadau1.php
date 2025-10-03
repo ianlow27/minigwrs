@@ -470,12 +470,12 @@ $LlCyn= '
    <!-- You can check your answers by clicking on the \'Check Answers\' button. -->
    When you have completed all selections correctly, a message will appear. Make a note of the "Success code" and time taken in seconds. ' .
     //', and paste them into my Preply chat at <u>https://preply.com/en/messages</u>. 
-    '<span xxstyle="color:red;">If you are having difficulties, please take a screenshot and we can look at it in class. Repeat this exercise as often as you like by clicking the \'Reset\' button to gain better familiarity and timing. Best of luck!</span> 
+    '<span xxstyle="color:red;">If you are having difficulties, please take a screenshot and we can look at it in class. Repeat this exercise as often as you like by clicking the \'Reset\' button to gain better familiarity and timing. Best of luck!
+</span> 
   </span>
 
-  <div style="margin-top:2px;" ><span id="correctAnsMsg" xxstyle="font-weight:bold;color:red;background-color:#ffff00;">&emsp;</span></div>
+  <center><div style="margin-top:2px;" ><span id="correctAnsMsg" xxstyle="font-weight:bold;color:red;background-color:#ffff00;">&emsp;</span></div></center>
 
-<br/>
   <!--
   <img style="height:300px;" src="file://C:/Users/user/downloads/Copilot_20250925_110423.png"></img> 
   -->'.
@@ -959,6 +959,28 @@ window.onload = getEncryptedParameter;
   let fadeTimeout, resetTimeout;
 
   //btn.addEventListener("click", () => {
+
+
+const encouragingEmojis = [
+ "💪","🌟","🚀",
+ //"🔥",
+ "🙌",
+ //"🧠", brain
+ //"✏️",
+ "📚","🌈",
+ //"☀️",
+ "🍀",
+ //"🕊️", dove
+ "🫶","🤗","💖","👏","🚀","🌱","🌈"
+ ,"✨","✨"
+];
+
+
+
+
+
+
+
   function dispCorrectAnsMsg(pmsg){
     // Clear any previous timeouts to reset fade
     clearTimeout(fadeTimeout);
@@ -966,7 +988,18 @@ window.onload = getEncryptedParameter;
 
     pmsg = pmsg.replace(/_/g, " ");
     // Show message and make it fully opaque
-    messageDiv.innerHTML = "<span style=\"font-weight:bold;color:red;background-color:#ffff88;border:2px solid red;padding:2px;\">Answer: " + pmsg + "</span>";
+
+
+    // messageDiv.innerHTML = "<span style=\"font-weight:bold;color:red;background-color:#ffff88;border:2px solid red;padding:2px;\">Answer: " + pmsg + "</span>";
+
+    const aEmojiPair = Array.from(getRandomEmojiPair());
+    messageDiv.innerHTML =
+        "<span style=\"font-size:250%;\"> "+ aEmojiPair[0] + " </span>" +
+        "<span style=\"font-size:100%;\"> "+ pmsg + " </span>" +
+        "<span style=\"font-size:250%;\"> "+ aEmojiPair[1] + " </span>" +
+        "";
+
+
     messageDiv.style.transition = "none";  // reset transition to show immediately
     messageDiv.style.opacity = "1";
 
@@ -981,10 +1014,27 @@ window.onload = getEncryptedParameter;
 
     // After fade completes (4s total), clear the message text
     fadeTimeout = setTimeout(() => {
-      messageDiv.innerHTML = "____ ";
+      messageDiv.innerHTML = "<span style=\"font-size:250%;\"> _____ </span>";
     }, 4000);
   //});
   }//endfunc
+
+
+function getRandomEmojiPair() {
+  const firstIndex = Math.floor(Math.random() * (encouragingEmojis.length - 1));
+  
+  let secondIndex;
+  do {
+    secondIndex = Math.floor(Math.random() * (encouragingEmojis.length -1));
+  } while (secondIndex === firstIndex); // Ensure it is different
+console.log(firstIndex + "___" + secondIndex);
+
+  const emojiPair = encouragingEmojis[firstIndex] + encouragingEmojis[secondIndex];
+  return emojiPair;
+}
+
+
+
 </script>
 
 
@@ -995,11 +1045,29 @@ function handleSelectChange(event) {
   const userAnswer = select.value;
   const correctAnswer = select.dataset.correct;
 
+  const goodJobEmojis = [
+    "🥳", "🎈", "🎉" , "🎊" , "🎊"
+  ];
+  const encouragingPhrases = [
+      "BRILLIANT!", "WELL DONE!", "PERFECT!",
+      "GOOD JOB!", "GREAT WORK!", "NICE GOING!",
+      "EXCELLENT EFFORT!", "THAT IS IMPRESSIVE!",
+      "BRAVO!", "AWESOME!", "FANTASTIC!",
+      "AMAZING!", "WONDERDUL!", "PROUD OF YOU!",
+      "WAY TO GO!"
+  ];
+  const phrsIdx = Math.floor(Math.random() * (encouragingPhrases.length - 1));
+  const goodJobEmojiIdx1 = Math.floor(Math.random() * (goodJobEmojis.length - 1));
+  const goodJobEmojiIdx2 = Math.floor(Math.random() * (goodJobEmojis.length - 1));
   if (userAnswer === correctAnswer) {
+    dispCorrectAnsMsg(
+      " <span style=\"font-size:250%;\">" + goodJobEmojis[goodJobEmojiIdx1] + "</span>" 
+    + " <span style=\"font-weight:bold;color:green;\">"+ encouragingPhrases[phrsIdx]  + "</span>" 
+    + " <span style=\"font-size:250%;\">" + goodJobEmojis[goodJobEmojiIdx2] + "</span>"  );
     select.classList.add("correct");
     select.classList.remove("incorrect");
   } else {
-    dispCorrectAnsMsg(correctAnswer);
+    dispCorrectAnsMsg("Answer: <span style=\"font-weight:bold;color:red;\">"+ correctAnswer + "</span>");
     select.classList.add("incorrect");
     select.classList.remove("correct");
   }
