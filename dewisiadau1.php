@@ -36,7 +36,7 @@ include "../mjemojis.php";
 //============================================
 //============================================
 $outstr = "<!DOCTYPE><html><body>";
-$lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lspswords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords="";
+$lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lspswords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords=""; $lsartwords=""; $lsnewwords=""; $lsnbwords="";
 htmlfmtinit();
 foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
   if((mb_substr($line, 0, 1)=="|") 
@@ -58,28 +58,23 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
 
 
     if(substr($line, 1, 4) == "===="){
-      //$outstr .= "</body></html>";
-      //echo $outstr;
-      //$outstr = preg_replace("/\n/", "<br>", $outstr);
+
       $outstr = acenau($outstr);
 
-      $outstr = preg_replace( "/plysnd_([´âêîôûŵŴŷáÁỳàäëïÏöÖëa-zA-Z0-9^_]+)/", "<plysnd>$1</plysnd>", $outstr);
-      $outstr = preg_replace("/plyssnd_([´âêîôûŵŴŷáÁỳàäëïÏöÖëa-zA-Z0-9^_]+)/", "<plyssnd>$1</plyssnd>", $outstr);
-      $outstr = preg_replace( "/shwjpg_([´âêîôûŵŴŷáÁỳàäëïÏöÖëa-zA-Z0-9^_\.\,\-]+)/", "<shwjpg>$1</shwjpg>", $outstr);
-      $outstr = preg_replace( "/shwpng_([´âêîôûŵŴŷáÁỳàäëïÏöÖëa-zA-Z0-9^_\.\,\-]+)/", "<shwpng>$1</shwpng>", $outstr);
-
-
-
-
-
+      $outstr = preg_replace( "/plysnd_(['´âêîôûŵŴŷáÁỳàäëïÏöÖëa-zA-Z0-9^_]+)/", "<plysnd>$1</plysnd>", $outstr);
+      $outstr = preg_replace("/plyssnd_(['´âêîôûŵŴŷáÁỳàäëïÏöÖëa-zA-Z0-9^_]+)/", "<plyssnd>$1</plyssnd>", $outstr);
+      $outstr = preg_replace( "/shwjpg_(['´âêîôûŵŴŷáÁỳàäëïÏöÖëa-zA-Z0-9^_\.\,\-]+)/", "<shwjpg>$1</shwjpg>", $outstr);
+      $outstr = preg_replace( "/shwpng_(['´âêîôûŵŴŷáÁỳàäëïÏöÖëa-zA-Z0-9^_\.\,\-]+)/", "<shwpng>$1</shwpng>", $outstr);
 
       $outstr2 = 
       "\nconst ansrOptions = [". dwsfmt($lsanswords, "ans"). "];\n".
+      "\nconst artlOptions = [". dwsfmt($lsartwords, "art"). "];\n".
       "\nconst initOptions = [". dwsfmt($lsitwords, "init"). "];\n".
       "\nconst lttrOptions = [". dwsfmt($lsltwords, "ltr"). "];\n".
       "\nconst respOptions = [". dwsfmt($lsrswords, "rsp"). "];\n".
       "\nconst infxOptions = [". dwsfmt($lsixwords, "vifx"). "];\n".
       "\nconst nounOptions = [". dwsfmt($lsnnwords, "noun"). "];\n".
+      "\nconst numbOptions = [". dwsfmt($lsnbwords, "num"). "];\n".
       "\nconst exclOptions = [". dwsfmt($lsexwords, "excl"). "];\n".
       "\nconst pronOptions = [". dwsfmt($lspnwords, "pron"). "];\n".
       "\nconst infvOptions = [". dwsfmt($lsivwords, "vifv"). "];\n".
@@ -95,9 +90,24 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
       $outstr = ffurfweddu((dewisiadausetsections($outstr, $outstr2, $LlFfeil )));
 
       file_put_contents("./". $LlFfeil. ".html", $outstr);
+      if($lsnewwords != ""){
+           $atmp1 = explode(" ", $lsnewwords);
+           $atmp1 = array_filter(array_unique($atmp1)); 
+           sort($atmp1);
+           $retstr = "";
+           $lsnewwords = "";
+           foreach($atmp1 as $ln){
+             //if($retstr != "") $retstr .='\n';
+             $lsnewwords .= $ln. " ";
+             $retstr .=  "|plyssnd_XXX (xx {*".mb_substr($ln,0,1)."__*}) ".$ln."`ans\n";
+           }//endforeach
+           $retstr = trim($lsnewwords) . "\n\n". $retstr;
+           file_put_contents("./". $LlFfeil. "_new.txt", $retstr);
+  
+      }
 
       $outstr = "";
-      $lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lspswords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords="";
+      $lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lspswords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords=""; $lsartwords=""; $lsnewwords=""; $lsnbwords="";
       htmlfmtinit();
       
     }else if(substr($line, 1, 4) == "----"){
@@ -138,9 +148,12 @@ global $lswords;
 global $lsitwords;
 global $lsltwords;
 global $lsanswords;
+global $lsartwords;
 global $lsrswords;
 global $lsixwords;
 global $lsnnwords;
+global $lsnbwords;
+global $lsnewwords;
 global $lsexwords;
 global $lspnwords;
 global $lsivwords;
@@ -158,7 +171,7 @@ global $lsajwords;
       $lnwords = "";
       foreach($awords as $word){
         if(trim($word)=="") continue;
-        if(preg_match("/`/", $word)){
+        if((preg_match("/`/", $word)) && (!preg_match("/`@/", $word)) ){
           $atmp1 = explode("`", $word);
           $type = "nn";
           if(isset($atmp1[1])){ $type = $atmp1[1]; }
@@ -187,6 +200,8 @@ global $lsajwords;
             $lswords .= mb_substr($word,0,-1). " ";
             if      ($type == "it"){
               $lsitwords .= mb_substr($word,0,-1). " ";
+            }else if($type == "at"){
+              $lsartwords .= mb_substr($word,0,-1). " ";
             }else if($type == "ans"){
               $lsanswords .= mb_substr($word,0,-1). " ";
             }else if($type == "lt"){
@@ -197,6 +212,8 @@ global $lsajwords;
               $lsixwords .= mb_substr($word,0,-1). " ";
             }else if($type == "nn"){
               $lsnnwords .= mb_substr($word,0,-1). " ";
+            }else if($type == "nb"){
+              $lsnbwords .= mb_substr($word,0,-1). " ";
             }else if($type == "ex"){
               $lsexwords .= mb_substr($word,0,-1). " ";
             }else if($type == "pn"){
@@ -230,6 +247,11 @@ global $lsajwords;
           if($lnwords != "") $lnwords .= ', ';
           $lnwords .= '"'. $lword. '"';
           
+        }else if(preg_match("/`@/", $word)){
+          $atmp1 = explode("`", $word);
+          if($lsnewwords != "") $lsnewwords .= ' ';
+          $lsnewwords .=  strtolower($atmp1[0]);
+
         }else {
           if($lnout != "") $lnout .= ', ';
           $lnout .= '"'. $word. '"';
@@ -286,6 +308,7 @@ $LlHtmlBrig='
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ian\'s Welsh Class Homework</title>
   <style>
     .container {
@@ -636,23 +659,41 @@ $LlWedi='
           } else if (nounOptions.includes(word)) {
             const select = createSelect(nounOptions, s.answers[answerIndex++]);
             div.appendChild(select);
+          } else if (numbOptions.includes(word)) {
+            const select = createSelect(numbOptions, s.answers[answerIndex++]);
+            div.appendChild(select);
+          } else if (artlOptions.includes(word)) {
+            const select = createSelect(artlOptions, s.answers[answerIndex++]);
+            div.appendChild(select);
+          //} else if (newwOptions.includes(word)) {
+          //  bselectword = false;
+          //  const span = document.createElement("span");
+          //  span.textContent = word + " ";
+          //  div.appendChild(span);
+
           } else {
             bselectword = false;
             //const span = document.createElement("span");
             //span.textContent = word + " ";
             //div.appendChild(span);
 
+            word = word.replace(/`@/g, "");
             const span = document.createElement("span");
             let wrdtmp = "";
             if(word.charAt(0) == "<"){
-               if(word.substring(0,8) == "<plysnd>"){
+//----------------------------------
+               if(word.substring(0,8) == "<xxxxxplysnd>"){
+
+
+                 //word = word.replace(/\'/g, "");
                  word = word.replace(/<plysnd>/, "<button style=\'font-size: 18px; cursor: pointer; background: none; border: none; padding:0px; margin:0px;\' onclick=\"playSound(\'./'.
 
 (($LlPlygellSain == "") ? "mp3" : $LlPlygellSain)
 
 .'/");
                  word = word.replace(/<\/plysnd>/, ".mp3\')\">▶️</button>");
-               } else if(word.substring(0,9) == "<plyssnd>"){
+               } else if(word.substring(0,9) == "<xxxxplyssnd>"){
+                 //word = word.replace(/\'/g, "");
                  wrdtmp = " " + word;
                  wrdtmp = wrdtmp.replace(/<plyssnd>/, "");
                  wrdtmp = wrdtmp.replace(/<\/plyssnd>/, "");
@@ -663,6 +704,28 @@ $LlWedi='
 .'/");
                  word = word.replace(/<\/plyssnd>/, ".mp3\')\">▶️</button> ");
                  word = removeAccents(word);
+//----------------------------------
+//----------------------------------
+              }else if(word.substring(0,8) == "<plysnd>"){
+                word = word.replace(/<plysnd>/, "");
+                word = word.replace(/<\/plysnd>/, "");
+                let fname2 = removeAccents(word);
+                word = "<button style=\'font-size: 18px; cursor: pointer; background: none; border: none; padding:0px; margin:0px;\' onclick=\"playSound(\'./'.
+
+(($LlPlygellSain == "") ? "mp3" : $LlPlygellSain)
+
+.'/" + fname2 + ".mp3\')\">▶️</button>";
+
+              }else if(word.substring(0,9) == "<plyssnd>"){
+                word = word.replace(/<plyssnd>/, "");
+                word = word.replace(/<\/plyssnd>/, "");
+                wrdtmp = " " + word;
+                let fname2 = removeAccents(word);
+                word = "<button style=\'font-size: 18px; cursor: pointer; background: none; border: none; padding:0px; margin:0px;\' onclick=\"playSound(\'./'.
+(($LlPlygellSain == "") ? "mp3" : $LlPlygellSain)
+.'/" + fname2 + ".mp3\')\">▶️</button>";
+
+//----------------------------------
                } else if(word.substring(0,8) == "<shwjpg>"){
                  wrdtmp = "";
                  word = word.replace(/<shwjpg>/, "<img style=\'width:90%;\' src=\'./img_'. $LlGwers. '/");
@@ -692,7 +755,7 @@ $LlWedi='
     }//endfunc
 
     function removeAccents(pstr){
-        if (pstr.match(/[âêîôûŵŴŷáÁỳàäëïÏöÖë]+/)){
+        if (pstr.match(/[âêîôûŵŴŷáÁỳàäëïÏöÖë\']+/)){
           pstr = pstr.replace(/â/, "a");
           pstr = pstr.replace(/ê/, "e");
           pstr = pstr.replace(/î/, "i");
@@ -711,6 +774,7 @@ $LlWedi='
           pstr = pstr.replace(/Ï/, "I");
           pstr = pstr.replace(/ö/, "o");
           pstr = pstr.replace(/ë/, "e");
+          pstr = pstr.replace(/\'/,"-");
         }
         return pstr;
 
@@ -855,6 +919,7 @@ $LlWedi='
 
 <script>
     function playSound(pstr) {
+      pstr = pstr.replace(/\'/g, "");
       const audio = new Audio(pstr);
 
 console.log(pstr);
@@ -1060,6 +1125,7 @@ function handleSelectChange(event) {
   const goodJobEmojiIdx1 = Math.floor(Math.random() * (goodJobEmojis.length - 1));
   const goodJobEmojiIdx2 = Math.floor(Math.random() * (goodJobEmojis.length - 1));
   if (userAnswer === correctAnswer) {
+    playSound("./correct1.mp3");
     dispCorrectAnsMsg(
       " <span style=\"font-size:250%;\">" + goodJobEmojis[goodJobEmojiIdx1] + "</span>" 
     + " <span style=\"font-weight:bold;color:green;\">"+ encouragingPhrases[phrsIdx]  + "</span>" 

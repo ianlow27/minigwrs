@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.45_251004-1651 - enhancements to dewisiadau1.php - bugfixes, and handling of names of files with accents and apostraphes in the sound file name, etc.
+-  Amendments as per the release description
+
 ## 0.0.44_251003-1928 - enhancements to dewisiadau1.php - Added more emojis to encourage incorrect answers and cheer correct answers
 -  Amendments as per the release description
 
