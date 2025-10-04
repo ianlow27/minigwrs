@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.46_251004-2025 - enhancements to dewisiadau1.php - play audio of word, if available, when the students selects the correct answer, otherwise play normal correct sound
+-  Amendments as per the release description
+
 ## 0.0.45_251004-1651 - enhancements to dewisiadau1.php - bugfixes, and handling of names of files with accents and apostraphes in the sound file name, etc.
 -  Amendments as per the release description
 

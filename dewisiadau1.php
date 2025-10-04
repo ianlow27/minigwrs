@@ -1124,8 +1124,29 @@ function handleSelectChange(event) {
   const phrsIdx = Math.floor(Math.random() * (encouragingPhrases.length - 1));
   const goodJobEmojiIdx1 = Math.floor(Math.random() * (goodJobEmojis.length - 1));
   const goodJobEmojiIdx2 = Math.floor(Math.random() * (goodJobEmojis.length - 1));
+
   if (userAnswer === correctAnswer) {
-    playSound("./correct1.mp3");
+//-------------------------------------------------
+     let bplayed = false;
+     const parentDiv = this.closest(".sentence");
+     // Get all span siblings before or after the select
+     const spans = parentDiv.querySelectorAll("span");
+     spans.forEach(span => {
+           const button = span.querySelector("button");
+           if (button) {
+               const onclickAttr = button.getAttribute("onclick");
+               const match = onclickAttr.match(/playSound\([\'"](.+?)[\'"]\)/);
+               if (match) {
+                   bplayed = true;
+                   playSound(match[1]); // "./mp3/test1.mp3"
+               }
+           }
+      });
+//--------------------------------------------------------
+    if(!bplayed) playSound("./correct1.mp3");
+//---------------------------------------------
+   // playSound("./correct1.mp3");
+
     dispCorrectAnsMsg(
       " <span style=\"font-size:250%;\">" + goodJobEmojis[goodJobEmojiIdx1] + "</span>" 
     + " <span style=\"font-weight:bold;color:green;\">"+ encouragingPhrases[phrsIdx]  + "</span>" 
