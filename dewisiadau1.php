@@ -91,6 +91,7 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
           file_put_contents("./". $LlFfeil. "_2mod.txt", $l2ndMod);
       }
       if($lsnewwords != ""){
+//echo "____94>>". $lsnewwords. "\n";
            $atmp1 = explode(" ", $lsnewwords);
            $atmp1 = array_filter(array_unique($atmp1)); 
            sort($atmp1);
@@ -98,9 +99,12 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
            $lsnewwords = "";
            foreach($atmp1 as $ln){
              //if($retstr != "") $retstr .='\n';
-             $atmp1b = preg_split("/[@!]/", $ln);
+             $ln = preg_replace("/¬/", "@", $ln);
+             //$atmp1b = preg_split("/[@&]/", $ln);
+             $atmp1b = explode("@", $ln);
              if(isset($atmp1b[2])){
                $lsnewwords .= $ln. " ";
+echo "__________>>105>>>". $atmp1b[1]."___[". $atmp1b[2]. "]__". $ln. "\n";
                $retstr .=  "|plyssnd_". $atmp1b[1]. " (". $atmp1b[2] ." {*".mb_substr($ln,0,1)."__*}) ".$atmp1b[0]."`ans\n";
              }
            }//endforeach
@@ -243,8 +247,12 @@ global $a2ndMod;
               $lsidwords .= mb_substr($word,0,-1). " ";
             }else if($type == "aj"){
               $lsajwords .= mb_substr($word,0,-1). " ";
+            }else if($type == "nm"){
+              $lsnnwords .= mb_substr($word,0,-1). " ";
+            }else if($type == "nf"){
+              $lsnnwords .= mb_substr($word,0,-1). " ";
             }else {
-echo "ERROR!!!------------>[". $origword. "] in [". $line ."]\n";
+echo "ERROR!!!(251)---speechtype code not found>[". $origword. "] in [". $line ."]\n";
 die();
 
               $lsnnwords .= mb_substr($word,0,-1). " ";
@@ -268,9 +276,9 @@ die();
           $atmp1 = explode("`", $word);
           // word = "phone`@ffo*n!nm"
           if(isset($atmp1[1])){
-echo "__________________283a>>".  $atmp1[0]. "___". $atmp1[1]. "\n";
+//echo "__________________283a>>".  $atmp1[0]. "___". $atmp1[1]. "\n";
             if(preg_match("/¬/", $atmp1[1])){
-echo "__________________283b>>".  $atmp1[0]. "___". $atmp1[1]. "\n";
+//echo "__________________283b>>".  $lsnewwords. "\n";
               if($lsnewwords != "") $lsnewwords .= ' ';
               $lsnewwords .=  strtolower($atmp1[0]. $atmp1[1]);
               $bnewword = true;
@@ -281,11 +289,11 @@ echo "__________________283b>>".  $atmp1[0]. "___". $atmp1[1]. "\n";
                 );
               $b2ndMod = true; 
               $a2ndMod[$atmp1[0]] = $atmp1[1];
-echo "__________________283>>".  $atmp1[0]. "___". $atmp1[1]. "\n";
+//echo "__________________283>>".  $atmp1[0]. "___". $atmp1[1]. "\n";
             }else {
-echo "__________________285>>".  $atmp1[0]. "\n";
+//echo "__________________285>>".  $atmp1[0]. "\n";
               if(!isset($a2ndMod[$atmp1[0]])){
-echo "ERROR!!!------------>[". $atmp1[0]. "] not set in [". $line ."]\n";
+echo "ERROR!!!(292)-engword not set with cymword-->[". $atmp1[0]. "] not set in [". $line ."]\n";
 die();
               }else {
                 $bnewword = true;
