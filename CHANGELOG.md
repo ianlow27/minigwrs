@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.47_251006-1622 - enhancements to dewisiadau1.php - Add functionality to handle speech parts for "poss", "nm", and "nf", as well as for generation of _new.txt and _2mod.txt files. In _new.txt the new vocab list is added from the story. In _2mod.txt the same story is used to test the learnt new vocab using the same story as before.
+-  Amendments as per the release description
+
 ## 0.0.46_251004-2025 - enhancements to dewisiadau1.php - play audio of word, if available, when the students selects the correct answer, otherwise play normal correct sound
 -  Amendments as per the release description
 

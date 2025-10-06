@@ -36,7 +36,7 @@ include "../mjemojis.php";
 //============================================
 //============================================
 $outstr = "<!DOCTYPE><html><body>";
-$lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lspswords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords=""; $lsartwords=""; $lsnewwords=""; $lsnbwords="";
+$lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lsppwords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords=""; $lsartwords=""; $lsnewwords=""; $lsnbwords=""; $lspvwords=""; $l2ndMod=""; $b2ndMod = false; $a2ndMod = [];
 htmlfmtinit();
 foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
   if((mb_substr($line, 0, 1)=="|") 
@@ -45,17 +45,12 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
    ||(mb_substr($line, 0, 1)=="¬")){
     $char1 = mb_substr($line, 0, 1);
 
-
-
-
-
     $line = mb_substr($line, 1);
     //echo "____". $line. "\n";
     $line = preg_replace("/ \"/", " {{ ", $line);
     $line = preg_replace("/^\"/", " {{ ", $line);
     $line = preg_replace("/\" /", " }} ", $line);
     $line = preg_replace("/([!?,\.;:])/", " $1", $line);
-
 
     if(substr($line, 1, 4) == "===="){
 
@@ -80,7 +75,8 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
       "\nconst infvOptions = [". dwsfmt($lsivwords, "vifv"). "];\n".
       "\nconst cnctOptions = [". dwsfmt($lsctwords, "cnct"). "];\n".
       "\nconst advbOptions = [". dwsfmt($lsavwords, "adv"). "];\n".
-      "\nconst prepOptions = [". dwsfmt($lspswords, "prep"). "];\n".
+      "\nconst prepOptions = [". dwsfmt($lsppwords, "prep"). "];\n".
+      "\nconst possOptions = [". dwsfmt($lspvwords, "poss"). "];\n".
       "\nconst idimOptions = [". dwsfmt($lsidwords, "idm"). "];\n".
       "\nconst adjvOptions = [". dwsfmt($lsajwords, "adj"). "];\n".
       "";
@@ -90,6 +86,10 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
       $outstr = ffurfweddu((dewisiadausetsections($outstr, $outstr2, $LlFfeil )));
 
       file_put_contents("./". $LlFfeil. ".html", $outstr);
+      if($l2ndMod != ""){
+        if($b2ndMod)
+          file_put_contents("./". $LlFfeil. "_2mod.txt", $l2ndMod);
+      }
       if($lsnewwords != ""){
            $atmp1 = explode(" ", $lsnewwords);
            $atmp1 = array_filter(array_unique($atmp1)); 
@@ -98,8 +98,11 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
            $lsnewwords = "";
            foreach($atmp1 as $ln){
              //if($retstr != "") $retstr .='\n';
-             $lsnewwords .= $ln. " ";
-             $retstr .=  "|plyssnd_XXX (xx {*".mb_substr($ln,0,1)."__*}) ".$ln."`ans\n";
+             $atmp1b = preg_split("/[@!]/", $ln);
+             if(isset($atmp1b[2])){
+               $lsnewwords .= $ln. " ";
+               $retstr .=  "|plyssnd_". $atmp1b[1]. " (". $atmp1b[2] ." {*".mb_substr($ln,0,1)."__*}) ".$atmp1b[0]."`ans\n";
+             }
            }//endforeach
            $retstr = trim($lsnewwords) . "\n\n". $retstr;
            file_put_contents("./". $LlFfeil. "_new.txt", $retstr);
@@ -107,7 +110,8 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
       }
 
       $outstr = "";
-      $lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lspswords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords=""; $lsartwords=""; $lsnewwords=""; $lsnbwords="";
+      $lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lsppwords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords=""; $lsartwords=""; $lsnewwords=""; $lsnbwords=""; $lspvwords=""; $l2ndMod = ""; $b2ndMod = false; $a2ndMod = [];
+      
       htmlfmtinit();
       
     }else if(substr($line, 1, 4) == "----"){
@@ -134,6 +138,7 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
       //  $lnout = mjemojis($lnout);
       // }
       $outstr .= $lnout."\n";
+      $l2ndMod .= "\n";
   
     }
   }
@@ -159,9 +164,13 @@ global $lspnwords;
 global $lsivwords;
 global $lsctwords;
 global $lsavwords;
-global $lspswords;
+global $lsppwords;
+global $lspvwords;
 global $lsidwords;
 global $lsajwords;
+global $l2ndMod;
+global $b2ndMod;
+global $a2ndMod;
 
   if($cluelevel == "!"){
     return "<em style='color:#555;'>". resetpunc($line). "</em>";
@@ -170,7 +179,9 @@ global $lsajwords;
       $lnout = "";
       $lnwords = "";
       foreach($awords as $word){
+        $origword = $word;
         if(trim($word)=="") continue;
+        $bnewword = false;
         if((preg_match("/`/", $word)) && (!preg_match("/`@/", $word)) ){
           $atmp1 = explode("`", $word);
           $type = "nn";
@@ -224,13 +235,18 @@ global $lsajwords;
               $lsctwords .= mb_substr($word,0,-1). " ";
             }else if($type == "av"){
               $lsavwords .= mb_substr($word,0,-1). " ";
-            }else if($type == "ps"){
-              $lspswords .= mb_substr($word,0,-1). " ";
+            }else if($type == "pp"){
+              $lsppwords .= mb_substr($word,0,-1). " ";
+            }else if($type == "pv"){
+              $lspvwords .= mb_substr($word,0,-1). " ";
             }else if($type == "id"){
               $lsidwords .= mb_substr($word,0,-1). " ";
             }else if($type == "aj"){
               $lsajwords .= mb_substr($word,0,-1). " ";
             }else {
+echo "ERROR!!!------------>[". $origword. "] in [". $line ."]\n";
+die();
+
               $lsnnwords .= mb_substr($word,0,-1). " ";
             }
 
@@ -248,14 +264,60 @@ global $lsajwords;
           $lnwords .= '"'. $lword. '"';
           
         }else if(preg_match("/`@/", $word)){
+          //--------------------
           $atmp1 = explode("`", $word);
-          if($lsnewwords != "") $lsnewwords .= ' ';
-          $lsnewwords .=  strtolower($atmp1[0]);
+          // word = "phone`@ffo*n!nm"
+          if(isset($atmp1[1])){
+echo "__________________283a>>".  $atmp1[0]. "___". $atmp1[1]. "\n";
+            if(preg_match("/¬/", $atmp1[1])){
+echo "__________________283b>>".  $atmp1[0]. "___". $atmp1[1]. "\n";
+              if($lsnewwords != "") $lsnewwords .= ' ';
+              $lsnewwords .=  strtolower($atmp1[0]. $atmp1[1]);
+              $bnewword = true;
+              if($l2ndMod != "") $l2ndMod .= ' ';
+              $l2ndMod .= 
+                preg_replace("/@/", "",
+                  preg_replace("/¬/", "`", $atmp1[1])
+                );
+              $b2ndMod = true; 
+              $a2ndMod[$atmp1[0]] = $atmp1[1];
+echo "__________________283>>".  $atmp1[0]. "___". $atmp1[1]. "\n";
+            }else {
+echo "__________________285>>".  $atmp1[0]. "\n";
+              if(!isset($a2ndMod[$atmp1[0]])){
+echo "ERROR!!!------------>[". $atmp1[0]. "] not set in [". $line ."]\n";
+die();
+              }else {
+                $bnewword = true;
+                if($l2ndMod != "") $l2ndMod .= ' ';
+                $l2ndMod .= 
+                  preg_replace("/@/", "",
+                    preg_replace("/¬/", "`", $a2ndMod[$atmp1[0]])
+                  );
+              }
+               
+            }
+          }
+          //--------------------
+          $atmp2 = explode("`@", $word);
+          $lsword2 = $atmp2[0];
+          if($lnout != "") $lnout .= ', ';
+          $lnout .= '"'. $lsword2. '"';
 
         }else {
           if($lnout != "") $lnout .= ', ';
           $lnout .= '"'. $word. '"';
+        }//endif
+        //-------------------------------------
+        if( !$bnewword){
+          if($l2ndMod != "") $l2ndMod .= ' ';
+          $l2ndMod .= preg_replace("/\`/", "", $word);
         }
+        //-------------------------------------
+        //-------------------------------------
+        //-------------------------------------
+        //-------------------------------------
+
 
       }//endforeach
 
@@ -411,21 +473,23 @@ $LlHtmlBrig='
       color: #28a745;
       margin-top: 30px;
       text-align: center;
+  xxpadding: 20px 40px;
+  /*
+  top: 50%;
+  transform: translate(-50%, -50%);
+  */
     }
 #goodJob {
   display: none;
   position: fixed;
   left: 50%;
-  /*
-  top: 50%;
-  transform: translate(-50%, -50%);
-  */
+  width: 80%;
   top: 50px;
   transform: translate(-50%);
   font-size: 160%;
   color: #188715;
   background-color: white;
-  padding: 20px 40px;
+  padding: 10px 10px;
   border: 3px solid #188715;
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
@@ -462,6 +526,10 @@ $LlHtmlBrig='
 </div>
 
 <div id="content">
+<div style="position:fixed; top:0px; left:0px; background-color:#ffffff;width:100%;text-align:center;">
+  </span>
+  <center><div style="margin-top:2px;" ><span id="correctAnsMsg" xxstyle="font-weight:bold;color:red;background-color:#ffff00;">&emsp;</span></div></center>
+</div>
 
 ';
 
@@ -490,14 +558,11 @@ $LlHtmlGwaelod=
 $LlCyn= '
   <span style="font-size:140%;font-weight:bold;">'. $LlGwers. ' - Choose the correct answer for all selections.</span><br/>
   <span style="font-size:90%;xxfont-weight:bold;">
-   <!-- You can check your answers by clicking on the \'Check Answers\' button. -->
-   When you have completed all selections correctly, a message will appear. Make a note of the "Success code" and time taken in seconds. ' .
+   <!-- You can check your answers by clicking on the \'Check Answers\' button. 
+   When you have completed all selections correctly, a message will appear. Make a note of the "Success code" and time taken in seconds. -->' .
     //', and paste them into my Preply chat at <u>https://preply.com/en/messages</u>. 
-    '<span xxstyle="color:red;">If you are having difficulties, please take a screenshot and we can look at it in class. Repeat this exercise as often as you like by clicking the \'Reset\' button to gain better familiarity and timing. Best of luck!
+    '<span xxstyle="color:red;">If you are having difficulties, please take a screenshot and we can look at it in class. Repeat this exercise as often as you like by clicking the \'Restart\' button to gain a better timing. Best of luck!
 </span> 
-  </span>
-
-  <center><div style="margin-top:2px;" ><span id="correctAnsMsg" xxstyle="font-weight:bold;color:red;background-color:#ffff00;">&emsp;</span></div></center>
 
   <!--
   <img style="height:300px;" src="file://C:/Users/user/downloads/Copilot_20250925_110423.png"></img> 
@@ -510,7 +575,7 @@ $LlCyn= '
   <div class="container" xxv5 id="sentences"></div>
 
   <button style="display:none;" onclick="checkAnswers()">Check Answers</button>
-  <button id="reset-btn">Reset</button>&emsp;<a id="nextlnk" href="./modiwl00'. $LlNesaf. '.html" style="display:'.
+  <button id="reset-btn">Restart</button>&emsp;<a id="nextlnk" href="./modiwl00'. $LlNesaf. '.html" style="display:'.
 
 
 
@@ -527,7 +592,13 @@ $LlCyn= '
     .'</b> <br>Time taken: <span id="spsecs"></span> secs
        <br>Average time: <span id="avgSecs"></span> secs
        <br><span style="font-size:350%;" id="speedEmoji"></span>
-       <br><span id="speedMsg"></span></div>
+       <br><span id="speedMsg"></span><br/>
+
+
+
+  <button onclick="window.location.reload();">Reset</button>
+  </div>
+
 
 
   <!-- Include canvas-confetti via CDN -->
@@ -652,6 +723,9 @@ $LlWedi='
             div.appendChild(select);
           } else if (pronOptions.includes(word)) {
             const select = createSelect(pronOptions, s.answers[answerIndex++]);
+            div.appendChild(select);
+          } else if (possOptions.includes(word)) {
+            const select = createSelect(possOptions, s.answers[answerIndex++]);
             div.appendChild(select);
           } else if (prepOptions.includes(word)) {
             const select = createSelect(prepOptions, s.answers[answerIndex++]);
@@ -918,14 +992,39 @@ $LlWedi='
 </script>
 
 <script>
-    function playSound(pstr) {
-      pstr = pstr.replace(/\'/g, "");
-      const audio = new Audio(pstr);
+    function xxplaySoundxx(pstr, correctAns) {
+      correctAns = "./mp3/" + correctAns.replace(/[^a-zA-Z0-9]+/,"").toLowerCase() + ".mp3";
+      const audio = new Audio(correctAns);
 
-console.log(pstr);
-      audio.pause();
-      audio.currentTime = 0;
-      audio.play();
+      console.log(correctAns);
+
+      audio.oncanplaythrough = function(){
+        //audio.pause();
+        //audio.currentTime = 0;
+        audio.play();
+      }
+
+      audio.onerror = function(){
+        pstr = pstr.replace(/\'/g, "");
+        audio.src = pstr;
+        //audio.pause();
+        //audio.currentTime = 0;
+        audio.play();
+      }
+    }
+
+    function playSound(pstr, correctAns) {
+      correctAns = "./mp3/" + correctAns.replace(/[^a-zA-Z0-9]+/, "").toLowerCase() + ".mp3";
+      const audio = new Audio(correctAns);
+    
+      audio.oncanplaythrough = function () {
+        audio.play();
+      };
+    
+      audio.onerror = function () {
+        const fallbackAudio = new Audio(pstr.replace(/\'/g, ""));
+        fallbackAudio.play();
+      };
     }
 </script>
 
@@ -1051,7 +1150,7 @@ const encouragingEmojis = [
     clearTimeout(fadeTimeout);
     clearTimeout(resetTimeout);
 
-    pmsg = pmsg.replace(/_/g, " ");
+    //pmsg = pmsg.replace(/_/g, " ");
     // Show message and make it fully opaque
 
 
@@ -1059,10 +1158,11 @@ const encouragingEmojis = [
 
     const aEmojiPair = Array.from(getRandomEmojiPair());
     messageDiv.innerHTML =
-        "<span style=\"font-size:250%;\"> "+ aEmojiPair[0] + " </span>" +
+        "<div style=\"font-size:100%;\">" + 
+        "<span style=\"font-size:150%;\"> "+ aEmojiPair[0] + " </span>" +
         "<span style=\"font-size:100%;\"> "+ pmsg + " </span>" +
-        "<span style=\"font-size:250%;\"> "+ aEmojiPair[1] + " </span>" +
-        "";
+        "<span style=\"font-size:150%;\"> "+ aEmojiPair[1] + " </span>" +
+        "</div>";
 
 
     messageDiv.style.transition = "none";  // reset transition to show immediately
@@ -1079,7 +1179,7 @@ const encouragingEmojis = [
 
     // After fade completes (4s total), clear the message text
     fadeTimeout = setTimeout(() => {
-      messageDiv.innerHTML = "<span style=\"font-size:250%;\"> _____ </span>";
+      messageDiv.innerHTML = "<span style=\"font-size:150%;\"> _____ </span>";
     }, 4000);
   //});
   }//endfunc
@@ -1115,11 +1215,10 @@ function handleSelectChange(event) {
   ];
   const encouragingPhrases = [
       "BRILLIANT!", "WELL DONE!", "PERFECT!",
-      "GOOD JOB!", "GREAT WORK!", "NICE GOING!",
-      "EXCELLENT EFFORT!", "THAT IS IMPRESSIVE!",
+      "GOOD JOB!", "GREAT WORK!", "NICE!",
+      "EXCELLENT!", "IMPRESSIVE!",
       "BRAVO!", "AWESOME!", "FANTASTIC!",
-      "AMAZING!", "WONDERDUL!", "PROUD OF YOU!",
-      "WAY TO GO!"
+      "AMAZING!", "WONDERDUL!",
   ];
   const phrsIdx = Math.floor(Math.random() * (encouragingPhrases.length - 1));
   const goodJobEmojiIdx1 = Math.floor(Math.random() * (goodJobEmojis.length - 1));
@@ -1143,14 +1242,18 @@ function handleSelectChange(event) {
            }
       });
 //--------------------------------------------------------
-    if(!bplayed) playSound("./correct1.mp3");
+    if(!bplayed) {
+//alert(userAnswer);
+    }
+//--------------------------------------------------------
+    if(!bplayed) playSound("./correct1.mp3", userAnswer);
 //---------------------------------------------
    // playSound("./correct1.mp3");
 
     dispCorrectAnsMsg(
-      " <span style=\"font-size:250%;\">" + goodJobEmojis[goodJobEmojiIdx1] + "</span>" 
+      " <span style=\"font-size:150%;\">" + goodJobEmojis[goodJobEmojiIdx1] + "</span>" 
     + " <span style=\"font-weight:bold;color:green;\">"+ encouragingPhrases[phrsIdx]  + "</span>" 
-    + " <span style=\"font-size:250%;\">" + goodJobEmojis[goodJobEmojiIdx2] + "</span>"  );
+    + " <span style=\"font-size:150%;\">" + goodJobEmojis[goodJobEmojiIdx2] + "</span>"  );
     select.classList.add("correct");
     select.classList.remove("incorrect");
   } else {
