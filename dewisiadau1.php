@@ -1022,8 +1022,11 @@ $LlWedi='
     }
 
     function playSound(pstr, correctAns) {
-      correctAns = "./mp3/" + correctAns.replace(/[^a-zA-Z0-9]+/, "").toLowerCase() + ".mp3";
-      const audio = new Audio(correctAns);
+      let audioFile =  pstr.replace(/\'/g, "");
+      if(typeof correctAns != "undefined" ){
+        audioFile = "./mp3/" + correctAns.replace(/[^a-zA-Z0-9]+/, "").toLowerCase() + ".mp3";
+      }
+      const audio = new Audio(audioFile);
     
       audio.oncanplaythrough = function () {
         audio.play();

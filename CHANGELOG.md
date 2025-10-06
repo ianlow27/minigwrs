@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.49_251006-1714 - further bugfixes for dewisiadau1.php
+-  Amendments as per the release description
+
 ## 0.0.48_251006-1657 - bugfixes to dewisiadau1.php
 -  Amendments as per the release description
 
