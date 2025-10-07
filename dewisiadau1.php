@@ -39,6 +39,7 @@ $outstr = "<!DOCTYPE><html><body>";
 $lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lsppwords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords=""; $lsartwords=""; $lsnewwords=""; $lsnbwords=""; $lspvwords=""; $l2ndMod=""; $b2ndMod = false; $a2ndMod = [];
 htmlfmtinit();
 foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
+  $origline = trim($line);
   if((mb_substr($line, 0, 1)=="|") 
    ||(mb_substr($line, 0, 1)=="`")
    ||(mb_substr($line, 0, 1)=="!")
@@ -135,7 +136,7 @@ echo "__________>>105>>>". $atmp1b[1]."___[". $atmp1b[2]. "]__". $ln. "\n";
        $outstr .="<hr>"; //\n---------------------------\n";
        */
        $lswords="";
-    }else if(htmlfmtsettings($line) == ""){
+    }else if(htmlfmtsettings($line, $origline) == ""){
 
       $lnout = parsewords($line, $char1);
       //if(preg_match("/\{mj/", $lnout)){
@@ -364,6 +365,7 @@ global $LlCwrs;
 global $LlGwers;
 global $LlDidoli;
 global $LlTeitl;
+global $LlFideo;
 global $LlCynModiwl;
 global $LlCynTeitl;
 global $LlNesaf;
@@ -487,6 +489,26 @@ $LlHtmlBrig='
   transform: translate(-50%, -50%);
   */
     }
+
+#dvMsg {
+  position: fixed;
+  xxtop: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  background-color: #ffffff;
+  color: #000000;
+  display: none;
+  z-index:1000;
+  top: 100px;
+  transform: translate(-50%);
+  padding: 10px 10px;
+  border: 3px solid #188715;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
 #goodJob {
   display: none;
   position: fixed;
@@ -536,7 +558,10 @@ $LlHtmlBrig='
 <div id="content">
 <div style="position:fixed; top:0px; left:0px; background-color:#ffffff;width:100%;text-align:center;">
   </span>
-  <center><div style="margin-top:2px;" ><span id="correctAnsMsg" xxstyle="font-weight:bold;color:red;background-color:#ffff00;">&emsp;</span></div></center>
+
+  <!-- center><div id="xxdvMsg" style="margin-top:2px;" ><span id="correctAnsMsg" xxstyle="font-weight:bold;color:red;background-color:#ffff00;">&emsp;</span></div></center -->
+  <div id="dvMsg" ></div>
+
 </div>
 
 ';
@@ -564,14 +589,19 @@ $LlHtmlGwaelod=
 
 
 $LlCyn= '
-  <span style="font-size:140%;font-weight:bold;">'. $LlGwers. ' - Choose the correct answer for all selections.</span><br/>
+<a id="alnkHome" style="font-size:140%;">🏠</a>
+&ensp;
+  <span style="font-size:140%;font-weight:bold;">
+   '. $LlGwers. ' - Choose the correct answer for all selections.</span><br/>
   <span style="font-size:90%;xxfont-weight:bold;">
    <!-- You can check your answers by clicking on the \'Check Answers\' button. 
    When you have completed all selections correctly, a message will appear. Make a note of the "Success code" and time taken in seconds. -->' .
     //', and paste them into my Preply chat at <u>https://preply.com/en/messages</u>. 
-    '<span xxstyle="color:red;">If you are having difficulties, please take a screenshot and we can look at it in class. Repeat this exercise as often as you like by clicking the \'Restart\' button to gain a better timing. Best of luck!
-</span> 
-
+    '<span xxstyle="color:red;">If you are having technical issues, please message me immediately at preply.com/en/messages. If you are finding the exercise too difficult, please take a screenshot and we can look at it in class. Repeat this exercise as often as you like by clicking the \'Restart\' button to gain a better timing. Best of luck!  </span> 
+    <br/><span xxstyle="color:red;">
+The video for this activity can be found by <a href="'. $LlFideo. '"  target="blank" >clicking on this link</a>.  </span> 
+    <span style="font-weight:bold;"><br/>'. acenau($LlCyfarwyddo) .'</span>
+</span>
   <!--
   <img style="height:300px;" src="file://C:/Users/user/downloads/Copilot_20250925_110423.png"></img> 
   -->'.
@@ -601,6 +631,7 @@ $LlCyn= '
        <br>Average time: <span id="avgSecs"></span> secs
        <br><span style="font-size:350%;" id="speedEmoji"></span>
        <br><span id="speedMsg"></span><br/>
+</span>
 
 
 
@@ -1074,6 +1105,8 @@ function getEncryptedParameter() {
         //alert("Encrypted Password: " + passwd);
         document.getElementById("nextlnk").href="./modiwl00'. $LlNesaf. '.html?u=" + u; 
         correctPassword = passwd + "123";
+        alnkHome = document.getElementById("alnkHome");
+        alnkHome.href = "https://2lnk.net/ianswelshclass/home/" + passwd + ".html";
     } else {
         //alert("No \"u\" parameter in the URL!");
     }
@@ -1129,11 +1162,6 @@ window.onload = getEncryptedParameter;
 
 
 <script>
-  const messageDiv = document.getElementById("correctAnsMsg");
-
-  let fadeTimeout, resetTimeout;
-
-  //btn.addEventListener("click", () => {
 
 
 const encouragingEmojis = [
@@ -1157,6 +1185,11 @@ const encouragingEmojis = [
 
 
   function dispCorrectAnsMsg(pmsg){
+    //const messageDiv = document.getElementById("correctAnsMsg");
+    const dvMsg = document.getElementById("dvMsg");
+    dvMsg.style.display = "block";
+
+    let fadeTimeout, resetTimeout;
     // Clear any previous timeouts to reset fade
     clearTimeout(fadeTimeout);
     clearTimeout(resetTimeout);
@@ -1168,29 +1201,36 @@ const encouragingEmojis = [
     // messageDiv.innerHTML = "<span style=\"font-weight:bold;color:red;background-color:#ffff88;border:2px solid red;padding:2px;\">Answer: " + pmsg + "</span>";
 
     const aEmojiPair = Array.from(getRandomEmojiPair());
-    messageDiv.innerHTML =
-        "<div style=\"font-size:100%;\">" + 
+    let lHtml  =
+        "<center><div style=\"font-size:100%;\">" + 
         "<span style=\"font-size:150%;\"> "+ aEmojiPair[0] + " </span>" +
         "<span style=\"font-size:100%;\"> "+ pmsg + " </span>" +
         "<span style=\"font-size:150%;\"> "+ aEmojiPair[1] + " </span>" +
-        "</div>";
+        "</div></center>";
+    //messageDiv.innerHTML = lHtml;
+    dvMsg.innerHTML = lHtml;
 
 
-    messageDiv.style.transition = "none";  // reset transition to show immediately
-    messageDiv.style.opacity = "1";
+    //messageDiv.style.transition = "none";  // reset transition to show immediately
+    //messageDiv.style.opacity = "1";
+    dvMsg.style.transition = "none";
+    dvMsg.style.opacity = "1";
 
     // Force reflow to apply the style without transition
-    messageDiv.offsetWidth;
+   // messageDiv.offsetWidth;
+    dvMsg.offsetWidth;
 
     // After 2 seconds, fade out over 2 seconds
     resetTimeout = setTimeout(() => {
-      messageDiv.style.transition = "opacity 0.3s linear";
-      messageDiv.style.opacity = "0";
+      //messageDiv.style.transition = "opacity 0.3s linear";
+      //messageDiv.style.opacity = "0";
+      dvMsg.style.transition = "opacity 0.3s linear";
+      dvMsg.style.opacity = "0";
     }, 300);
 
     // After fade completes (4s total), clear the message text
     fadeTimeout = setTimeout(() => {
-      messageDiv.innerHTML = "<span style=\"font-size:150%;\"> _____ </span>";
+      //messageDiv.innerHTML = "<span style=\"font-size:150%;\"> _____ </span>";
     }, 4000);
   //});
   }//endfunc

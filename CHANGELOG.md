@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.50_251007-0610 - enhancements to dewisiadau1.php and htmlfmt.php - improvements to the UI
+-  Amendments as per the release description
+
 ## 0.0.49_251006-1714 - further bugfixes for dewisiadau1.php
 -  Amendments as per the release description
 
