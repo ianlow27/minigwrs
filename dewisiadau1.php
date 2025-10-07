@@ -597,16 +597,17 @@ $LlCyn= '
    <!-- You can check your answers by clicking on the \'Check Answers\' button. 
    When you have completed all selections correctly, a message will appear. Make a note of the "Success code" and time taken in seconds. -->' .
     //', and paste them into my Preply chat at <u>https://preply.com/en/messages</u>. 
-    '<span xxstyle="color:red;">If you are having technical issues, please message me immediately at preply.com/en/messages. If you are finding the exercise too difficult, please take a screenshot and we can look at it in class. Repeat this exercise as often as you like by clicking the \'Restart\' button to gain a better timing. Best of luck!  </span> 
-    <br/><span xxstyle="color:red;">
-The video for this activity can be found by <a href="'. $LlFideo. '"  target="blank" >clicking on this link</a>.  </span> 
-    <span style="font-weight:bold;"><br/>'. acenau($LlCyfarwyddo) .'</span>
-</span>
-  <!--
-  <img style="height:300px;" src="file://C:/Users/user/downloads/Copilot_20250925_110423.png"></img> 
-  -->'.
+    '<span xxstyle="color:red;">If you are having technical issues, please message me immediately at preply.com/en/messages. If you are finding the exercise too difficult, please take a screenshot and we can look at it in class. Repeat this exercise as often as you like by clicking the \'Restart\' button to gain a better timing. Best of luck!  </span>  '.
 
-($LlLlun1 == "" ? "" : '<img style="height:300px;" src="./'.$LlLlun1. '"></img>')
+   ($LlFideo == "" ? "" :
+  '<span xxstyle="color:red;"><br/>
+The video for this activity can be found by <a href="'. $LlFideo. '"  target="blank" >clicking on this link</a>.  </span> '
+   )
+
+   .' <span style="font-weight:bold;"><br/>'. acenau($LlCyfarwyddo) .'</span>
+</span><br/> '.
+
+($LlLlun1 == "" ? "" : '<img style="max-width:90%;height:auto;" src="./'.$LlLlun1. '"></img>')
 
 .'
 
@@ -841,12 +842,12 @@ $LlWedi='
 //----------------------------------
                } else if(word.substring(0,8) == "<shwjpg>"){
                  wrdtmp = "";
-                 word = word.replace(/<shwjpg>/, "<img style=\'width:90%;\' src=\'./img_'. $LlGwers. '/");
+                 word = word.replace(/<shwjpg>/, "<img style=\'max-width:90%;height:auto;\' src=\'./img_'. $LlGwers. '/");
                  word = word.replace(/<\/shwjpg>/, ".jpg\' />");
                  word = removeAccents(word);
                } else if(word.substring(0,8) == "<shwpng>"){
                  wrdtmp = "";
-                 word = word.replace(/<shwpng>/, "<img style=\'width:90%;\' src=\'./img_'. $LlGwers. '/");
+                 word = word.replace(/<shwpng>/, "<img style=\'max-width:90%;height:auto;\' src=\'./img_'. $LlGwers. '/");
                  word = word.replace(/<\/shwpng>/, ".jpg\' />");
                  word = removeAccents(word);
                } 
