@@ -628,7 +628,8 @@ The video for this activity can be found by <a href="'. $LlFideo. '"  target="bl
 
   <div id="goodJob">'
     .'🎉 <b>Good Job! </b>🎉'.
-   '<br/><span style="font-size:70%;">Please make a note of your success code and module number as you will need it later:<br/>Success Code: <b>' .  strtolower($LlTeitl ). '</b><br/>Module: <b>'. strtolower($LlGwers)
+   '<br/><a id="alnkHome3" style="font-size:100%;text-decoration:none;">🏠</a>
+&ensp;<span style="font-size:70%;">Please make a note of your success code and module number as you will need it later:<br/>Success Code: <b>' .  strtolower($LlTeitl ). '</b><br/>Module: <b>'. strtolower($LlGwers)
     .'</b> <br>Time taken: <span id="spsecs"></span> secs
        <br>Average time: <span id="avgSecs"></span> secs
        <br><span style="font-size:350%;" id="speedEmoji"></span>
@@ -1113,6 +1114,8 @@ function getEncryptedParameter() {
         alnkHome.href = "https://2lnk.net/ianswelshclass/home/" + passwd + ".html";
         alnkHome2 = document.getElementById("alnkHome2");
         alnkHome2.href = "https://2lnk.net/ianswelshclass/home/" + passwd + ".html";
+        alnkHome3 = document.getElementById("alnkHome3");
+        alnkHome3.href = "https://2lnk.net/ianswelshclass/home/" + passwd + ".html";
     } else {
         //alert("No \"u\" parameter in the URL!");
     }

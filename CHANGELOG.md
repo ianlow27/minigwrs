@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.55_251008-1121 - enhancement to dewisiadau1.php - added homepage button on module completion message
+-  Amendments as per the release description
+
 ## 0.0.54_251008-1108 - enhancement to dewisiadau1.php - added homepage button on the module password input
 -  Amendments as per the release description
 
