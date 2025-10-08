@@ -125,28 +125,29 @@ echo "__________>>105>>>". $atmp1b[1]."___[". $atmp1b[2]. "]__". $ln. "\n";
       
     }else if(substr($line, 1, 4) == "----"){
        $lswords="";
-    }else if(mb_substr($line, 0,4) == "plys"){
-//echo ">>>>>>". mb_substr($line, 0,4). "\n";
-//sleep(1);
-
-      $tmpln1 = preg_replace("/ /", " = ", mb_substr($line, 8). "\n");
-      $tmpln1 = preg_replace("/`ix/", " (vbifx)", $tmpln1);
-      $tmpln1 = preg_replace("/`iv/", " (vbifv)", $tmpln1);
-      $tmpln1 = preg_replace("/`nn/", " (noun)", $tmpln1);
-      $tmpln1 = preg_replace("/`it/", " (init)", $tmpln1);
-      $tmpln1 = preg_replace("/`lt/", " (lttr)", $tmpln1);
-      $tmpln1 = preg_replace("/`av/", " (adv)", $tmpln1);
-      $tmpln1 = preg_replace("/`pr/", " (prn)", $tmpln1);
-      $tmpln1 = preg_replace("/`pp/", " (prep)", $tmpln1);
-      $tmpln1 = preg_replace("/`id/", " (idm)", $tmpln1);
-      $tmpln1 = preg_replace("/`aj/", " (adj)", $tmpln1);
-      $tmpln1 = preg_replace("/`ct/", " (cnct)", $tmpln1);
-      $tmpln1 = preg_replace("/`rs/", " (resp)", $tmpln1);
-      $tmpln1 = preg_replace("/`ex/", " (excl)", $tmpln1);
-      $tmpln1 = preg_replace("/`nb/", " (num)", $tmpln1);
-      $tmpln1 = preg_replace("/_/", " ", $tmpln1);
-      $lsvcb .= $lvcbcount++ . ") ". $tmpln1;
     }else if(htmlfmtsettings($line, $origline) == ""){
+       if(mb_substr($line, 0,4) == "plys"){
+  //echo ">>>>>>". mb_substr($line, 0,4). "\n";
+  //sleep(1);
+  
+        $tmpln1 = preg_replace("/ /", " = ", mb_substr($line, 8). "\n");
+        $tmpln1 = preg_replace("/`ix/", " (vbifx)", $tmpln1);
+        $tmpln1 = preg_replace("/`iv/", " (vbifv)", $tmpln1);
+        $tmpln1 = preg_replace("/`nn/", " (noun)", $tmpln1);
+        $tmpln1 = preg_replace("/`it/", " (init)", $tmpln1);
+        $tmpln1 = preg_replace("/`lt/", " (lttr)", $tmpln1);
+        $tmpln1 = preg_replace("/`av/", " (adv)", $tmpln1);
+        $tmpln1 = preg_replace("/`pr/", " (prn)", $tmpln1);
+        $tmpln1 = preg_replace("/`pp/", " (prep)", $tmpln1);
+        $tmpln1 = preg_replace("/`id/", " (idm)", $tmpln1);
+        $tmpln1 = preg_replace("/`aj/", " (adj)", $tmpln1);
+        $tmpln1 = preg_replace("/`ct/", " (cnct)", $tmpln1);
+        $tmpln1 = preg_replace("/`rs/", " (resp)", $tmpln1);
+        $tmpln1 = preg_replace("/`ex/", " (excl)", $tmpln1);
+        $tmpln1 = preg_replace("/`nb/", " (num)", $tmpln1);
+        $tmpln1 = preg_replace("/_/", " ", $tmpln1);
+        $lsvcb .= $lvcbcount++ . ") ". $tmpln1;
+      }
 
       $lnout = parsewords($line, $char1);
       //if(preg_match("/\{mj/", $lnout)){
@@ -472,7 +473,7 @@ $LlHtmlBrig='
 
     body {
       font-family: Arial, sans-serif;
-      padding: 20px;
+      xxpadding: 20px;
     }
 
     select {
@@ -604,6 +605,7 @@ $LlHtmlGwaelod=
 
 
 $LlCyn= '
+  <div style="text-align:center;font-size:120%;font-weight:bold;">'. $LlBtnsDesc.'</div>
 <a id="alnkHome" style="font-size:140%;">🏠</a>
 &ensp;
   <span style="font-size:140%;font-weight:bold;">

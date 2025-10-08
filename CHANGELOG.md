@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.59_251008-1940 - enhancement to dewisiadau1.php - Add titles into activity module pages
+-  Amendments as per the release description
+
 ## 0.0.58_251008-1744 - additional bugfix to utils/yz.html
 -  Amendments as per the release description
 
