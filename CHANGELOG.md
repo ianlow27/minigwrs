@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.52_251008-1057 - Enhancements to dewisiadau1.php and Addition of utils folder - the new utils folder contains the files classhome.css, classhome.js, send_email.php, and an example student's homepage yz.html. Buttons on the homepage open to a module in the course. The homepage is located minigwrs/cwrs_<coursename>/home relative to the parent folder minigwrs. The send_email.php is located in cwrs_<coursename>. Whenever a module is completed an email is sent to the teacher's email containing the student's score and timing. The module button on the student's homepage is also updated with a star.
+-  Amendments as per the release description
+
 ## 0.0.51_251007-1716 - enhancements to dewisiadau1.php
 -  Amendments as per the release description
 

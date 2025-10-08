@@ -691,6 +691,7 @@ $LlRhwng='
 
 
 $LlWedi='
+    let usrInitials = "";
     function createSelect(options, correctValue) {
       const select = document.createElement("select");
       for (let opt of options) {
@@ -969,7 +970,7 @@ $LlWedi='
         origin: { y: 0.6 }
       });
 
-      sendMessage(correctPassword, secondsElapsed);
+      sendMessage(correctPassword, secondsElapsed, usrInitials);
     }
 
     // Initialize
@@ -1102,6 +1103,7 @@ function getEncryptedParameter() {
         const encryptedValue = encryptString(u);
         // Store the result in the passwd variable
         const passwd = encryptedValue;
+        usrInitials = passwd;
         //console.log("Encrypted value:", passwd);
         //alert("Encrypted Password: " + passwd);
         document.getElementById("nextlnk").href="./modiwl00'. $LlNesaf. '.html?u=" + u; 
@@ -1120,7 +1122,7 @@ window.onload = getEncryptedParameter;
 
 <script>
     // JavaScript function to send the Ajax request
-    function sendMessage(correctPassword, secondsElapsed) {
+    function sendMessage(correctPassword, secondsElapsed, usrInitials) {
         // Create a new XMLHttpRequest object
         var xhr = new XMLHttpRequest();
         
@@ -1147,7 +1149,11 @@ window.onload = getEncryptedParameter;
         
         // Send the request
         // xhr.send("message=" + encodeURIComponent(message));
-        xhr.send("message=" + encodeURIComponent(message) + "&subject=" + encodeURIComponent(subject));
+        xhr.send("message=" + encodeURIComponent(message) 
+              + "&subject=" + encodeURIComponent(subject)
+              + "&usr=" + encodeURIComponent(usrInitials)
+              + "&modref=" + encodeURIComponent("'. $LlGwers.'")
+              );
 
         // Handle the response
         xhr.onload = function () {
