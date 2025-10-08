@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.56_251008-1254 - enhancement to dewisiadau1.php - generates vocab textfiles with _words.txt suffix for vocab lines starting with |plyssnd_ or |plysnd_
+-  Amendments as per the release description
+
 ## 0.0.55_251008-1121 - enhancement to dewisiadau1.php - added homepage button on module completion message
 -  Amendments as per the release description
 

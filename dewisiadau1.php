@@ -36,7 +36,7 @@ include "../mjemojis.php";
 //============================================
 //============================================
 $outstr = "<!DOCTYPE><html><body>";
-$lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lsppwords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords=""; $lsartwords=""; $lsnewwords=""; $lsnbwords=""; $lspvwords=""; $l2ndMod=""; $b2ndMod = false; $a2ndMod = [];
+$lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lsppwords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords=""; $lsartwords=""; $lsnewwords=""; $lsnbwords=""; $lspvwords=""; $l2ndMod=""; $b2ndMod = false; $a2ndMod = []; $lsvcb=""; $lvcbcount = 1;
 htmlfmtinit();
 foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
   $origline = trim($line);
@@ -87,6 +87,8 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
       $outstr = ffurfweddu((dewisiadausetsections($outstr, $outstr2, $LlFfeil )));
 
       file_put_contents("./". $LlFfeil. ".html", $outstr);
+      if($lsvcb != "") 
+        file_put_contents("./". $LlFfeil. "_words.txt", $lsvcb);
       if($l2ndMod != ""){
         if($b2ndMod)
           file_put_contents("./". $LlFfeil. "_2mod.txt", $l2ndMod);
@@ -115,27 +117,33 @@ echo "__________>>105>>>". $atmp1b[1]."___[". $atmp1b[2]. "]__". $ln. "\n";
       }
 
       $outstr = "";
-      $lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lsppwords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords=""; $lsartwords=""; $lsnewwords=""; $lsnbwords=""; $lspvwords=""; $l2ndMod = ""; $b2ndMod = false; $a2ndMod = [];
+      $lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lsppwords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords=""; $lsartwords=""; $lsnewwords=""; $lsnbwords=""; $lspvwords=""; $l2ndMod = ""; $b2ndMod = false; $a2ndMod = []; $lsvcb=""; $lvcbcount = 1;
       
       htmlfmtinit();
       
     }else if(substr($line, 1, 4) == "----"){
-       /*
-       //$outstr .= $lswords."\n";
-       $atmp1 = (explode(" ",strtolower($lswords)));
-       shuffle($atmp1);
-       $listwrds = "";
-       foreach($atmp1 as $tmp1){
-          if(trim($tmp1)=="") continue;
-          if($listwrds != "") $listwrds .= " / ";
-
-          $listwrds .= $tmp1. "";
-       }
-       if($listwrds != "")
-         $outstr .= "{lnkb:( ". $listwrds . " ):}";
-       $outstr .="<hr>"; //\n---------------------------\n";
-       */
        $lswords="";
+    }else if(mb_substr($line, 0,4) == "plys"){
+//echo ">>>>>>". mb_substr($line, 0,4). "\n";
+//sleep(1);
+
+      $tmpln1 = preg_replace("/ /", " = ", mb_substr($line, 8). "\n");
+      $tmpln1 = preg_replace("/`ix/", " (vbifx)", $tmpln1);
+      $tmpln1 = preg_replace("/`iv/", " (vbifv)", $tmpln1);
+      $tmpln1 = preg_replace("/`nn/", " (noun)", $tmpln1);
+      $tmpln1 = preg_replace("/`it/", " (init)", $tmpln1);
+      $tmpln1 = preg_replace("/`lt/", " (lttr)", $tmpln1);
+      $tmpln1 = preg_replace("/`av/", " (adv)", $tmpln1);
+      $tmpln1 = preg_replace("/`pr/", " (prn)", $tmpln1);
+      $tmpln1 = preg_replace("/`pp/", " (prep)", $tmpln1);
+      $tmpln1 = preg_replace("/`id/", " (idm)", $tmpln1);
+      $tmpln1 = preg_replace("/`aj/", " (adj)", $tmpln1);
+      $tmpln1 = preg_replace("/`ct/", " (cnct)", $tmpln1);
+      $tmpln1 = preg_replace("/`rs/", " (resp)", $tmpln1);
+      $tmpln1 = preg_replace("/`ex/", " (excl)", $tmpln1);
+      $tmpln1 = preg_replace("/`nb/", " (num)", $tmpln1);
+      $tmpln1 = preg_replace("/_/", " ", $tmpln1);
+      $lsvcb .= $lvcbcount++ . ") ". $tmpln1;
     }else if(htmlfmtsettings($line, $origline) == ""){
 
       $lnout = parsewords($line, $char1);
@@ -155,6 +163,8 @@ echo "__________>>105>>>". $atmp1b[1]."___[". $atmp1b[2]. "]__". $ln. "\n";
 function parsewords($line, $cluelevel = "|"){
 //irinepicapia;
 global $lswords;
+global $lsvcb;
+global $lvcbcount;
 global $lsitwords;
 global $lsltwords;
 global $lsanswords;
