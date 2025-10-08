@@ -531,6 +531,7 @@ $LlHtmlBrig='
 <body>
 <div id="lock-screen">
   <center>
+  <a id="alnkHome2" style="font-size:140%;text-decoration:none;">🏠</a>
   <h2>Ian\'s Welsh Class - Homework<br/>'.  $pmod. '<br/>
 
 
@@ -1110,6 +1111,8 @@ function getEncryptedParameter() {
         correctPassword = passwd + "123";
         alnkHome = document.getElementById("alnkHome");
         alnkHome.href = "https://2lnk.net/ianswelshclass/home/" + passwd + ".html";
+        alnkHome2 = document.getElementById("alnkHome2");
+        alnkHome2.href = "https://2lnk.net/ianswelshclass/home/" + passwd + ".html";
     } else {
         //alert("No \"u\" parameter in the URL!");
     }

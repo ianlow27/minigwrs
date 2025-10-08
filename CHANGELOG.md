@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.54_251008-1108 - enhancement to dewisiadau1.php - added homepage button on the module password input
+-  Amendments as per the release description
+
 ## 0.0.53_251008-1100 - amended .gitignore and add example student's homepage file utils/yz.html
 -  Amendments as per the release description
 
