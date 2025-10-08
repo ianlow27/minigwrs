@@ -38,6 +38,7 @@ include "../mjemojis.php";
 $outstr = "<!DOCTYPE><html><body>";
 $lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lsppwords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords=""; $lsartwords=""; $lsnewwords=""; $lsnbwords=""; $lspvwords=""; $l2ndMod=""; $b2ndMod = false; $a2ndMod = []; $lsvcb=""; $lvcbcount = 1;
 htmlfmtinit();
+$lbtnsdesc="";
 foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
   $origline = trim($line);
   if((mb_substr($line, 0, 1)=="|") 
@@ -87,6 +88,7 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
       $outstr = ffurfweddu((dewisiadausetsections($outstr, $outstr2, $LlFfeil )));
 
       file_put_contents("./". $LlFfeil. ".html", $outstr);
+      if($LlGwers != "") $lbtnsdesc .= '"'.$LlGwers.'": "'. $LlBtnsDesc. '",'. "\n";
       if($lsvcb != "") 
         file_put_contents("./". $LlFfeil. "_words.txt", $lsvcb);
       if($l2ndMod != ""){
@@ -159,6 +161,7 @@ echo "__________>>105>>>". $atmp1b[1]."___[". $atmp1b[2]. "]__". $ln. "\n";
 }//endforeach
 
 
+file_put_contents("./btnsdesc.js", 'const abtnsdesc = {'.  $lbtnsdesc. '};');
 
 function parsewords($line, $cluelevel = "|"){
 //irinepicapia;
@@ -373,6 +376,7 @@ function dewisiadausetsections($outstr, $outstr2, $pmod="test1"){
 
 global $LlCwrs;
 global $LlGwers;
+global $LlBtnsDesc;
 global $LlDidoli;
 global $LlTeitl;
 global $LlFideo;

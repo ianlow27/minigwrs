@@ -1,5 +1,5 @@
 :root {
-  --box-size: 100px; /* 192px;  / 2 inches at 96 DPI */
+  --box-size: 110px; /* 192px;  / 2 inches at 96 DPI */
 }
 
 body {
@@ -17,10 +17,12 @@ body {
 }
 
 .grid-item {
+  padding-top: 10px;
   width: var(--box-size);
   height: var(--box-size);
   border-radius: 20px;
-  display: flex;
+  top: 50%;
+  xxdisplay: flex;
   align-items: center;
   justify-content: center;
   text-align: center;

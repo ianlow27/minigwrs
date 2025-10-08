@@ -1,3 +1,4 @@
+//--------------------------------------------
 const encUsr = encryptString(initials1); 
 //alert(encryptedValue);
 function shiftCharacter(char) {  
@@ -43,14 +44,23 @@ for (let r of modLinks) {
   }
   idx++;
   const url = new URL(r);
-  const path = url.pathname;
+  const path = r; //url.pathname;
   const baseName = path.substring(path.lastIndexOf('/') + 
      1).replace('.html', '').replace(/modiwl(0*)/,'');
   const moduleTitle = baseName;
   const moduleLink = r +  "?u=" + encUsr;
     const div = document.createElement('a');
     div.className = 'grid-item';
-    div.innerHTML = idx + "<br/>" + moduleTitle  + "<br/>" + lemoji;
+    let atmp1 = moduleTitle.split(/__/);
+    div.innerHTML = 
+          //  "<br/>"
+         + idx + "<br/>" + moduleTitle  + "<br/>" 
+         + (typeof  abtnsdesc[moduleTitle] != "undefined" 
+              ?   "<span style='font-size:80%;font-weight:normal;'>"
+                + abtnsdesc[moduleTitle]
+                + "</span><br/>" 
+              : "" )
+         +  lemoji;
     div.href = moduleLink;
     //div.target = '_blank';
     div.style.backgroundColor = pastelColors[Math.floor(Math.random() * pastelColors.length)];

@@ -1,6 +1,7 @@
 <?php
 $LlCwrs="";
 $LlGwers="";
+$LlBtnsDesc="";
 $LlTeitl="";
 $LlFideo="";
 $LlCynTeitl="";
@@ -33,9 +34,10 @@ $DFfeil1 = explode("\n", file_get_contents("./". $LlTestun) );
 //---------------------------------------
 //---------------------------------------
 function htmlfmtinit(){
-global $LlCwrs; global $LlGwers; global $LlTeitl; global $LlNodwch; global $LlCyfarwyddo; global $LlLlun1; global $LlLlun2; global $LlFfeil; global $LlFfeilPrev; global $LlLledYmylCy; global $LlLledYmylEn; global $LlMaintCy; global $LlMaintEn; global $LlCy; global $LlEn; global $DLlun1; global $DLlun2; global $DLlun3; global $DLlun4; global $DFfeil1; global $LlTestun; global $LlDidoli; global $LlPlygellSain; global $LlCynTeitl; global $LlCynModiwl; global $LlNesaf; global $LlFideo;
+global $LlCwrs; global $LlGwers; global $LlTeitl; global $LlNodwch; global $LlCyfarwyddo; global $LlLlun1; global $LlLlun2; global $LlFfeil; global $LlFfeilPrev; global $LlLledYmylCy; global $LlLledYmylEn; global $LlMaintCy; global $LlMaintEn; global $LlCy; global $LlEn; global $DLlun1; global $DLlun2; global $DLlun3; global $DLlun4; global $DFfeil1; global $LlTestun; global $LlDidoli; global $LlPlygellSain; global $LlCynTeitl; global $LlCynModiwl; global $LlNesaf; global $LlFideo; $LlBtnsDesc;
 $LlCwrs="";
 $LlGwers="";
+$LlBtnsDesc="";
 $LlTeitl="";
 $LlFideo="";
 $LlCynTeitl="";
@@ -60,7 +62,7 @@ $LlEn="";
 //---------------------------------------
 //---------------------------------------
 function htmlfmtsettings($ll1a, $origline){
-global $LlCwrs; global $LlGwers; global $LlTeitl; global $LlNodwch; global $LlCyfarwyddo; global $LlLlun1; global $LlLlun2; global $LlFfeil; global $LlFfeil;  global $LlLledYmylCy; global $LlLledYmylEn; global $LlMaintCy; global $LlMaintEn; global $LlCy; global $LlEn; global $DLlun1; global $DLlun2; global $DLlun3; global $DLlun4; global $DFfeil1; global $LlTestun; global $LlDidoli; global $LlPlygellSain; global $LlCynTeitl; global $LlCynModiwl; global $LlNesaf; global $LlFideo;
+global $LlCwrs; global $LlGwers; global $LlTeitl; global $LlNodwch; global $LlCyfarwyddo; global $LlLlun1; global $LlLlun2; global $LlFfeil; global $LlFfeil;  global $LlLledYmylCy; global $LlLledYmylEn; global $LlMaintCy; global $LlMaintEn; global $LlCy; global $LlEn; global $DLlun1; global $DLlun2; global $DLlun3; global $DLlun4; global $DFfeil1; global $LlTestun; global $LlDidoli; global $LlPlygellSain; global $LlCynTeitl; global $LlCynModiwl; global $LlNesaf; global $LlFideo; global $LlBtnsDesc;
 $bfound=false;
       $d1a = explode("=", substr($ll1a,0));
 
@@ -75,6 +77,9 @@ $bfound=false;
         $bfound=true;
       }else if($d1a[0]=="teitl"){
         $LlTeitl=$d1a[1];
+        $bfound=true;
+      }else if($d1a[0]=="btnsdesc"){
+        $LlBtnsDesc=$d1a[1];
         $bfound=true;
       }else if($d1a[0]=="fideo"){
         $LlFideo=mb_substr($origline, 7);
@@ -176,6 +181,7 @@ $bfound=false;
 function htmlfmtsetsections($outstr){
 global $LlCwrs;
 global $LlGwers;
+global $LlBtnsDesc;
 global $LlTeitl;
 global $LlFideo;
 global $LlPlygellSain;
