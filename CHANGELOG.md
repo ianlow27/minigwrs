@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.61_251009-1854 - Enhancements to dewisiadau1.php, htmlfmt.php, and utils send_email.php - Added functionality for textbox handling and student essay submission using the txtbx_ tag whereby the underscore is the delimiter e.g. txtbx_100_200_bifurcation|irrigation_desertification|drought-prone where min words is 100, msx words is 200, required words are bifurcation and irrigation and prohibited words are desertification and drought-pron. Also the send_email.php was enhanced to handle the essay submission.
+-  Amendments as per the release description
+
 ## 0.0.60_251009-0935 - security enhancements to dewisiadau1.php, classhome.js, send_email.php, and user homepage - The u URL parameter and user homepage name have been made more obfuscated to avoid students randomly finding the homepages of other students. The email message with their scores have also been made more concise.
 -  Amendments as per the release description
 

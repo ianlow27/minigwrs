@@ -6,8 +6,6 @@
  *
  */
 
-
-
 $LlTestun="testun";
 if(isset($argv[1])) $LlTestun = $argv[1];
 echo $LlTestun;
@@ -35,10 +33,17 @@ include "../mjemojis.php";
 //============================================
 //============================================
 //============================================
+//===========================
+//GLOBALS;
 $outstr = "<!DOCTYPE><html><body>";
-$lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lsppwords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords=""; $lsartwords=""; $lsnewwords=""; $lsnbwords=""; $lspvwords=""; $l2ndMod=""; $b2ndMod = false; $a2ndMod = []; $lsvcb=""; $lvcbcount = 1;
-htmlfmtinit();
+$LlTxtMinWrds = "";
+$LlTxtMaxWrds = "";
+$LlTxtInclude = "";
+$LlTxtExclude = "";
 $lbtnsdesc="";
+$lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lsppwords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords=""; $lsartwords=""; $lsnewwords=""; $lsnbwords=""; $lspvwords=""; $l2ndMod=""; $b2ndMod = false; $a2ndMod = []; $lsvcb=""; $lvcbcount = 1;
+//===========================
+htmlfmtinit();
 foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
   $origline = trim($line);
   if((mb_substr($line, 0, 1)=="|") 
@@ -119,43 +124,62 @@ echo "__________>>105>>>". $atmp1b[1]."___[". $atmp1b[2]. "]__". $ln. "\n";
       }
 
       $outstr = "";
+      $LlTxtMinWrds = "";
+      $LlTxtMaxWrds = "";
+      $LlTxtInclude = "";
+      $LlTxtExclude = "";
       $lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lsppwords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords=""; $lsartwords=""; $lsnewwords=""; $lsnbwords=""; $lspvwords=""; $l2ndMod = ""; $b2ndMod = false; $a2ndMod = []; $lsvcb=""; $lvcbcount = 1;
       
       htmlfmtinit();
       
     }else if(substr($line, 1, 4) == "----"){
        $lswords="";
+    //--------------------------------------------
+    //This checks if the line contains a module setting.
+    // If it doesn't, then continue, because this is
+    //  a data line
     }else if(htmlfmtsettings($line, $origline) == ""){
-       if(mb_substr($line, 0,4) == "plys"){
-  //echo ">>>>>>". mb_substr($line, 0,4). "\n";
-  //sleep(1);
-  
-        $tmpln1 = preg_replace("/ /", " = ", mb_substr($line, 8). "\n");
-        $tmpln1 = preg_replace("/`ix/", " (vbifx)", $tmpln1);
-        $tmpln1 = preg_replace("/`iv/", " (vbifv)", $tmpln1);
-        $tmpln1 = preg_replace("/`nn/", " (noun)", $tmpln1);
-        $tmpln1 = preg_replace("/`it/", " (init)", $tmpln1);
-        $tmpln1 = preg_replace("/`lt/", " (lttr)", $tmpln1);
-        $tmpln1 = preg_replace("/`av/", " (adv)", $tmpln1);
-        $tmpln1 = preg_replace("/`pr/", " (prn)", $tmpln1);
-        $tmpln1 = preg_replace("/`pp/", " (prep)", $tmpln1);
-        $tmpln1 = preg_replace("/`id/", " (idm)", $tmpln1);
-        $tmpln1 = preg_replace("/`aj/", " (adj)", $tmpln1);
-        $tmpln1 = preg_replace("/`ct/", " (cnct)", $tmpln1);
-        $tmpln1 = preg_replace("/`rs/", " (resp)", $tmpln1);
-        $tmpln1 = preg_replace("/`ex/", " (excl)", $tmpln1);
-        $tmpln1 = preg_replace("/`nb/", " (num)", $tmpln1);
-        $tmpln1 = preg_replace("/_/", " ", $tmpln1);
-        $lsvcb .= $lvcbcount++ . ") ". $tmpln1;
-      }
+       if(mb_substr($line, 0,6) == "txtbx_"){
+          $atmp1d = explode("_", $line);
+          if(isset($atmp1d[1])) $LlTxtMinWrds = trim($atmp1d[1]);
+          if(isset($atmp1d[2])) $LlTxtMaxWrds = trim($atmp1d[2]);
+          if(isset($atmp1d[3])) $LlTxtInclude = trim($atmp1d[3]);
+          if(isset($atmp1d[4])) $LlTxtExclude = trim($atmp1d[4]);
+          //$outstr .= $lnout."\n";
 
-      $lnout = parsewords($line, $char1);
-      //if(preg_match("/\{mj/", $lnout)){
-      //  $lnout = mjemojis($lnout);
-      // }
-      $outstr .= $lnout."\n";
-      $l2ndMod .= "\n";
+print_r($atmp1d);
+//sleep(1);
+       }else {
+         if(mb_substr($line, 0,4) == "plys"){
+    //echo ">>>>>>". mb_substr($line, 0,4). "\n";
+    //sleep(1);
+    
+          $tmpln1 = preg_replace("/ /", " = ", mb_substr($line, 8). "\n");
+          $tmpln1 = preg_replace("/`ix/", " (vbifx)", $tmpln1);
+          $tmpln1 = preg_replace("/`iv/", " (vbifv)", $tmpln1);
+          $tmpln1 = preg_replace("/`nn/", " (noun)", $tmpln1);
+          $tmpln1 = preg_replace("/`it/", " (init)", $tmpln1);
+          $tmpln1 = preg_replace("/`lt/", " (lttr)", $tmpln1);
+          $tmpln1 = preg_replace("/`av/", " (adv)", $tmpln1);
+          $tmpln1 = preg_replace("/`pn/", " (pron)", $tmpln1);
+          $tmpln1 = preg_replace("/`pp/", " (prep)", $tmpln1);
+          $tmpln1 = preg_replace("/`id/", " (idm)", $tmpln1);
+          $tmpln1 = preg_replace("/`aj/", " (adj)", $tmpln1);
+          $tmpln1 = preg_replace("/`ct/", " (cnct)", $tmpln1);
+          $tmpln1 = preg_replace("/`rs/", " (resp)", $tmpln1);
+          $tmpln1 = preg_replace("/`ex/", " (excl)", $tmpln1);
+          $tmpln1 = preg_replace("/`nb/", " (num)", $tmpln1);
+          $tmpln1 = preg_replace("/_/", " ", $tmpln1);
+          $lsvcb .= $lvcbcount++ . ") ". $tmpln1;
+        }
   
+        $lnout = parsewords($line, $char1);
+        //if(preg_match("/\{mj/", $lnout)){
+        //  $lnout = mjemojis($lnout);
+        // }
+        $outstr .= $lnout."\n";
+        $l2ndMod .= "\n"; //any onward module after current
+      } 
     }
   }
 
@@ -190,6 +214,10 @@ global $lsajwords;
 global $l2ndMod;
 global $b2ndMod;
 global $a2ndMod;
+global $LlTxtMinWrds;
+global $LlTxtMaxWrds;
+global $LlTxtInclude;
+global $LlTxtExclude;
 
   if($cluelevel == "!"){
     return "<em style='color:#555;'>". resetpunc($line). "</em>";
@@ -388,6 +416,11 @@ global $LlPlygellSain;
 global $LlLlun1;
 global $LlCyfarwyddo;
 global $LlFfram;
+global $LlTxtMinWrds;
+global $LlTxtMaxWrds;
+global $LlTxtInclude;
+global $LlTxtExclude;
+
 
 
 $LlHtmlBrig='
@@ -550,14 +583,14 @@ $LlHtmlBrig='
   <h2>Ian\'s Welsh Class - Homework<br/>'.  $pmod. '<br/>
 
 
-  <div style=display:'.
+  <div style="display:'.
 
 
   ($LlCynTeitl == "" ? "none" : "block" )
 
 
 
-.';""><br/>Enter your success code from modiwl00' . $LlCynModiwl     .'<br/>
+.';"><br/>Enter your success code from modiwl00' . $LlCynModiwl     .'<br/>
   <input type="password" id="successcode" placeholder="Success Code">
 
   </div>Enter your password to access the page<br/>
@@ -573,9 +606,7 @@ $LlHtmlBrig='
 
 <div id="content">
 <div style="position:fixed; top:0px; left:0px; background-color:#ffffff;width:100%;text-align:center;">
-  </span>
 
-  <!-- center><div id="xxdvMsg" style="margin-top:2px;" ><span id="correctAnsMsg" xxstyle="font-weight:bold;color:red;background-color:#ffff00;">&emsp;</span></div></center -->
   <div id="dvMsg" ></div>
 
 </div>
@@ -629,10 +660,14 @@ The video for this activity can be found by <a href="'. $LlFideo. '"  target="bl
 .'
 
   <div class="container" xxv5 id="sentences"></div>
+';
+
+
+
+$LlCynB = '
 
   <button style="display:none;" onclick="checkAnswers()">Check Answers</button>
   <button id="reset-btn">Restart</button>&emsp;<a id="nextlnk" href="./modiwl00'. $LlNesaf. '.html" style="display:'.
-
 
 
 
@@ -651,8 +686,6 @@ The video for this activity can be found by <a href="'. $LlFideo. '"  target="bl
        <br><span style="font-size:350%;" id="speedEmoji"></span>
        <br><span id="speedMsg"></span><br/>
 </span>
-
-
 
   <button onclick="window.location.reload();">Reset</button>
   </div>
@@ -951,7 +984,6 @@ $LlWedi='
       let speedStr = "You are a squirrel! You are the 8th fastest!" + " " + repeatMsg;
       let speedEmoji = "🐿";
     
-      //alert(avgSecs);
       if      (avgSecs < 1.5){
          speedStr = "You are a cheetah! You are the fastest!";
          speedEmoji = "🐆";
@@ -1130,7 +1162,6 @@ function getEncryptedParameter() {
         homePage = u;
         usrInitials = getLeftOfp5w(passwd);
         //console.log("Encrypted value:", passwd);
-        //alert("Encrypted Password: " + passwd);
         document.getElementById("nextlnk").href="./modiwl00'. $LlNesaf. '.html?u=" + u; 
         correctPassword = usrInitials + "123";
         alnkHome = document.getElementById("alnkHome");
@@ -1140,7 +1171,6 @@ function getEncryptedParameter() {
         alnkHome3 = document.getElementById("alnkHome3");
         alnkHome3.href = "https://2lnk.net/ianswelshclass/home/" + homePage + ".html";
     } else {
-        //alert("No \"u\" parameter in the URL!");
     }
 }
 
@@ -1168,7 +1198,6 @@ window.onload = getEncryptedParameter;
         " " + selwordcount  + " qstn," +
         " " + secondsElapsed + " sec," +
         " avg " + (secondsElapsed/selwordcount).toFixed(2) + " sec";
-        //alert(message);
 
 
 
@@ -1331,7 +1360,6 @@ function handleSelectChange(event) {
       });
 //--------------------------------------------------------
     if(!bplayed) {
-//alert(userAnswer);
     }
 //--------------------------------------------------------
     if(!bplayed) playSound("./correct1.mp3", userAnswer);
@@ -1376,9 +1404,118 @@ document.querySelectorAll("select").forEach(select => {
 
 
 
-';
+'; //END OF $LlWedi
 
 
+
+
+
+$LlTextboxDiv='';
+$LlTextboxScript='';
+if($LlTxtMinWrds != ""){
+//echo "_________________1a>". $LlTxtMinWrds. "\n";
+//sleep(1);
+  if($LlTxtMaxWrds == "") $LlTxtMaxWrds = '10000000';
+  $LlTextboxDiv='
+    <form id="essayForm">
+        <label for="essay">Enter your essay below:</label><br>
+        <textarea style="width:90%;height:200px;" id="essay" name="essay" required></textarea><br><br>
+        <div id="message" style="color:red;margin-top:2px;margin-bottom:2px;"></div>
+        <button type="submit">Submit Essay</button>
+    </form>
+'; //END OF $LlTextboxDiv 
+
+
+$LlTextboxScript='
+    <script>
+        const mustInclude = "'. $LlTxtInclude.'";
+        const mustExclude = "'. $LlTxtExclude.'";
+
+        document.getElementById("essayForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const essay = document.getElementById("essay").value.toLowerCase();
+            const messageEl = document.getElementById("message");
+            messageEl.className = "error";
+            messageEl.textContent = "";
+
+            const includeWords = mustInclude.split("|");
+            const excludeWords = mustExclude.split("|");
+
+            const missing = includeWords.filter(word => !essay.includes(word));
+            const foundExcluded = excludeWords.filter(word => essay.includes(word));
+
+            if (missing.length > 0) {
+                messageEl.textContent = "Error: Your essay is missing the following required words: " + missing.join(", ");
+                return;
+            }
+
+            if (foundExcluded.length > 0) {
+                messageEl.textContent = "Error: Your essay includes prohibited words: " + foundExcluded.join(", ");
+                return;
+            }
+
+            const wordCount = essay.trim().split(/\s+/).filter(word => word.length > 0).length;
+            if (wordCount < '. $LlTxtMinWrds .' || wordCount > '. $LlTxtMaxWrds .') {
+                messageEl.textContent = `Error: Essay must be between 200 and 1000 words. Your essay has ${wordCount} word(s).`;
+                return;
+            }
+
+            // Extract module reference from filename
+            const pathParts = window.location.pathname.split("/");
+            const filename = pathParts[pathParts.length - 1];
+            const moduleRefMatch = filename.match(/module0*(\d+-\w+)\.html/i);
+            let moduleRef = "'. $LlGwers. '";
+
+            // Get "u" parameter from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const homepage1 = urlParams.get("u") || "unknown";
+            const  initials = getLeftOfp5w(homepage1);
+            const homeURL =  "https://2lnk.net/ianswelshclass/home/" + homepage1 + ".html";
+
+            // Create form to submit
+            const form = document.createElement("form");
+            form.method = "POST";
+            form.action = "./home/send_email.php";
+
+            const essayInput = document.createElement("input");
+            essayInput.type = "hidden";
+            essayInput.name = "essay";
+            essayInput.value = essay;
+
+            const homepgInput = document.createElement("input");
+            homepgInput.type = "hidden";
+            homepgInput.name = "homepg";
+            homepgInput.value = homepage1;
+
+            const homeInput = document.createElement("input");
+            homeInput.type = "hidden";
+            homeInput.name = "homeurl";
+            homeInput.value = homeURL;
+
+            const moduleInput = document.createElement("input");
+            moduleInput.type = "hidden";
+            moduleInput.name = "module";
+            moduleInput.value = moduleRef;
+
+            const initialsInput = document.createElement("input");
+            initialsInput.type = "hidden";
+            initialsInput.name = "initials";
+            initialsInput.value = initials;
+
+            form.appendChild(essayInput);
+            form.appendChild(homeInput);
+            form.appendChild(homepgInput);
+            form.appendChild(moduleInput);
+            form.appendChild(initialsInput);
+
+            document.body.appendChild(form);
+            form.submit();
+        });
+    </script>
+
+'; //END OF $LlTextboxScript
+}
 
 
 
@@ -1389,6 +1526,9 @@ return $LlHtmlBrig. $LlHtmlPenniad.
 
 $LlCyn.
 
+$LlTextboxDiv.
+
+$LlCynB.
 
 $outstr. 
 $LlRhwng.
@@ -1400,6 +1540,7 @@ $outstr2.
 $LlWedi.
 
 
+$LlTextboxScript.
 
 
 $LlHtmlGwaelod;

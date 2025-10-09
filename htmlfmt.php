@@ -99,7 +99,8 @@ $bfound=false;
         $LlCwrs.=$d1a[1]. "/";
         $bfound=true;
       }else if($d1a[0]=="cyfarwyddo"){
-        $LlCyfarwyddo.=$d1a[1];
+        //$LlCyfarwyddo.=$d1a[1];
+        $LlCyfarwyddo=mb_substr($origline, 12);
         $bfound=true;
       }else if($d1a[0]=="nodwch"){
         $LlNodwch.=$d1a[1]. "/";

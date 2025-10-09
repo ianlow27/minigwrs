@@ -1,5 +1,6 @@
 <?php
 // Check if the 'message' is passed
+file_put_contents("./_11", $_POST['homepage'] );
 if(isset($_POST['message'])) {
     $message = $_POST['message'];
     
@@ -18,18 +19,113 @@ if(isset($_POST['message'])) {
     if(mail($to, $subject, $message, $headers)) {
         echo "Email sent successfully!";
         
+
+        addStarToButton($_POST['modref'], $_POST['homepage']);      
+
+    } else {
+        echo "Failed to send email.";
+    }
+} else if(isset($_POST['essay'])) {
+    
+    $homeURL =  $_POST['homeurl'] ;
+    $message =  $_POST['essay'] ;
+    
+    // The recipient email address
+    $to = "ianlow27@gmail.com";
+    
+    // Subject of the email
+    $subject = $_POST['initials'] . " (". $_POST['module'].") Essay";
+    
+    // Additional headers
+    $headers = "From: no-reply@test.com" . "\r\n" .
+               "Reply-To: no-reply@test.com" . "\r\n" .
+               "X-Mailer: PHP/" . phpversion();
+
+    // Send the email
+    if(mail($to, $subject, $message, $headers)) {
+        echo '
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Essay Submitted</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 60px;
+            background-color: #f9f9f9;
+        }
+
+        .home-icon {
+            font-size: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .message {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .instructions {
+            font-size: 18px;
+            color: #666;
+        }
+
+        .home-icon:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Home Icon -->
+    <a href="'. $homeURL .'" class="home-icon" title="Go to Home Page">🏠</a>
+
+    <!-- Thank You Message -->
+    <div class="message">Thank you for submitting your essay!</div>
+
+    <!-- Instructions -->
+    <div class="instructions">To return to your exercise homepage please click on the home icon above.</div>
+
+</body>
+</html>        
         
+        ';
         
+        addStarToButton($_POST['module'], $_POST['homeurl']);          
         
+    } else {
+        echo "Failed to send email.";
+    }
         
+    
+    
+    
+    
+} else {
+    echo "No message received.";
+}
+
+
+
+function addStarToButton($modref, $homepage){
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // Ensure POST data exists
-if (!isset($_POST['usr']) || !isset($_POST['modref'])) {
-
+//if (!isset($_POST['usr']) || !isset($_POST['modref'])) {
+if (!isset($homepage) || !isset($modref)) {
+file_put_contents("./_0a", $_POST['homepg'] );
 }else {
+    
+file_put_contents("./_0",  $_POST['homepg'] );    
 
-$usr = basename($_POST['homepage']);        // sanitize to prevent path traversal
-$modref = $_POST['modref'];
+$usr = basename($homepage);        // sanitize to prevent path traversal
+$usr = pathinfo($usr, PATHINFO_FILENAME);
+
 $filePath = "./$usr.html";
 
 file_put_contents("./_1", $filePath );
@@ -96,33 +192,7 @@ if ($result === false) {
 file_put_contents("./_9", "");
 echo "File updated successfully. Backup saved as: " . basename($backupPath);
 }//endif
-
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    } else {
-        echo "Failed to send email.";
-    }
-} else {
-    echo "No message received.";
 }
+
 ?>
