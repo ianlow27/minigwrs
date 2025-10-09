@@ -710,6 +710,7 @@ $LlRhwng='
 
 $LlWedi='
     let usrInitials = "";
+    let homePage = "";
     function createSelect(options, correctValue) {
       const select = document.createElement("select");
       for (let opt of options) {
@@ -1111,6 +1112,11 @@ function encryptString(str) {
     return str.split("").map(shiftCharacter).join("");
 }
 
+function getLeftOfp5w(str){
+  const match = str.match(/^(.*?)p5w/);
+  return match ? match[1] : str;
+}
+
 // Function to get the URL parameter "u" and encrypt it
 function getEncryptedParameter() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -1118,20 +1124,21 @@ function getEncryptedParameter() {
 
     if (u) {
         // Encrypt the parameter
-        const encryptedValue = encryptString(u);
+        //const encryptedValue = encryptString(u);
         // Store the result in the passwd variable
-        const passwd = encryptedValue;
-        usrInitials = passwd;
+        let passwd =  u; //encryptedValue;
+        homePage = u;
+        usrInitials = getLeftOfp5w(passwd);
         //console.log("Encrypted value:", passwd);
         //alert("Encrypted Password: " + passwd);
         document.getElementById("nextlnk").href="./modiwl00'. $LlNesaf. '.html?u=" + u; 
-        correctPassword = passwd + "123";
+        correctPassword = usrInitials + "123";
         alnkHome = document.getElementById("alnkHome");
-        alnkHome.href = "https://2lnk.net/ianswelshclass/home/" + passwd + ".html";
+        alnkHome.href = "https://2lnk.net/ianswelshclass/home/" + homePage + ".html";
         alnkHome2 = document.getElementById("alnkHome2");
-        alnkHome2.href = "https://2lnk.net/ianswelshclass/home/" + passwd + ".html";
+        alnkHome2.href = "https://2lnk.net/ianswelshclass/home/" + homePage + ".html";
         alnkHome3 = document.getElementById("alnkHome3");
-        alnkHome3.href = "https://2lnk.net/ianswelshclass/home/" + passwd + ".html";
+        alnkHome3.href = "https://2lnk.net/ianswelshclass/home/" + homePage + ".html";
     } else {
         //alert("No \"u\" parameter in the URL!");
     }
@@ -1149,18 +1156,18 @@ window.onload = getEncryptedParameter;
         var xhr = new XMLHttpRequest();
         
         // Open a POST request to the PHP page
-        xhr.open("POST", "send_email.php", true);
+        xhr.open("POST", "./home/send_email.php", true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         
         // The message to be sent to the PHP page
         var xxmessage = "The module is '. $LlGwers. ', the passcode code is " + correctPassword  + ", the time taken is " + secondsElapsed + " seconds";
 
         var message = 
-        "Passcode: " + correctPassword + "\\r\\n" +
-        "Module: '. $LlGwers. '\\r\\n" +
-        "Total Selections: " + selwordcount  + "\\r\\n" +
-        "Total time: " + secondsElapsed + " seconds\\r\\n" +
-        "Average time: " + (secondsElapsed/selwordcount).toFixed(2) + " seconds\\r\\n";
+        "" + usrInitials + "" +
+        " ('. $LlGwers. '), " +
+        " " + selwordcount  + " qstn," +
+        " " + secondsElapsed + " sec," +
+        " avg " + (secondsElapsed/selwordcount).toFixed(2) + " sec";
         //alert(message);
 
 
@@ -1175,6 +1182,7 @@ window.onload = getEncryptedParameter;
               + "&subject=" + encodeURIComponent(subject)
               + "&usr=" + encodeURIComponent(usrInitials)
               + "&modref=" + encodeURIComponent("'. $LlGwers.'")
+              + "&homepage=" + encodeURIComponent(homePage)
               );
 
         // Handle the response

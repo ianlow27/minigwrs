@@ -4,7 +4,7 @@ if(isset($_POST['message'])) {
     $message = $_POST['message'];
     
     // The recipient email address
-    $to = "XXX@XXX.XXX";
+    $to = "ianlow27@gmail.com";
     
     // Subject of the email
     $subject = $_POST['subject'];
@@ -28,37 +28,37 @@ if (!isset($_POST['usr']) || !isset($_POST['modref'])) {
 
 }else {
 
-$usr = basename($_POST['usr']);        // sanitize to prevent path traversal
+$usr = basename($_POST['homepage']);        // sanitize to prevent path traversal
 $modref = $_POST['modref'];
-$filePath = "./home/$usr.html";
+$filePath = "./$usr.html";
 
-file_put_contents("./home/_1", $filePath );
+file_put_contents("./_1", $filePath );
 // Check if the file exists and is writable
 if (!file_exists($filePath)) {
     die("User file not found.");
 }
-file_put_contents("./home/_2", "");
+file_put_contents("./_2", "");
 if (!is_writable($filePath)) {
     die("File is not writable.");
 }
 
-file_put_contents("./home/_3", "");
+file_put_contents("./_3", "");
 // Create a backup
 $timestamp = date("Ymd_His");
-$backupPath = "./home/{$usr}.bak_{$timestamp}";
+$backupPath = "./{$usr}.bak_{$timestamp}";
 
 if (!copy($filePath, $backupPath)) {
     die("Failed to create backup.");
 }
 
-file_put_contents("./home/_4", "");
+file_put_contents("./_4", "");
 // Read the file
 $fileContents = file_get_contents($filePath);
 if ($fileContents === false) {
     die("Failed to read the file.");
 }
 
-file_put_contents("./home/_5", "");
+file_put_contents("./_5", "");
 
 
 // Transform $modref into desired pattern: moduleXYZ-suffix
@@ -78,22 +78,22 @@ $modref .= ".";
 $pattern1 = preg_quote($modref . "html_2do',", '/');
 $pattern2 = preg_quote($modref . "html',", '/');
 
-file_put_contents("./home/_6", $modref);
+file_put_contents("./_6", $modref);
 
 $modifiedContents = preg_replace(
     ["/$pattern1/", "/$pattern2/"],
     $modref . "html_done',",
     $fileContents
 );
-file_put_contents("./home/_7", "");
+file_put_contents("./_7", "");
 // Save changes back to the original file
 $result = file_put_contents($filePath, $modifiedContents);
 
-file_put_contents("./home/_8", "");
+file_put_contents("./_8", "");
 if ($result === false) {
     die("Failed to write to the file.");
 }
-file_put_contents("./home/_9", "");
+file_put_contents("./_9", "");
 echo "File updated successfully. Backup saved as: " . basename($backupPath);
 }//endif
 

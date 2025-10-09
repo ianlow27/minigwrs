@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.60_251009-0935 - security enhancements to dewisiadau1.php, classhome.js, send_email.php, and user homepage - The u URL parameter and user homepage name have been made more obfuscated to avoid students randomly finding the homepages of other students. The email message with their scores have also been made more concise.
+-  Amendments as per the release description
+
 ## 0.0.59_251008-1940 - enhancement to dewisiadau1.php - Add titles into activity module pages
 -  Amendments as per the release description
 

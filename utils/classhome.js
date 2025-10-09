@@ -1,5 +1,9 @@
+const url = new URL(document.URL);
+const pathname = url.pathname; // "/path/to/file.html"
+const basename = pathname.substring(pathname.lastIndexOf("/") + 1).replace(/\.[^/.]+$/, ""); // "file";
+//alert(basename)
 //--------------------------------------------
-const encUsr = encryptString(initials1); 
+//const encUsr = encryptString(initials1); 
 //alert(encryptedValue);
 function shiftCharacter(char) {  
   const charCode = char.charCodeAt(0);           
@@ -48,7 +52,7 @@ for (let r of modLinks) {
   const baseName = path.substring(path.lastIndexOf('/') + 
      1).replace('.html', '').replace(/modiwl(0*)/,'');
   const moduleTitle = baseName;
-  const moduleLink = r +  "?u=" + encUsr;
+  const moduleLink = r +  "?u=" + basename; //encUsr;
     const div = document.createElement('a');
     div.className = 'grid-item';
     let atmp1 = moduleTitle.split(/__/);
