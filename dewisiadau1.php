@@ -89,7 +89,6 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
       "";
       $outstr2 = acenau($outstr2);
 
-      //$outstr = ffurfweddu(dewisiadausetsections($outstr));
       $outstr = ffurfweddu((dewisiadausetsections($outstr, $outstr2, $LlFfeil )));
 
       file_put_contents("./". $LlFfeil. ".html", $outstr);
@@ -1164,12 +1163,25 @@ function getEncryptedParameter() {
         //console.log("Encrypted value:", passwd);
         document.getElementById("nextlnk").href="./modiwl00'. $LlNesaf. '.html?u=" + u; 
         correctPassword = usrInitials + "123";
+        /*
         alnkHome = document.getElementById("alnkHome");
         alnkHome.href = "https://2lnk.net/ianswelshclass/home/" + homePage + ".html";
         alnkHome2 = document.getElementById("alnkHome2");
         alnkHome2.href = "https://2lnk.net/ianswelshclass/home/" + homePage + ".html";
         alnkHome3 = document.getElementById("alnkHome3");
         alnkHome3.href = "https://2lnk.net/ianswelshclass/home/" + homePage + ".html";
+        */
+
+
+
+        alnkHome = document.getElementById("alnkHome");
+        alnkHome.href = "./home/" + homePage + ".html";
+        alnkHome2 = document.getElementById("alnkHome2");
+        alnkHome2.href = "./home/" + homePage + ".html";
+        alnkHome3 = document.getElementById("alnkHome3");
+        alnkHome3.href = "./home/" + homePage + ".html";
+
+
     } else {
     }
 }
@@ -1471,7 +1483,8 @@ $LlTextboxScript='
             const urlParams = new URLSearchParams(window.location.search);
             const homepage1 = urlParams.get("u") || "unknown";
             const  initials = getLeftOfp5w(homepage1);
-            const homeURL =  "https://2lnk.net/ianswelshclass/home/" + homepage1 + ".html";
+            //const homeURL =  "https://2lnk.net/ianswelshclass/home/" + homepage1 + ".html";
+            const homeURL =  "./home/" + homepage1 + ".html";
 
             // Create form to submit
             const form = document.createElement("form");

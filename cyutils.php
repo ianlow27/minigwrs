@@ -141,7 +141,8 @@ $pstr = preg_replace("/:\}/", "</span>", $pstr);
 $pstr = preg_replace("/\{\*/", "<b>", $pstr);
 $pstr = preg_replace("/\*\}/", "</b>", $pstr);
 
-$pstr = preg_replace("/\{\/\}/", "<br><br>", $pstr);
+$pstr = preg_replace("/\{\/\}/", "<br>", $pstr);
+$pstr = preg_replace("/\{\/\/\}/", "<br><br>", $pstr);
 
 
 return $pstr;

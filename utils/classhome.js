@@ -35,7 +35,8 @@ const pastelColors = [
 ];
 
 let idx = 0;
-for (let r of modLinks) {
+const modLinks1 = modLinks.reverse();
+for (let r of modLinks1) {
   //let orig_r = r;
   let bdone = r.match(/html_done/);
   let b2do = r.match(/html_2do/);
@@ -47,7 +48,7 @@ for (let r of modLinks) {
     r = r.replace(/html_2do/,"html")
   }
   idx++;
-  const url = new URL(r);
+  //const url = new URL(r);
   const path = r; //url.pathname;
   const baseName = path.substring(path.lastIndexOf('/') + 
      1).replace('.html', '').replace(/modiwl(0*)/,'');
@@ -58,7 +59,7 @@ for (let r of modLinks) {
     let atmp1 = moduleTitle.split(/__/);
     div.innerHTML = 
           //  "<br/>"
-         + idx + "<br/>" + moduleTitle  + "<br/>" 
+         +  ((modLinks1.length + 1) - idx) + "<br/>" + moduleTitle  + "<br/>" 
          + (typeof  abtnsdesc[moduleTitle] != "undefined" 
               ?   "<span style='font-size:80%;font-weight:normal;'>"
                 + abtnsdesc[moduleTitle]

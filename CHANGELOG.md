@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.62_251010-0953 - Enhancements to cyutils.php, dewisiadau1.php, and utils components btnsdesc.js, classhome.js, and yzp5wa1b2c.html - 1) Reverse sorting order of student's exercise homepage buttons so that latest is displayed first, 2) made filepaths relative with the home folder a subfolder of the modules folder instead of hardcoding the domain name
+-  Amendments as per the release description
+
 ## 0.0.61_251009-1854 - Enhancements to dewisiadau1.php, htmlfmt.php, and utils send_email.php - Added functionality for textbox handling and student essay submission using the txtbx_ tag whereby the underscore is the delimiter e.g. txtbx_100_200_bifurcation|irrigation_desertification|drought-prone where min words is 100, msx words is 200, required words are bifurcation and irrigation and prohibited words are desertification and drought-pron. Also the send_email.php was enhanced to handle the essay submission.
 -  Amendments as per the release description
 
