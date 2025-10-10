@@ -1,5 +1,7 @@
 <?php
 // Check if the 'message' is passed
+date_default_timezone_set('Europe/London');
+$ldate = date("ymd-hi");
 file_put_contents("./_11", $_POST['homepage'] );
 if(isset($_POST['message'])) {
     $message = $_POST['message'];
@@ -8,7 +10,8 @@ if(isset($_POST['message'])) {
     $to = "ianlow27@gmail.com";
     
     // Subject of the email
-    $subject = $_POST['subject'];
+    //$subject = $_POST['subject'] . " ". $ldate;
+    $subject =  "WlshHmwrk_". $ldate. ": ". $_POST['message'];
     
     // Additional headers
     $headers = "From: no-reply@test.com" . "\r\n" .
@@ -34,7 +37,7 @@ if(isset($_POST['message'])) {
     $to = "ianlow27@gmail.com";
     
     // Subject of the email
-    $subject = $_POST['initials'] . " (". $_POST['module'].") Essay";
+    $subject = $_POST['initials'] . " (". $_POST['module'].") Essay" . " ". $ldate;
     
     // Additional headers
     $headers = "From: no-reply@test.com" . "\r\n" .
@@ -190,7 +193,7 @@ if ($result === false) {
     die("Failed to write to the file.");
 }
 file_put_contents("./_9", "");
-echo "File updated successfully. Backup saved as: " . basename($backupPath);
+//echo "File updated successfully. Backup saved as: " . basename($backupPath);
 }//endif
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 }

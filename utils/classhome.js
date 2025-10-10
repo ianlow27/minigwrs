@@ -24,6 +24,11 @@ document.getElementById('diarylnk1').innerHTML = name1 + "'s Google Doc Welsh Le
 document.getElementById('diarylnk1').href = diaryurl1;
 //document.getElementById('diarylnk1').target = "blank";
 
+document.getElementById('instruct1').innerHTML = "<br/>Complete these activities in ascending numerical order (bottom-right buttons to top-left) as often as you like in your free time: " 
++"✏️= to do "
++"&ensp;"
++"⭐ = completed"
+;
 
 const grid = document.getElementById('grid');
 

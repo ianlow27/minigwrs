@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.64_251010-1406 - tidying up code in utils components classhome.js, send_email.php, and yzp5wa1b2c.html
+-  Amendments as per the release description
+
 ## 0.0.63_251010-1400 - bugfixes to dewisiadau1.php and htmlfmt.php
 -  Amendments as per the release description
 
