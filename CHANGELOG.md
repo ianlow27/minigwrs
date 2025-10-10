@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.63_251010-1400 - bugfixes to dewisiadau1.php and htmlfmt.php
+-  Amendments as per the release description
+
 ## 0.0.62_251010-0953 - Enhancements to cyutils.php, dewisiadau1.php, and utils components btnsdesc.js, classhome.js, and yzp5wa1b2c.html - 1) Reverse sorting order of student's exercise homepage buttons so that latest is displayed first, 2) made filepaths relative with the home folder a subfolder of the modules folder instead of hardcoding the domain name
 -  Amendments as per the release description
 

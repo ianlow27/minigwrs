@@ -162,6 +162,7 @@ print_r($atmp1d);
           $tmpln1 = preg_replace("/`av/", " (adv)", $tmpln1);
           $tmpln1 = preg_replace("/`pn/", " (pron)", $tmpln1);
           $tmpln1 = preg_replace("/`pp/", " (prep)", $tmpln1);
+          $tmpln1 = preg_replace("/`pv/", " (poss)", $tmpln1);
           $tmpln1 = preg_replace("/`id/", " (idm)", $tmpln1);
           $tmpln1 = preg_replace("/`aj/", " (adj)", $tmpln1);
           $tmpln1 = preg_replace("/`ct/", " (cnct)", $tmpln1);

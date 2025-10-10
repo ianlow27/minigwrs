@@ -79,7 +79,8 @@ $bfound=false;
         $LlTeitl=$d1a[1];
         $bfound=true;
       }else if($d1a[0]=="btnsdesc"){
-        $LlBtnsDesc=$d1a[1];
+        //$LlBtnsDesc=$d1a[1];
+        $LlBtnsDesc=mb_substr($origline, 10);
         $bfound=true;
       }else if($d1a[0]=="fideo"){
         $LlFideo=mb_substr($origline, 7);
