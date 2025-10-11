@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.65_251011-1933 - minor amendments to dewisiadau1.php - adjustments of spacing for instructions and inclusion of video emoji for video instructions etc.
+-  Amendments as per the release description
+
 ## 0.0.64_251010-1406 - tidying up code in utils components classhome.js, send_email.php, and yzp5wa1b2c.html
 -  Amendments as per the release description
 

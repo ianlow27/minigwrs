@@ -649,10 +649,13 @@ $LlCyn= '
 
    ($LlFideo == "" ? "" :
   '<span xxstyle="color:red;"><br/>
-The video for this activity can be found by <a href="'. $LlFideo. '"  target="blank" >clicking on this link</a>.  </span> '
+<span style="font-size:140%;">
+🎞️
+</span>
+<b>The video for this activity can be found by <a href="'. $LlFideo. '"  target="blank" >clicking on this link</a>.</b>  </span> '
    )
 
-   .' <span style="font-weight:bold;"><br/>'. acenau($LlCyfarwyddo) .'</span>
+   .' <span style="font-weight:bold;"><br/><br/>'. acenau($LlCyfarwyddo) .'<br/></span>
 </span><br/> '.
 
 ($LlLlun1 == "" ? "" : '<img style="max-width:90%;height:auto;" src="./'.$LlLlun1. '"></img>')
