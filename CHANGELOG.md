@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.66_251014-2256 - enhancements to dewisiadau1.php - Added splitstory_ functionality whereby a long text with new words can be split into multiple vocab learning and building activities using the splitstory_ line inside the module.
+-  Amendments as per the release description
+
 ## 0.0.65_251011-1933 - minor amendments to dewisiadau1.php - adjustments of spacing for instructions and inclusion of video emoji for video instructions etc.
 -  Amendments as per the release description
 

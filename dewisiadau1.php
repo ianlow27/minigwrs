@@ -1,6 +1,6 @@
 #!/usr/bin/php
 <?php
-/* This is the 'homework' generator. For lines beginning with "|" and Welsh words suffixed with backtick (`) followed by the word type, which is 1 of the following 12: it (initiator), rs (response), iv (infinitive), nn (noun), ex (excalamation), pn (pronoun), ix (inflexion), ct (connector), av (adverb), ps (preposition), id (idiom), or aj (adjective) then it generates a selection list for that word in the HTML. A new word can be specified using the not symbol (¬) followed by the English for the Welsh e.g. "music¬cerddoriaeth". This uses the library at CDN https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js to create a confetti effect when the student selects all the correct options.
+/* This is the 'homework' generator. For lines beginning with "|" and Welsh words suffixed with backtick (`)  followed by the word type, which is 1 of the following 12: it (initiator), rs (response), iv (infinitive), nn (noun), ex (excalamation), pn (pronoun), ix (inflexion), ct (connector), av (adverb), ps (preposition), id (idiom), or aj (adjective) then it generates a selection list for that word in the HTML. A new word can be specified using the not symbol (¬) followed by the English for the Welsh e.g. "music¬cerddoriaeth". This uses the library at CDN https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js to create a confetti effect when the student selects all the correct options.
  *
  *
  *
@@ -46,10 +46,12 @@ $lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnnwords=""; $lsexwo
 htmlfmtinit();
 foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
   $origline = trim($line);
-  if((mb_substr($line, 0, 1)=="|") 
-   ||(mb_substr($line, 0, 1)=="`")
-   ||(mb_substr($line, 0, 1)=="!")
-   ||(mb_substr($line, 0, 1)=="¬")){
+  if((mb_substr($line, 0, 1)=="|")//select word from list
+   ||(mb_substr($line, 0, 1)=="`")//fill word in blank
+   ||(mb_substr($line, 0, 1)=="!")//reset spacing in line
+   ||(mb_substr($line, 0, 1)=="¬")//under word
+   ||(mb_substr($line, 0, 1)=="&")//word lists preprocessor
+   ){
     $char1 = mb_substr($line, 0, 1);
 
     $line = mb_substr($line, 1);
@@ -61,6 +63,8 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
 
     if(substr($line, 1, 4) == "===="){
 
+//--------------
+/*
       $outstr = acenau($outstr);
 
       $outstr = preg_replace( "/plysnd_(['´âêîôûŵŴŷáÁỳàäëïÏöÖëa-zA-Z0-9^_]+)/", "<plysnd>$1</plysnd>", $outstr);
@@ -90,15 +94,23 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
       $outstr2 = acenau($outstr2);
 
       $outstr = ffurfweddu((dewisiadausetsections($outstr, $outstr2, $LlFfeil )));
+*/
+//--------------
 
-      file_put_contents("./". $LlFfeil. ".html", $outstr);
+      if($char1 != "&"){
+        $outstr = preputcleandata($outstr);
+        file_put_contents("./". $LlFfeil. ".html", $outstr);
+      }
       if($LlGwers != "") $lbtnsdesc .= '"'.$LlGwers.'": "'. $LlBtnsDesc. '",'. "\n";
       if($lsvcb != "") 
         file_put_contents("./". $LlFfeil. "_words.txt", $lsvcb);
       if($l2ndMod != ""){
         if($b2ndMod)
-          file_put_contents("./". $LlFfeil. "_2mod.txt", $l2ndMod);
+          file_put_contents("./". $LlFfeil. "_2ndmod.txt", $l2ndMod);
       }
+      //-----------------
+      putnewtxt($lsnewwords, $l2ndMod, "");
+      /*
       if($lsnewwords != ""){
 //echo "____94>>". $lsnewwords. "\n";
            $atmp1 = explode(" ", $lsnewwords);
@@ -121,6 +133,8 @@ echo "__________>>105>>>". $atmp1b[1]."___[". $atmp1b[2]. "]__". $ln. "\n";
            file_put_contents("./". $LlFfeil. "_new.txt", $retstr);
   
       }
+      */
+      //-----------------
 
       $outstr = "";
       $LlTxtMinWrds = "";
@@ -149,7 +163,22 @@ echo "__________>>105>>>". $atmp1b[1]."___[". $atmp1b[2]. "]__". $ln. "\n";
 print_r($atmp1d);
 //sleep(1);
        }else {
-         if(mb_substr($line, 0,4) == "plys"){
+         if      (mb_substr($line, 0,11)=="splitstory_"){
+           $splitletter = mb_substr($line,11,1);
+           $outstr = preputcleandata($outstr);
+           file_put_contents("./". $LlFfeil. $splitletter.".html", $outstr);
+
+           file_put_contents("./". $LlFfeil. "_splitstory_". $splitletter. ".txt", $lsnewwords. "\n\n\n______\n\n\n". $l2ndMod);
+
+           putnewtxt($lsnewwords, $l2ndMod, $splitletter);
+
+$lsnewwords = "";
+$outstr = "";
+$l2ndMod = "";
+
+
+
+         }else if(mb_substr($line, 0,4) =="plys"){
     //echo ">>>>>>". mb_substr($line, 0,4). "\n";
     //sleep(1);
     
@@ -219,158 +248,175 @@ global $LlTxtMaxWrds;
 global $LlTxtInclude;
 global $LlTxtExclude;
 
+  // If line starts with ! then reset all punctuation
+  // i.e. by removing incorrect spacing etc.
+  // and then return back immediately
   if($cluelevel == "!"){
     return "<em style='color:#555;'>". resetpunc($line). "</em>";
   }
-      $awords = explode(" ", $line);
-      $lnout = "";
-      $lnwords = "";
-      foreach($awords as $word){
-        $origword = $word;
-        if(trim($word)=="") continue;
-        $bnewword = false;
-        if((preg_match("/`/", $word)) && (!preg_match("/`@/", $word)) ){
-          $atmp1 = explode("`", $word);
-          $type = "nn";
-          if(isset($atmp1[1])){ $type = $atmp1[1]; }
-          $word = $atmp1[0]. "`";
-          $lword="";
-          if($cluelevel == "`"){ //clue0
-            // backtick symbol - display blank with clue
-            $lword = mb_substr($word,0,1). "___";
-            if(preg_match("/_/", $word)) $lword .= "___";
-            $lword .= " ";
-            $lword = "{lnkb:". $lword. "&ensp;:}";
-            $lswords .= mb_substr($word,0,-1). " ";
-          }else if($cluelevel == "|"){ //clue1
-            // pipe symbol - display blank no clue
-            //
-            //
-            //
-            //
-            //
-            //
-            //$lword =  "____";
-            //if(preg_match("/_/", $word)) $lword .= "___";
-            $lword =  mb_substr($word,0,-1);
-            //$lword .= " ";
-            //$lword = "{lnkb:". $lword. "&ensp;:}";
-            $lswords .= mb_substr($word,0,-1). " ";
-            if      ($type == "it"){
-              $lsitwords .= mb_substr($word,0,-1). " ";
-            }else if($type == "at"){
-              $lsartwords .= mb_substr($word,0,-1). " ";
-            }else if($type == "ans"){
-              $lsanswords .= mb_substr($word,0,-1). " ";
-            }else if($type == "lt"){
-              $lsltwords .= mb_substr($word,0,-1). " ";
-            }else if($type == "rs"){
-              $lsrswords .= mb_substr($word,0,-1). " ";
-            }else if($type == "ix"){
-              $lsixwords .= mb_substr($word,0,-1). " ";
-            }else if($type == "nn"){
-              $lsnnwords .= mb_substr($word,0,-1). " ";
-            }else if($type == "nb"){
-              $lsnbwords .= mb_substr($word,0,-1). " ";
-            }else if($type == "ex"){
-              $lsexwords .= mb_substr($word,0,-1). " ";
-            }else if($type == "pn"){
-              $lspnwords .= mb_substr($word,0,-1). " ";
-            }else if($type == "iv"){
-              $lsivwords .= mb_substr($word,0,-1). " ";
-            }else if($type == "ct"){
-              $lsctwords .= mb_substr($word,0,-1). " ";
-            }else if($type == "av"){
-              $lsavwords .= mb_substr($word,0,-1). " ";
-            }else if($type == "pp"){
-              $lsppwords .= mb_substr($word,0,-1). " ";
-            }else if($type == "pv"){
-              $lspvwords .= mb_substr($word,0,-1). " ";
-            }else if($type == "id"){
-              $lsidwords .= mb_substr($word,0,-1). " ";
-            }else if($type == "aj"){
-              $lsajwords .= mb_substr($word,0,-1). " ";
-            }else if($type == "nm"){
-              $lsnnwords .= mb_substr($word,0,-1). " ";
-            }else if($type == "nf"){
-              $lsnnwords .= mb_substr($word,0,-1). " ";
-            }else {
+  $awords = explode(" ", $line);
+  $lnout = "";
+  $lnwords = "";
+  foreach($awords as $word){
+    $origword = $word;
+    if(trim($word)=="") continue;
+    $bnewword = false;
+    if((preg_match("/`/", $word)) && (!preg_match("/`@/", $word)) ){
+      $atmp1 = explode("`", $word);
+      $type = "nn";
+      if(isset($atmp1[1])){ $type = $atmp1[1]; }
+      $word = $atmp1[0]. "`";
+      $lword="";
+      // If line starts with ` then show blank spaces
+      // for where the answer should appear
+      if($cluelevel == "`"){ //clue0
+        // backtick symbol - display blank with clue
+        $lword = mb_substr($word,0,1). "___";
+        if(preg_match("/_/", $word)) $lword .= "___";
+        $lword .= " ";
+        $lword = "{lnkb:". $lword. "&ensp;:}";
+        $lswords .= mb_substr($word,0,-1). " ";
+      // If line starts with | then show selection list
+      // for the answer option
+      }else if(($cluelevel == "|")
+             ||($cluelevel == "&")){ //clue1
+        // pipe symbol - display blank no clue
+        //
+        //$lword =  "____";
+        //if(preg_match("/_/", $word)) $lword .= "___";
+        $lword =  mb_substr($word,0,-1);
+        //$lword .= " ";
+        //$lword = "{lnkb:". $lword. "&ensp;:}";
+        $lswords .= mb_substr($word,0,-1). " ";
+        if      ($type == "it"){
+          $lsitwords .= mb_substr($word,0,-1). " ";
+        }else if($type == "at"){
+          $lsartwords .= mb_substr($word,0,-1). " ";
+        }else if($type == "ans"){
+          $lsanswords .= mb_substr($word,0,-1). " ";
+        }else if($type == "lt"){
+          $lsltwords .= mb_substr($word,0,-1). " ";
+        }else if($type == "rs"){
+          $lsrswords .= mb_substr($word,0,-1). " ";
+        }else if($type == "ix"){
+          $lsixwords .= mb_substr($word,0,-1). " ";
+        }else if($type == "nn"){
+          $lsnnwords .= mb_substr($word,0,-1). " ";
+        }else if($type == "nb"){
+          $lsnbwords .= mb_substr($word,0,-1). " ";
+        }else if($type == "ex"){
+          $lsexwords .= mb_substr($word,0,-1). " ";
+        }else if($type == "pn"){
+          $lspnwords .= mb_substr($word,0,-1). " ";
+        }else if($type == "iv"){
+          $lsivwords .= mb_substr($word,0,-1). " ";
+        }else if($type == "ct"){
+          $lsctwords .= mb_substr($word,0,-1). " ";
+        }else if($type == "av"){
+          $lsavwords .= mb_substr($word,0,-1). " ";
+        }else if($type == "pp"){
+          $lsppwords .= mb_substr($word,0,-1). " ";
+        }else if($type == "pv"){
+          $lspvwords .= mb_substr($word,0,-1). " ";
+        }else if($type == "id"){
+          $lsidwords .= mb_substr($word,0,-1). " ";
+        }else if($type == "aj"){
+          $lsajwords .= mb_substr($word,0,-1). " ";
+        }else if($type == "nm"){
+          $lsnnwords .= mb_substr($word,0,-1). " ";
+        }else if($type == "nf"){
+          $lsnnwords .= mb_substr($word,0,-1). " ";
+        }else {
 echo "ERROR!!!(251)---speechtype code not found>[". $origword. "] in [". $line ."]\n";
 die();
 
-              $lsnnwords .= mb_substr($word,0,-1). " ";
-            }
+          $lsnnwords .= mb_substr($word,0,-1). " ";
+        }
 
 
 
+      //¬ underline answer for reading
+      //If line starts with ¬ then underling the
+      //answer.
+      }else if($cluelevel == "¬"){ //bold
+        // not symbol - display text in bold
+        $lword = "<u>{*". mb_substr($word,0,-1). "*}</u> ";
+      //& Preprocessor for longer stories
+      //that need to be split up into segments
+      //and vocab lists
+      //}else if($cluelevel == "&"){ //bold
+       // $lword = "xx". $word;
 
-          }else if($cluelevel == "¬"){ //bold
-            // not symbol - display text in bold
-            $lword = "<u>{*". mb_substr($word,0,-1). "*}</u> ";
-          }
-          if($lnout != "") $lnout .= ', ';
-          $lnout .= '"'. $lword. '"';
 
-          if($lnwords != "") $lnwords .= ', ';
-          $lnwords .= '"'. $lword. '"';
-          
-        }else if(preg_match("/`@/", $word)){
-          //--------------------
-          $atmp1 = explode("`", $word);
-          // word = "phone`@ffo*n!nm"
-          if(isset($atmp1[1])){
+
+      }
+      if($lnout != "") $lnout .= ', ';
+      $lnout .= '"'. $lword. '"';
+
+      if($lnwords != "") $lnwords .= ', ';
+      $lnwords .= '"'. $lword. '"';
+      
+    //`@ words are not used as vocab test words,
+    //instead, they are preprocessed to be used
+    //as vocab learning words in a later module
+    //by writing to the _text.txt files
+    }else if(preg_match("/`@/", $word)){
+      //--------------------
+      $atmp1 = explode("`", $word);
+      // word = "phone`@ffo*n!nm"
+      if(isset($atmp1[1])){
 //echo "__________________283a>>".  $atmp1[0]. "___". $atmp1[1]. "\n";
-            if(preg_match("/¬/", $atmp1[1])){
+        if(preg_match("/¬/", $atmp1[1])){
 //echo "__________________283b>>".  $lsnewwords. "\n";
-              if($lsnewwords != "") $lsnewwords .= ' ';
-              $lsnewwords .=  strtolower($atmp1[0]. $atmp1[1]);
-              $bnewword = true;
-              if($l2ndMod != "") $l2ndMod .= ' ';
-              $l2ndMod .= 
-                preg_replace("/@/", "",
-                  preg_replace("/¬/", "`", $atmp1[1])
-                );
-              $b2ndMod = true; 
-              $a2ndMod[$atmp1[0]] = $atmp1[1];
+          if($lsnewwords != "") $lsnewwords .= ' ';
+          $lsnewwords .=  strtolower($atmp1[0]. $atmp1[1]);
+          $bnewword = true;
+          if($l2ndMod != "") $l2ndMod .= ' ';
+          $l2ndMod .= 
+            preg_replace("/@/", "",
+              preg_replace("/¬/", "`", $atmp1[1])
+            );
+          $b2ndMod = true; 
+          $a2ndMod[$atmp1[0]] = $atmp1[1];
 //echo "__________________283>>".  $atmp1[0]. "___". $atmp1[1]. "\n";
-            }else {
+        }else {
 //echo "__________________285>>".  $atmp1[0]. "\n";
-              if(!isset($a2ndMod[$atmp1[0]])){
+          if(!isset($a2ndMod[$atmp1[0]])){
 echo "ERROR!!!(292)-engword not set with cymword-->[". $atmp1[0]. "] not set in [". $line ."]\n";
 die();
-              }else {
-                $bnewword = true;
-                if($l2ndMod != "") $l2ndMod .= ' ';
-                $l2ndMod .= 
-                  preg_replace("/@/", "",
-                    preg_replace("/¬/", "`", $a2ndMod[$atmp1[0]])
-                  );
-              }
-               
-            }
+          }else {
+            $bnewword = true;
+            if($l2ndMod != "") $l2ndMod .= ' ';
+            $l2ndMod .= 
+              preg_replace("/@/", "",
+                preg_replace("/¬/", "`", $a2ndMod[$atmp1[0]])
+              );
           }
-          //--------------------
-          $atmp2 = explode("`@", $word);
-          $lsword2 = $atmp2[0];
-          if($lnout != "") $lnout .= ', ';
-          $lnout .= '"'. $lsword2. '"';
-
-        }else {
-          if($lnout != "") $lnout .= ', ';
-          $lnout .= '"'. $word. '"';
-        }//endif
-        //-------------------------------------
-        if( !$bnewword){
-          if($l2ndMod != "") $l2ndMod .= ' ';
-          $l2ndMod .= preg_replace("/\`/", "", $word);
+           
         }
-        //-------------------------------------
-        //-------------------------------------
-        //-------------------------------------
-        //-------------------------------------
+      }
+      //--------------------
+      $atmp2 = explode("`@", $word);
+      $lsword2 = $atmp2[0];
+      if($lnout != "") $lnout .= ', ';
+      $lnout .= '"'. $lsword2. '"';
+
+    }else {
+      if($lnout != "") $lnout .= ', ';
+      $lnout .= '"'. $word. '"';
+    }//endif
+    //-------------------------------------
+    if( !$bnewword){
+      if($l2ndMod != "") $l2ndMod .= ' ';
+      $l2ndMod .= preg_replace("/\`/", "", $word);
+    }
+    //-------------------------------------
+    //-------------------------------------
+    //-------------------------------------
+    //-------------------------------------
 
 
-      }//endforeach
+  }//endforeach
 
 echo "_____". $lnout. "____\n";
 echo "____________". $lnwords. "____\n";
@@ -379,19 +425,109 @@ echo "____________". $lnwords. "____\n";
 
 /*
  *       {
-        text: ["The", "girl", "is", "the sister of the", "boy", "."],
-        answers: ["girl","boy"]
-      },
+    text: ["The", "girl", "is", "the sister of the", "boy", "."],
+    answers: ["girl","boy"]
+  },
 
  */
-      $lnout = "{ text: [". $lnout. "], answers: [". $lnwords. "] },";
+  $lnout = "{ text: [". $lnout. "], answers: [". $lnwords. "] },";
       //$lnout = resetpunc($lnout);
   
 
   return $lnout;
 }//endfunc
+//---------------------------------------------------
+function putnewtxt($lsnewwords, $l2ndMod, $splitletter = ""){
+global $LlFfeil;
+global $LlGwers;
+global $LlTeitl;
+global $LlBtnsDesc;
+global $LlDidoli;
+global $LlPlygellSain;
+global $LlLlun1;
+ if($lsnewwords != ""){
+//echo "____94>>". $lsnewwords. "\n";
+   $atmp1 = explode(" ", $lsnewwords);
+   $atmp1 = array_filter(array_unique($atmp1)); 
+   sort($atmp1);
+   $retstr = "";
+   $lsnewwords = "";
+   foreach($atmp1 as $ln){
+     $ln = preg_replace("/¬/", "@", $ln);
+     //$atmp1b = preg_split("/[@&]/", $ln);
+     $atmp1b = explode("@", $ln);
+     if(isset($atmp1b[2])){
+       $lsnewwords .= $ln. " ";
+echo "__________>>105>>>". $atmp1b[1]."___[". $atmp1b[2]. "]__". $ln. "\n";
+       $retstr .=  "|plyssnd_". $atmp1b[1]. " (". $atmp1b[2] ." {*".mb_substr($ln,0,1)."__*}) ".$atmp1b[0]."`ans\n";
+     }
+   }//endforeach
+  // $retstr = trim($lsnewwords) . "\n\n". $retstr;
+   $retstr =
+       "|ffeil=". $LlFfeil. $splitletter. "1\n".
+       "|modiwl=". $LlGwers. $splitletter. "1\n".
+       "|teitl=u5\n".
+       "|btnsdesc=".$LlBtnsDesc." ".strtoupper($splitletter)."1\n".
+       "|didoli=hapnam\n".
+       "|plygellsain=". $LlPlygellSain. "\n".
+       $retstr.
+       "|--------------------------------------\n".
+       "|======================================\n".
+       "|ffeil=". $LlFfeil. $splitletter. "2\n".
+       "|modiwl=". $LlGwers. $splitletter. "2\n".
+       "|teitl=u5\n".
+       "|btnsdesc=".$LlBtnsDesc." ".strtoupper($splitletter)."2\n".
+       "|didoli=hapnam\n".
+       "|plygellsain=". $LlPlygellSain. "\n".
+       preg_replace("/^/m","|", $l2ndMod).
+       "|--------------------------------------\n".
+       "|======================================\n".
+       "";
+   file_put_contents("./". $LlFfeil. $splitletter. "_new.txt", $retstr);
+ }
+}//endfunc
+
+//---------------------------------------------------
+function preputcleandata($outstr){
+global $lsitwords; global $lsltwords; global $lsanswords; global $lsartwords; global $lsrswords; global $lsixwords; global $lsnnwords; global $lsnbwords; global $lsnewwords; global $lsexwords; global $lspnwords; global $lsivwords; global $lsctwords; global $lsavwords; global $lsppwords; global $lspvwords; global $lsidwords; global $lsajwords; 
+global $LlFfeil;
+//--------------
+  $outstr = acenau($outstr);
+
+  $outstr = preg_replace( "/plysnd_(['´âêîôûŵŴŷáÁỳàäëïÏöÖëa-zA-Z0-9^_]+)/", "<plysnd>$1</plysnd>", $outstr);
+  $outstr = preg_replace("/plyssnd_(['´âêîôûŵŴŷáÁỳàäëïÏöÖëa-zA-Z0-9^_]+)/", "<plyssnd>$1</plyssnd>", $outstr);
+  $outstr = preg_replace( "/shwjpg_(['´âêîôûŵŴŷáÁỳàäëïÏöÖëa-zA-Z0-9^_\.\,\-]+)/", "<shwjpg>$1</shwjpg>", $outstr);
+  $outstr = preg_replace( "/shwpng_(['´âêîôûŵŴŷáÁỳàäëïÏöÖëa-zA-Z0-9^_\.\,\-]+)/", "<shwpng>$1</shwpng>", $outstr);
+
+  $outstr2 = 
+  "\nconst ansrOptions = [". dwsfmt($lsanswords, "ans"). "];\n".
+  "\nconst artlOptions = [". dwsfmt($lsartwords, "art"). "];\n".
+  "\nconst initOptions = [". dwsfmt($lsitwords, "init"). "];\n".
+  "\nconst lttrOptions = [". dwsfmt($lsltwords, "ltr"). "];\n".
+  "\nconst respOptions = [". dwsfmt($lsrswords, "rsp"). "];\n".
+  "\nconst infxOptions = [". dwsfmt($lsixwords, "vifx"). "];\n".
+  "\nconst nounOptions = [". dwsfmt($lsnnwords, "noun"). "];\n".
+  "\nconst numbOptions = [". dwsfmt($lsnbwords, "num"). "];\n".
+  "\nconst exclOptions = [". dwsfmt($lsexwords, "excl"). "];\n".
+  "\nconst pronOptions = [". dwsfmt($lspnwords, "pron"). "];\n".
+  "\nconst infvOptions = [". dwsfmt($lsivwords, "vifv"). "];\n".
+  "\nconst cnctOptions = [". dwsfmt($lsctwords, "cnct"). "];\n".
+  "\nconst advbOptions = [". dwsfmt($lsavwords, "adv"). "];\n".
+  "\nconst prepOptions = [". dwsfmt($lsppwords, "prep"). "];\n".
+  "\nconst possOptions = [". dwsfmt($lspvwords, "poss"). "];\n".
+  "\nconst idimOptions = [". dwsfmt($lsidwords, "idm"). "];\n".
+  "\nconst adjvOptions = [". dwsfmt($lsajwords, "adj"). "];\n".
+  "";
+  $outstr2 = acenau($outstr2);
+
+  $outstr = ffurfweddu((dewisiadausetsections($outstr, $outstr2, $LlFfeil )));
+  return $outstr;
+//--------------
+}//endfunc
 
 
+
+//---------------------------------------------------
 function resetpunc($lnout){
       $lnout = preg_replace("/(\s*)\{\{(\s*)/", " \"", $lnout);
       $lnout = preg_replace("/(\s*)\}\}(\s*)/", "\" ", $lnout);
@@ -399,8 +535,10 @@ function resetpunc($lnout){
       return $lnout;
 
 }//endfunc
+//---------------------------------------------------
 
 
+//---------------------------------------------------
 function dewisiadausetsections($outstr, $outstr2, $pmod="test1"){
 
 global $LlCwrs;
@@ -548,7 +686,7 @@ $LlHtmlBrig='
   color: #000000;
   display: none;
   z-index:1000;
-  top: 100px;
+  top: 20px;
   transform: translate(-50%);
   padding: 10px 10px;
   border: 3px solid #188715;
