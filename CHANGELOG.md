@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.72_251015-2234 - enhancements to dewisiadau1.php - corrections to placements of dvMsg message, and bugfixes
+-  Amendments as per the release description
+
 ## 0.0.71_251015-2154 - enhancements to dewisiadau1.php - relocate all audio files in mp3 subfolder and all image files in img subfolder
 -  Amendments as per the release description
 

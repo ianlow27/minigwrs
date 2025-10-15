@@ -646,8 +646,8 @@ $LlHtmlBrig='
   background-color: #ffffff;
   color: #000000;
   display: none;
-  z-index:1000;
-  top: 20px;
+  z-index:1;
+  top: 50px;
   transform: translate(-50%);
   padding: 10px 10px;
   border: 3px solid #188715;
@@ -678,7 +678,7 @@ $LlHtmlBrig='
 <body>
 <div id="lock-screen">
   <center>
-  <a id="alnkHome2" style="font-size:140%;text-decoration:none;">🏠</a>
+  <a id="alnkHome2" style="z-index:9999;font-size:140%;text-decoration:none;">🏠</a>
   <h2>Ian\'s Welsh Class - Homework<br/>'.  $pmod. '<br/>
 
 
@@ -781,7 +781,7 @@ $LlCynB = '
 
   <div id="goodJob">'
     .'🎉 <b>Good Job! </b>🎉'.
-   '<br/><a id="alnkHome3" style="font-size:100%;text-decoration:none;">🏠</a>
+   '<br/><a id="alnkHome3" style="z-index:9999;font-size:100%;text-decoration:none;">🏠</a>
 &ensp;<span style="font-size:70%;">Please make a note of your success code and module number as you will need it later:<br/>Success Code: <b>' .  strtolower($LlTeitl ). '</b><br/>Module: <b>'. strtolower($LlGwers)
     .'</b> <br>Time taken: <span id="spsecs"></span> secs
        <br>Average time: <span id="avgSecs"></span> secs
@@ -1148,7 +1148,7 @@ $LlWedi='
 
   let correctPassword = "K\.?s{4(:@(3613~,?45!KJd^%$@£!)0{{1(Jksi3(*!%$@:"; // Change this to your desired password
 
-  function checkPassword() {
+  function checkPassword(pstr) {
     const input = document.getElementById("password-input").value.toLowerCase();;
     const successcode = document.getElementById("successcode").value.toLowerCase();;
     //const error = document.getElementById("error");
@@ -1165,7 +1165,7 @@ $LlWedi='
      //error.style.display = "block";
     }
   }
-  checkPassword(1);
+  checkPassword(2);
 </script>
 
 <script>
@@ -1267,14 +1267,6 @@ function getEncryptedParameter() {
         //console.log("Encrypted value:", passwd);
         document.getElementById("nextlnk").href="./modiwl00'. $LlNesaf. '.html?u=" + u; 
         correctPassword = usrInitials + "123";
-        /*
-        alnkHome = document.getElementById("alnkHome");
-        alnkHome.href = "https://2lnk.net/ianswelshclass/home/" + homePage + ".html";
-        alnkHome2 = document.getElementById("alnkHome2");
-        alnkHome2.href = "https://2lnk.net/ianswelshclass/home/" + homePage + ".html";
-        alnkHome3 = document.getElementById("alnkHome3");
-        alnkHome3.href = "https://2lnk.net/ianswelshclass/home/" + homePage + ".html";
-        */
 
 
 
@@ -1413,7 +1405,8 @@ const encouragingEmojis = [
     // After fade completes (4s total), clear the message text
     fadeTimeout = setTimeout(() => {
       //messageDiv.innerHTML = "<span style=\"font-size:150%;\"> _____ </span>";
-    }, 4000);
+      dvMsg.style.display = "none";
+    }, 1000);
   //});
   }//endfunc
 
@@ -1731,8 +1724,8 @@ return '
         background-color: #ffffff;
         color: #000000;
         display: none;
-        z-index:1000;
-        top: 20px;
+        z-index:1;
+        top: 50px;
         transform: translate(-50%);
         padding: 10px 10px;
         border: 3px solid #188715;
@@ -1844,7 +1837,7 @@ return '
       <body>
       <div id="lock-screen">
         <center>
-        <a id="alnkHome2" style="font-size:140%;text-decoration:none;">🏠</a>
+        <a id="alnkHome2" style="z-index:9999;font-size:140%;text-decoration:none;">🏠</a>
         <h2>Ian\'s Welsh Class - Homework<br/>modiwl003-h1<br/>
       
       
@@ -1872,7 +1865,7 @@ return '
         <button style="display:none;" onclick="checkAnswers()">Check Answers</button>
         <button id="reset-btn" style="z-index:9999;">Restart</button>&emsp;<a id="nextlnk" href="./modiwl00.html" style="display:none;" >Next Assignment - </a>
       
-        <div id="goodJob">🎉 <b>Good Job! </b>🎉<br/><a id="alnkHome3" style="font-size:100%;text-decoration:none;">🏠</a>
+        <div id="goodJob">🎉 <b>Good Job! </b>🎉<br/><a id="alnkHome3" style="z-index:9999;font-size:100%;text-decoration:none;">🏠</a>
       &ensp;<span style="font-size:70%;">Please make a note of your success code and module number as you will need it later:<br/>Success Code: <b>d2</b><br/>Module: <b>3-h1</b> <br>Time taken: <span id="spsecs"></span> secs
              <br>Average time: <span id="avgSecs"></span> secs
              <br><span style="font-size:350%;" id="speedEmoji"></span>
@@ -2109,7 +2102,8 @@ document.addEventListener("mousemove", function(event) {
           // After fade completes (4s total), clear the message text
           fadeTimeout = setTimeout(() => {
             //messageDiv.innerHTML = "<span style=\"font-size:150%;\"> _____ </span>";
-          }, 4000);
+            dvMsg.style.display = "none";
+          }, 1000);
         //});
         }//endfunc
       
@@ -2233,7 +2227,7 @@ document.addEventListener("mousemove", function(event) {
       
         let correctPassword = "K\.?s{4(:@(3613~,?45!KJd^%$@£!)0{{1(Jksi3(*!%$@:"; // Change this to your desired password
       
-        function checkPassword() {
+        function checkPassword(pstr) {
           const input = document.getElementById("password-input").value.toLowerCase();;
           const successcode = document.getElementById("successcode").value.toLowerCase();;
           //const error = document.getElementById("error");
@@ -2298,14 +2292,6 @@ document.addEventListener("mousemove", function(event) {
               //console.log("Encrypted value:", passwd);
               document.getElementById("nextlnk").href="./modiwl00.html?u=" + u; 
               correctPassword = usrInitials + "123";
-              /*
-              alnkHome = document.getElementById("alnkHome");
-              alnkHome.href = "https://2lnk.net/ianswelshclass/home/" + homePage + ".html";
-              alnkHome2 = document.getElementById("alnkHome2");
-              alnkHome2.href = "https://2lnk.net/ianswelshclass/home/" + homePage + ".html";
-              alnkHome3 = document.getElementById("alnkHome3");
-              alnkHome3.href = "https://2lnk.net/ianswelshclass/home/" + homePage + ".html";
-              */
       
       
       
