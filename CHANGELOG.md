@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.68_251015-0821 - Added zipfldr.sh - Shell script utility to back up an existing course folder to a zipfile
+-  Amendments as per the release description
+
 ## 0.0.67_251015-0805 - enhancements to dewisiadau1.php - Added the functionality putnewtxt() and circleimagemob() to split a vocab story into smaller parts and vocab learning activities. The circleimagemob() function creates an object selection activity from a single image.
 -  Amendments as per the release description
 
