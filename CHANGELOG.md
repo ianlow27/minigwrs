@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.67_251015-0805 - enhancements to dewisiadau1.php - Added the functionality putnewtxt() and circleimagemob() to split a vocab story into smaller parts and vocab learning activities. The circleimagemob() function creates an object selection activity from a single image.
+-  Amendments as per the release description
+
 ## 0.0.66_251014-2256 - enhancements to dewisiadau1.php - Added splitstory_ functionality whereby a long text with new words can be split into multiple vocab learning and building activities using the splitstory_ line inside the module.
 -  Amendments as per the release description
 

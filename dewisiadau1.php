@@ -63,39 +63,6 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
 
     if(substr($line, 1, 4) == "===="){
 
-//--------------
-/*
-      $outstr = acenau($outstr);
-
-      $outstr = preg_replace( "/plysnd_(['´âêîôûŵŴŷáÁỳàäëïÏöÖëa-zA-Z0-9^_]+)/", "<plysnd>$1</plysnd>", $outstr);
-      $outstr = preg_replace("/plyssnd_(['´âêîôûŵŴŷáÁỳàäëïÏöÖëa-zA-Z0-9^_]+)/", "<plyssnd>$1</plyssnd>", $outstr);
-      $outstr = preg_replace( "/shwjpg_(['´âêîôûŵŴŷáÁỳàäëïÏöÖëa-zA-Z0-9^_\.\,\-]+)/", "<shwjpg>$1</shwjpg>", $outstr);
-      $outstr = preg_replace( "/shwpng_(['´âêîôûŵŴŷáÁỳàäëïÏöÖëa-zA-Z0-9^_\.\,\-]+)/", "<shwpng>$1</shwpng>", $outstr);
-
-      $outstr2 = 
-      "\nconst ansrOptions = [". dwsfmt($lsanswords, "ans"). "];\n".
-      "\nconst artlOptions = [". dwsfmt($lsartwords, "art"). "];\n".
-      "\nconst initOptions = [". dwsfmt($lsitwords, "init"). "];\n".
-      "\nconst lttrOptions = [". dwsfmt($lsltwords, "ltr"). "];\n".
-      "\nconst respOptions = [". dwsfmt($lsrswords, "rsp"). "];\n".
-      "\nconst infxOptions = [". dwsfmt($lsixwords, "vifx"). "];\n".
-      "\nconst nounOptions = [". dwsfmt($lsnnwords, "noun"). "];\n".
-      "\nconst numbOptions = [". dwsfmt($lsnbwords, "num"). "];\n".
-      "\nconst exclOptions = [". dwsfmt($lsexwords, "excl"). "];\n".
-      "\nconst pronOptions = [". dwsfmt($lspnwords, "pron"). "];\n".
-      "\nconst infvOptions = [". dwsfmt($lsivwords, "vifv"). "];\n".
-      "\nconst cnctOptions = [". dwsfmt($lsctwords, "cnct"). "];\n".
-      "\nconst advbOptions = [". dwsfmt($lsavwords, "adv"). "];\n".
-      "\nconst prepOptions = [". dwsfmt($lsppwords, "prep"). "];\n".
-      "\nconst possOptions = [". dwsfmt($lspvwords, "poss"). "];\n".
-      "\nconst idimOptions = [". dwsfmt($lsidwords, "idm"). "];\n".
-      "\nconst adjvOptions = [". dwsfmt($lsajwords, "adj"). "];\n".
-      "";
-      $outstr2 = acenau($outstr2);
-
-      $outstr = ffurfweddu((dewisiadausetsections($outstr, $outstr2, $LlFfeil )));
-*/
-//--------------
 
       if($char1 != "&"){
         $outstr = preputcleandata($outstr);
@@ -110,30 +77,6 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
       }
       //-----------------
       putnewtxt($lsnewwords, $l2ndMod, "");
-      /*
-      if($lsnewwords != ""){
-//echo "____94>>". $lsnewwords. "\n";
-           $atmp1 = explode(" ", $lsnewwords);
-           $atmp1 = array_filter(array_unique($atmp1)); 
-           sort($atmp1);
-           $retstr = "";
-           $lsnewwords = "";
-           foreach($atmp1 as $ln){
-             //if($retstr != "") $retstr .='\n';
-             $ln = preg_replace("/¬/", "@", $ln);
-             //$atmp1b = preg_split("/[@&]/", $ln);
-             $atmp1b = explode("@", $ln);
-             if(isset($atmp1b[2])){
-               $lsnewwords .= $ln. " ";
-echo "__________>>105>>>". $atmp1b[1]."___[". $atmp1b[2]. "]__". $ln. "\n";
-               $retstr .=  "|plyssnd_". $atmp1b[1]. " (". $atmp1b[2] ." {*".mb_substr($ln,0,1)."__*}) ".$atmp1b[0]."`ans\n";
-             }
-           }//endforeach
-           $retstr = trim($lsnewwords) . "\n\n". $retstr;
-           file_put_contents("./". $LlFfeil. "_new.txt", $retstr);
-  
-      }
-      */
       //-----------------
 
       $outstr = "";
@@ -164,13 +107,15 @@ print_r($atmp1d);
 //sleep(1);
        }else {
          if      (mb_substr($line, 0,11)=="splitstory_"){
-           $splitletter = mb_substr($line,11,1);
+           $atmp2a = explode("_", preg_replace("/ /", "", $line));
+           $splitletter = trim($atmp2a[1]);
+           $splitimg = trim($atmp2a[2]);
            $outstr = preputcleandata($outstr);
            file_put_contents("./". $LlFfeil. $splitletter.".html", $outstr);
 
            file_put_contents("./". $LlFfeil. "_splitstory_". $splitletter. ".txt", $lsnewwords. "\n\n\n______\n\n\n". $l2ndMod);
 
-           putnewtxt($lsnewwords, $l2ndMod, $splitletter);
+           putnewtxt($lsnewwords, $l2ndMod, $splitletter, $splitimg);
 
 $lsnewwords = "";
 $outstr = "";
@@ -437,7 +382,7 @@ echo "____________". $lnwords. "____\n";
   return $lnout;
 }//endfunc
 //---------------------------------------------------
-function putnewtxt($lsnewwords, $l2ndMod, $splitletter = ""){
+function putnewtxt($lsnewwords,$l2ndMod,$splitletter="",$splitimg=""){
 global $LlFfeil;
 global $LlGwers;
 global $LlTeitl;
@@ -452,13 +397,17 @@ global $LlLlun1;
    sort($atmp1);
    $retstr = "";
    $lsnewwords = "";
+   $lsimgjs = "";
+   $lcount = 0;
    foreach($atmp1 as $ln){
+     $lcount++;
      $ln = preg_replace("/¬/", "@", $ln);
      //$atmp1b = preg_split("/[@&]/", $ln);
      $atmp1b = explode("@", $ln);
+     $lsimgjs .= '"'. $atmp1b[1]. '": [0, '. ($lcount * 5) ."],\n";
      if(isset($atmp1b[2])){
        $lsnewwords .= $ln. " ";
-echo "__________>>105>>>". $atmp1b[1]."___[". $atmp1b[2]. "]__". $ln. "\n";
+//echo "__________>>105>>>". $atmp1b[1]."___[". $atmp1b[2]. "]__". $ln. "\n";
        $retstr .=  "|plyssnd_". $atmp1b[1]. " (". $atmp1b[2] ." {*".mb_substr($ln,0,1)."__*}) ".$atmp1b[0]."`ans\n";
      }
    }//endforeach
@@ -484,9 +433,10 @@ echo "__________>>105>>>". $atmp1b[1]."___[". $atmp1b[2]. "]__". $ln. "\n";
        "|======================================\n".
        "";
    file_put_contents("./". $LlFfeil. $splitletter. "_new.txt", $retstr);
+   $lsimgjs = circleimagemob($lsimgjs, $splitimg);
+   file_put_contents("./". $LlFfeil. $splitletter. "i.html", $lsimgjs);
  }
 }//endfunc
-
 //---------------------------------------------------
 function preputcleandata($outstr){
 global $lsitwords; global $lsltwords; global $lsanswords; global $lsartwords; global $lsrswords; global $lsixwords; global $lsnnwords; global $lsnbwords; global $lsnewwords; global $lsexwords; global $lspnwords; global $lsivwords; global $lsctwords; global $lsavwords; global $lsppwords; global $lspvwords; global $lsidwords; global $lsajwords; 
@@ -524,9 +474,6 @@ global $LlFfeil;
   return $outstr;
 //--------------
 }//endfunc
-
-
-
 //---------------------------------------------------
 function resetpunc($lnout){
       $lnout = preg_replace("/(\s*)\{\{(\s*)/", " \"", $lnout);
@@ -535,9 +482,6 @@ function resetpunc($lnout){
       return $lnout;
 
 }//endfunc
-//---------------------------------------------------
-
-
 //---------------------------------------------------
 function dewisiadausetsections($outstr, $outstr2, $pmod="test1"){
 
@@ -1700,9 +1644,7 @@ $LlTextboxScript.
 
 $LlHtmlGwaelod;
 }//endfunc
-
-
-
+//---------------------------------------------
 function dwsfmt($pstr, $popt){
   $atmp1 = explode(" ", $pstr);
   $atmp1 = array_filter(array_unique($atmp1)); 
@@ -1715,10 +1657,672 @@ function dwsfmt($pstr, $popt){
   
   if ($retstr != "") $retstr = ", ". $retstr;
   return '"_'. $popt. '_"'. $retstr;
+}//endfunc
+//---------------------------------------------
+function circleimagemob($pstr, $splitimg){
 
+return '
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <title>Mobile Vocabulary Game</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+        <style>
+      
+          #lock-screen {
+            position: fixed;
+            xxtop: 0; left: 0; right: 0; bottom: 0;
+            top: 50px; left: 0; right: 0; bottom: 0;
+            xxbackground: #111;
+            xxcolor: #fff;
+            display: flex;
+            flex-direction: column;
+            //justify-content: center;
+            justify-content: flex-start;
+            align-items: center;
+            z-index: 9999;
+          }
+          #content {
+            display: none;
+            padding: 20px;
+          }
+          input[type="password"] {
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+          }
+          button {
+            padding: 10px 15px;
+            margin-top: 10px;
+          }
+      
+      
+      
+      
+      
+      
+      
+      
+      #dvMsg {
+        position: fixed;
+        xxtop: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        background-color: #ffffff;
+        color: #000000;
+        display: none;
+        z-index:1000;
+        top: 20px;
+        transform: translate(-50%);
+        padding: 10px 10px;
+        border: 3px solid #188715;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        text-align: center;
+      }
+      #goodJob {
+        display: none;
+        position: fixed;
+        left: 50%;
+        width: 80%;
+        top: 50px;
+        transform: translate(-50%);
+        font-size: 160%;
+        color: #188715;
+        background-color: white;
+        padding: 10px 10px;
+        border: 3px solid #188715;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        z-index: 9999;
+        text-align: center;
+      }
+      
+      
+      
+      
+      
+      
+          body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            background: #f9f9f9;
+          }
+      
+          #container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin: auto;
+            aspect-ratio: 1 / 1;
+          }
+      
+          #main-image {
+            width: 100%;
+            xxheight: 100%;
+            xxobject-fit: cover;
+            display: block;
+          }
+      
+          .circle {
+            position: absolute;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 2;
+          }
+      
+          /* Modal styles */
+          #modal {
+            display: none;
+            position: fixed;
+            z-index: 10;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+            align-items: center;
+            justify-content: center;
+          }
+      
+          #modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 300px;
+            margin: auto;
+          }
+      
+          .option-button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 12px;
+            font-size: 18px;
+            border: none;
+            border-radius: 6px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+          }
+      
+          .option-button:hover {
+            background-color: #0056b3;
+          }
+      
+          #modal h3 {
+            margin-bottom: 15px;
+          }
+        </style>
+      </head>
+      <body>
+      <div id="lock-screen">
+        <center>
+        <a id="alnkHome2" style="font-size:140%;text-decoration:none;">🏠</a>
+        <h2>Ian\'s Welsh Class - Homework<br/>modiwl003-h1<br/>
+      
+      
+        <div style="display:none;"><br/>Enter your success code from modiwl00<br/>
+        <input type="password" id="successcode" placeholder="Success Code">
+      
+        </div>Enter your password to access the page<br/>
+        <input type="password" id="password-input" placeholder="Password">
+        <p id="error" style="color: red; display: none;"></p>
+      
+        </h2>
+      
+      
+      
+        </center>
+      </div>
+      <div id="content">
+      
+      
+      
+       <div id="dvMsg" ></div>
+      
+      <a id="alnkHome" style="font-size:140%;">🏠</a>
+      
+        <button style="display:none;" onclick="checkAnswers()">Check Answers</button>
+        <button id="reset-btn">Restart</button>&emsp;<a id="nextlnk" href="./modiwl00.html" style="display:none;" >Next Assignment - </a>
+      
+        <div id="goodJob">🎉 <b>Good Job! </b>🎉<br/><a id="alnkHome3" style="font-size:100%;text-decoration:none;">🏠</a>
+      &ensp;<span style="font-size:70%;">Please make a note of your success code and module number as you will need it later:<br/>Success Code: <b>d2</b><br/>Module: <b>3-h1</b> <br>Time taken: <span id="spsecs"></span> secs
+             <br>Average time: <span id="avgSecs"></span> secs
+             <br><span style="font-size:350%;" id="speedEmoji"></span>
+             <br><span id="speedMsg"></span><br/>
+      </span>
+      
+        <button onclick="window.location.reload();">Reset</button>
+        </div>
+      
+      
+      
+      
+      
+      
+      
+      
+        <h2>Find the Objects</h2>
+      
+        <div id="container">
+          <img src="./img/'. $splitimg .'" id="main-image" alt="Main image">
+          <!-- Circles will be injected here -->
+        </div>
+      
+        <!-- Modal for answer selection -->
+        <div id="modal">
+          <div id="modal-content">
+            <h3>Select the correct object</h3>
+            <!-- Option buttons injected here -->
+          </div>
+        </div>
+      
+        <!-- Confetti -->
+        <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+      
+        <script>
+          const avocabpics = {
 
+' . $pstr.  '
+
+          };
+          const options = Object.keys(avocabpics);
+      const totvocabpics = options.length;
+      let countCorrect = 0;
+          let remaining = options.length;
+          let activeCircle = null;
+      
+          const container = document.getElementById("container");
+          const modal = document.getElementById("modal");
+          const modalContent = document.getElementById("modal-content");
+      
+          // Add a circle for each vocab item
+          function createCircle(id, leftPct, topPct) {
+            const circle = document.createElement("img");
+            circle.src = "./img/circle.png";
+            circle.className = "circle";
+            circle.id = id;
+            circle.style.left = `calc(${leftPct}% - 24px)`; // Adjust for 48px size
+            circle.style.top = `calc(${topPct}% - 24px)`;
+      
+            circle.addEventListener("click", () => {
+              activeCircle = circle;
+              showModal();
+            });
+      
+            container.appendChild(circle);
+          }
+      
+          // Show modal with answer buttons
+          function showModal() {
+            const buttonsContainer = document.createElement("div");
+            buttonsContainer.id = "buttons-container";
+            modalContent.appendChild(buttonsContainer);
+      
+            options.forEach(option => {
+              const btn = document.createElement("button");
+              btn.className = "option-button";
+              btn.textContent = option;
+              btn.onclick = () => {
+                //CORRECT ANSWER
+                if (option === activeCircle.id) {
+      dispCorrectAnsMsg("Correct!");
+      playSound("./correct1.mp3", activeCircle.id);
+      
+      
+                  activeCircle.remove();
+                  remaining--;
+                  if (remaining === 0) {
+                    setTimeout(() => {
+                      confetti({
+                        particleCount: 200,
+                        spread: 100,
+                        origin: { y: 0.6 }
+                      });
+                      //alert("Well done!");
+                    }, 200);
+                  }
+      countCorrect++;
+      if(countCorrect  == totvocabpics) showSuccess();
+      
+      
+      
+                //WRONG ANSWER
+      //showSuccess();
+                }else {
+      dispCorrectAnsMsg(activeCircle.id);
+      
+                }
+                closeModal();
+              };
+              buttonsContainer.appendChild(btn);
+            });
+      
+            modal.style.display = "flex";
+          }
+      
+          // Close modal and clean up
+          function closeModal() {
+            modal.style.display = "none";
+            const buttonsContainer = document.getElementById("buttons-container");
+            if (buttonsContainer) buttonsContainer.remove();
+          }
+      
+          // Initialize circles on load
+          window.onload = function () {
+            for (const [key, [left, top]] of Object.entries(avocabpics)) {
+              createCircle(key, left, top);
+            }
+          };
+      
+          // Close modal on outside click
+          window.addEventListener("click", (e) => {
+            if (e.target === modal) closeModal();
+          });
+      
+      
+        </script>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <script>
+      const encouragingEmojis = [
+       "💪","🌟","🚀",
+       //"🔥",
+       "🙌",
+       //"🧠", brain
+       //"✏️",
+       "📚","🌈",
+       //"☀️",
+       "🍀",
+       //"🕊️", dove
+       "🫶","🤗","💖","👏","🚀","🌱","🌈"
+       ,"✨","✨"
+      ];
+      
+      function getRandomEmojiPair() {
+        const firstIndex = Math.floor(Math.random() * (encouragingEmojis.length - 1));
+        
+        let secondIndex;
+        do {
+          secondIndex = Math.floor(Math.random() * (encouragingEmojis.length -1));
+        } while (secondIndex === firstIndex); // Ensure it is different
+      console.log(firstIndex + "___" + secondIndex);
+      
+        const emojiPair = encouragingEmojis[firstIndex] + encouragingEmojis[secondIndex];
+        return emojiPair;
+      }
+      
+      function dispCorrectAnsMsg(pmsg){
+          const dvMsg = document.getElementById("dvMsg");
+          dvMsg.style.display = "block";
+      
+          let fadeTimeout, resetTimeout;
+          // Clear any previous timeouts to reset fade
+          clearTimeout(fadeTimeout);
+          clearTimeout(resetTimeout);
+      
+          const aEmojiPair = Array.from(getRandomEmojiPair());
+          let lHtml  =
+              "<center><div style=\"font-size:100%;\">" + 
+              "<span style=\"font-size:150%;\"> "+ aEmojiPair[0] + " </span>" +
+              "<span style=\"font-size:100%;\"> "+ pmsg + " </span>" +
+              "<span style=\"font-size:150%;\"> "+ aEmojiPair[1] + " </span>" +
+              "</div></center>";
+          dvMsg.innerHTML = lHtml;
+      
+      
+          //messageDiv.style.transition = "none";  // reset transition to show immediately
+          //messageDiv.style.opacity = "1";
+          dvMsg.style.transition = "none";
+          dvMsg.style.opacity = "1";
+      
+          // Force reflow to apply the style without transition
+         // messageDiv.offsetWidth;
+          dvMsg.offsetWidth;
+      
+          // After 2 seconds, fade out over 2 seconds
+          resetTimeout = setTimeout(() => {
+            //messageDiv.style.transition = "opacity 0.3s linear";
+            //messageDiv.style.opacity = "0";
+            dvMsg.style.transition = "opacity 0.3s linear";
+            dvMsg.style.opacity = "0";
+          }, 300);
+      
+          // After fade completes (4s total), clear the message text
+          fadeTimeout = setTimeout(() => {
+            //messageDiv.innerHTML = "<span style=\"font-size:150%;\"> _____ </span>";
+          }, 4000);
+        //});
+        }//endfunc
+      
+      
+      </script>
+      
+      
+      
+      
+      <script>
+          function playSound(pstr, correctAns) {
+            let audioFile =  pstr.replace(/\'/g, "");
+            if(typeof correctAns != "undefined" ){
+              audioFile = "./mp3/" + correctAns.replace(/[^a-zA-Z0-9]+/, "").toLowerCase() + ".mp3";
+            }
+            const audio = new Audio(audioFile);
+          
+            audio.oncanplaythrough = function () {
+              audio.play();
+            };
+          
+            audio.onerror = function () {
+              const fallbackAudio = new Audio(pstr.replace(/\'/g, ""));
+              fallbackAudio.play();
+            };
+          }
+      </script>
+      
+      
+      
+      
+      
+      
+      <script>
+      let selwordcount = 0;
+        const encouragingPhrases = [
+            "BRILLIANT!", "WELL DONE!", "PERFECT!",
+            "GOOD JOB!", "GREAT WORK!", "NICE!",
+            "EXCELLENT!", "IMPRESSIVE!",
+            "BRAVO!", "AWESOME!", "FANTASTIC!",
+            "AMAZING!", "WONDERDUL!",
+        ];
+        //let loadTime = Date.now();
+        const goodJobEmojis = [
+          "🥳", "🎈", "🎉" , "🎊" , "🎊"
+        ];
+        const phrsIdx = Math.floor(Math.random() * (encouragingPhrases.length - 1));
+        const goodJobEmojiIdx1 = Math.floor(Math.random() * (goodJobEmojis.length - 1));
+        const goodJobEmojiIdx2 = Math.floor(Math.random() * (goodJobEmojis.length - 1));
+      
+       function showSuccess() {
+            // Show message
+            const message = document.getElementById("goodJob");
+      
+            const now = Date.now();
+            const secondsElapsed = Math.floor((now - loadTime) / 1000);
+            const spsecs = document.getElementById("spsecs");
+            spsecs.innerHTML = secondsElapsed;
+            
+            const avgSecs =  (secondsElapsed/selwordcount).toFixed(2);
+            const repeatMsg = "Repeat this activity as often as you like to see whether you can be a faster animal.";
+            let speedStr = "You are a squirrel! You are the 8th fastest!" + " " + repeatMsg;
+            let speedEmoji = "🐿";
+          
+            if      (avgSecs < 1.5){
+               speedStr = "You are a cheetah! You are the fastest!";
+               speedEmoji = "🐆";
+            }else if(avgSecs < 1.7){
+               speedStr = "You are a lion! You are the 2ns fastest!" + " " + repeatMsg;
+               speedEmoji = "🦁";
+            }else if(avgSecs < 1.9){
+               speedStr = "You are a horse! You are the 3rd fastest!" + " " + repeatMsg;
+               speedEmoji = "🐎";
+            }else if(avgSecs < 2.1){
+               speedStr = "You are a hare! You are the 4th fastest!" + " " + repeatMsg;
+               speedEmoji = "🐇";
+            }else if(avgSecs < 2.5){
+               speedStr = "You are an elk! You are the 5th fastest!" + " " + repeatMsg;
+               speedEmoji = "🫎";
+            }else if(avgSecs < 3){
+               speedStr = "You are a zebra! You are the 6th fastest!" + " " + repeatMsg;
+               speedEmoji = "🦓";
+            }else if(avgSecs < 3.5){
+               speedStr = "You are a kangaroo! You are the 7th fastest!" + " " + repeatMsg;
+               speedEmoji = "🦘";
+            }
+            document.getElementById("avgSecs").innerHTML = avgSecs;
+            document.getElementById("speedMsg").innerHTML = speedStr;
+            document.getElementById("speedEmoji").innerHTML = speedEmoji;
+      
+      
+      
+            message.style.display = "block";
+      
+            // Trigger confetti explosion
+            confetti({
+              particleCount: 150,
+              spread: 100,
+              origin: { y: 0.6 }
+            });
+      
+            sendMessage(correctPassword, secondsElapsed, usrInitials);
+          }
+      
+      
+      </script>
+      
+      
+      
+      
+      
+      
+      
+      <script>
+        let loadTime = "";
+      
+        document.getElementById("password-input").focus();
+      //   document.getElementById("reset-btn").addEventListener("click", () => {
+      //      location.reload();
+      //    });
+      
+        let correctPassword = "K\.?s{4(:@(3613~,?45!KJd^%$@£!)0{{1(Jksi3(*!%$@:"; // Change this to your desired password
+      
+        function checkPassword() {
+          const input = document.getElementById("password-input").value.toLowerCase();;
+          const successcode = document.getElementById("successcode").value.toLowerCase();;
+          //const error = document.getElementById("error");
+      
+          console.log (String(input).toLowerCase()  == String(correctPassword).toLowerCase() ); 
+          if (String(input).toLowerCase()  == String(correctPassword).toLowerCase() ) {
+            if (successcode == String("").toLowerCase() ){
+              document.getElementById("lock-screen").style.display = "none";
+              document.getElementById("content").style.display = "block";
+              loadTime = Date.now();
+            for (const [key, [left, top]] of Object.entries(avocabpics)) {
+              createCircle(key, left, top);
+            }
+      
+            }
+      
+          } else {
+           //error.style.display = "block";
+          }
+        }
+      </script>
+      
+      
+      
+      <script>
+      // Function to shift each character by 2 positions backwards in the alphabet
+      function shiftCharacter(char) {
+          // ASCII codes for lowercase letters: "a" = 97, "z" = 122
+          const charCode = char.charCodeAt(0);
+      
+          if (charCode >= 97 && charCode <= 122) {
+              // For "a" to "z", shift by 2 positions backwards
+              return String.fromCharCode((charCode - 97 - 2 + 26) % 26 + 97);
+          }
+      
+          // For any other character (non-alphabetic), return as is
+          return char;
+      }
+      
+      // Function to encrypt the string by shifting each character
+      function encryptString(str) {
+          return str.split("").map(shiftCharacter).join("");
+      }
+      
+      function getLeftOfp5w(str){
+        const match = str.match(/^(.*?)p5w/);
+        return match ? match[1] : str;
+      }
+      
+      // Function to get the URL parameter "u" and encrypt it
+      function getEncryptedParameter() {
+          const urlParams = new URLSearchParams(window.location.search);
+          const u = urlParams.get("u");  // Get the parameter "u" from the URL
+      
+          if (u) {
+              // Encrypt the parameter
+              //const encryptedValue = encryptString(u);
+              // Store the result in the passwd variable
+              let passwd =  u; //encryptedValue;
+              homePage = u;
+              usrInitials = getLeftOfp5w(passwd);
+              //console.log("Encrypted value:", passwd);
+              document.getElementById("nextlnk").href="./modiwl00.html?u=" + u; 
+              correctPassword = usrInitials + "123";
+              /*
+              alnkHome = document.getElementById("alnkHome");
+              alnkHome.href = "https://2lnk.net/ianswelshclass/home/" + homePage + ".html";
+              alnkHome2 = document.getElementById("alnkHome2");
+              alnkHome2.href = "https://2lnk.net/ianswelshclass/home/" + homePage + ".html";
+              alnkHome3 = document.getElementById("alnkHome3");
+              alnkHome3.href = "https://2lnk.net/ianswelshclass/home/" + homePage + ".html";
+              */
+      
+      
+      
+              alnkHome = document.getElementById("alnkHome");
+              alnkHome.href = "./home/" + homePage + ".html";
+              alnkHome2 = document.getElementById("alnkHome2");
+              alnkHome2.href = "./home/" + homePage + ".html";
+              alnkHome3 = document.getElementById("alnkHome3");
+              alnkHome3.href = "./home/" + homePage + ".html";
+      
+      
+          } else {
+          }
+      }
+      
+      // Run the function when the page loads
+      window.onload = getEncryptedParameter;
+      </script>
+      
+      
+      
+      <script>
+          (function () {
+            const inputpw = document.getElementById("password-input");
+            inputpw.addEventListener("input", checkPassword, { passive: true });
+            inputpw.addEventListener("paste", () => setTimeout(checkPassword, 0));
+          })();
+      /*
+        const inputBox = document.getElementById("password-input");
+        inputBox.addEventListener("input", function() {
+          checkPassword();
+          //if (inputBox.value == correctPassword){
+          //    showSuccess();
+          //}
+          //console.log("Current value:", inputBox.value, "___", correctPassword);
+        });
+      */
+      </script>
+      
+      </div>
+      </body>
+      </html>
+';
 
 
 }//endfunc
+//---------------------------------------------
+//---------------------------------------------
+//---------------------------------------------
+//---------------------------------------------
+//---------------------------------------------
+//---------------------------------------------
+//---------------------------------------------
+//---------------------------------------------
+//---------------------------------------------
+
 
 
