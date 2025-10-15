@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.73_251015-2351 - bugfixes to dewisiadau1.php - Original idea was to keep all mp3 files in the mp3 folder, but the audio for Letters of the Alphabet and Dipthongs need to be kept in separate folders need to casing of letters, hence the retention of the mp3_1-h2 and mp3_1-h3 subfolders while all other audio files are in mp3.
+-  Amendments as per the release description
+
 ## 0.0.72_251015-2234 - enhancements to dewisiadau1.php - corrections to placements of dvMsg message, and bugfixes
 -  Amendments as per the release description
 

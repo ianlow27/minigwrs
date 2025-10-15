@@ -401,6 +401,7 @@ global $LlPlygellSain;
 global $LlLlun1;
 global $lbtnsdesc;
 global $lSplitStoryFiles;
+ if($LlPlygellSain == "") $LlPlygellSain = "mp3";
  if($lsnewwords != ""){
 //echo "____94>>". $lsnewwords. "\n";
    $atmp1 = explode(" ", $lsnewwords);
@@ -425,7 +426,6 @@ global $lSplitStoryFiles;
    }//endforeach
   // $retstr = trim($lsnewwords) . "\n\n". $retstr;
    $l2ndMod = preg_replace("/^splitstory.*$/m", '', $l2ndMod);
-   $LlPlygellSain = "mp3";
    $retstr =
        "|ffeil=". $LlFfeil. $splitletter. "1\n".
        "|modiwl=". $LlGwers. $splitletter. "1\n".
@@ -521,6 +521,7 @@ global $LlTxtInclude;
 global $LlTxtExclude;
 
 
+if($LlPlygellSain == "") $LlPlygellSain = "mp3";
 
 $LlHtmlBrig='
 <!DOCTYPE html>
@@ -840,7 +841,7 @@ $LlRhwng='
     ';
 
 
-($LlPlygellSain == "" ?  "mp3": "mp3");
+($LlPlygellSain == "" ?  "mp3" : $LlPlygellSain);
 
 
 $LlWedi='
@@ -957,7 +958,7 @@ $LlWedi='
                  //word = word.replace(/\'/g, "");
                  word = word.replace(/<plysnd>/, "<button style=\'font-size: 18px; cursor: pointer; background: none; border: none; padding:0px; margin:0px;\' onclick=\"playSound(\'./'.
 
-(($LlPlygellSain == "") ? "mp3" : "mp3")
+(($LlPlygellSain == "") ? "mp3" : $LlPlygellSain)
 
 .'/");
                  word = word.replace(/<\/plysnd>/, ".mp3\')\">▶️</button>");
@@ -968,7 +969,7 @@ $LlWedi='
                  wrdtmp = wrdtmp.replace(/<\/plyssnd>/, "");
                  word = word.replace(/<plyssnd>/, "<button style=\'font-size: 18px; cursor: pointer; background: none; border: none; padding:0px; margin:0px;\' onclick=\"playSound(\'./'.
 
-(($LlPlygellSain == "") ? "mp3" : "mp3")
+(($LlPlygellSain == "") ? "mp3" : $LlPlygellSain)
 
 .'/");
                  word = word.replace(/<\/plyssnd>/, ".mp3\')\">▶️</button> ");
@@ -981,7 +982,7 @@ $LlWedi='
                 let fname2 = removeAccents(word);
                 word = "<button style=\'font-size: 18px; cursor: pointer; background: none; border: none; padding:0px; margin:0px;\' onclick=\"playSound(\'./'.
 
-(($LlPlygellSain == "") ? "mp3" : "mp3")
+(($LlPlygellSain == "") ? "mp3" : $LlPlygellSain)
 
 .'/" + fname2 + ".mp3\')\">▶️</button>";
 
@@ -991,7 +992,7 @@ $LlWedi='
                 wrdtmp = " " + word;
                 let fname2 = removeAccents(word);
                 word = "<button style=\'font-size: 18px; cursor: pointer; background: none; border: none; padding:0px; margin:0px;\' onclick=\"playSound(\'./'.
-(($LlPlygellSain == "") ? "mp3" : "mp3")
+(($LlPlygellSain == "") ? "mp3" : $LlPlygellSain)
 .'/" + fname2 + ".mp3\')\">▶️</button>";
 
 //----------------------------------
