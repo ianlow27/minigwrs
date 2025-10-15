@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.71_251015-2154 - enhancements to dewisiadau1.php - relocate all audio files in mp3 subfolder and all image files in img subfolder
+-  Amendments as per the release description
+
 ## 0.0.70_251015-2052 - enhancements to dewisiadau1.php - Bugfixes and functionality to help locate correct X and Y positions for circles in circleimagemob()
 -  Amendments as per the release description
 

@@ -425,6 +425,7 @@ global $lSplitStoryFiles;
    }//endforeach
   // $retstr = trim($lsnewwords) . "\n\n". $retstr;
    $l2ndMod = preg_replace("/^splitstory.*$/m", '', $l2ndMod);
+   $LlPlygellSain = "mp3";
    $retstr =
        "|ffeil=". $LlFfeil. $splitletter. "1\n".
        "|modiwl=". $LlGwers. $splitletter. "1\n".
@@ -839,7 +840,7 @@ $LlRhwng='
     ';
 
 
-($LlPlygellSain == "" ?  "mp3_". $LlGwers : $LlPlygellSain);
+($LlPlygellSain == "" ?  "mp3": "mp3");
 
 
 $LlWedi='
@@ -956,7 +957,7 @@ $LlWedi='
                  //word = word.replace(/\'/g, "");
                  word = word.replace(/<plysnd>/, "<button style=\'font-size: 18px; cursor: pointer; background: none; border: none; padding:0px; margin:0px;\' onclick=\"playSound(\'./'.
 
-(($LlPlygellSain == "") ? "mp3" : $LlPlygellSain)
+(($LlPlygellSain == "") ? "mp3" : "mp3")
 
 .'/");
                  word = word.replace(/<\/plysnd>/, ".mp3\')\">▶️</button>");
@@ -967,7 +968,7 @@ $LlWedi='
                  wrdtmp = wrdtmp.replace(/<\/plyssnd>/, "");
                  word = word.replace(/<plyssnd>/, "<button style=\'font-size: 18px; cursor: pointer; background: none; border: none; padding:0px; margin:0px;\' onclick=\"playSound(\'./'.
 
-(($LlPlygellSain == "") ? "mp3" : $LlPlygellSain)
+(($LlPlygellSain == "") ? "mp3" : "mp3")
 
 .'/");
                  word = word.replace(/<\/plyssnd>/, ".mp3\')\">▶️</button> ");
@@ -980,7 +981,7 @@ $LlWedi='
                 let fname2 = removeAccents(word);
                 word = "<button style=\'font-size: 18px; cursor: pointer; background: none; border: none; padding:0px; margin:0px;\' onclick=\"playSound(\'./'.
 
-(($LlPlygellSain == "") ? "mp3" : $LlPlygellSain)
+(($LlPlygellSain == "") ? "mp3" : "mp3")
 
 .'/" + fname2 + ".mp3\')\">▶️</button>";
 
@@ -990,7 +991,7 @@ $LlWedi='
                 wrdtmp = " " + word;
                 let fname2 = removeAccents(word);
                 word = "<button style=\'font-size: 18px; cursor: pointer; background: none; border: none; padding:0px; margin:0px;\' onclick=\"playSound(\'./'.
-(($LlPlygellSain == "") ? "mp3" : $LlPlygellSain)
+(($LlPlygellSain == "") ? "mp3" : "mp3")
 .'/" + fname2 + ".mp3\')\">▶️</button>";
 
 //----------------------------------
@@ -1477,9 +1478,8 @@ function handleSelectChange(event) {
     if(!bplayed) {
     }
 //--------------------------------------------------------
-    if(!bplayed) playSound("./correct1.mp3", userAnswer);
+    if(!bplayed) playSound("./mp3/correct1.mp3", userAnswer);
 //---------------------------------------------
-   // playSound("./correct1.mp3");
 
     dispCorrectAnsMsg(
       " <span style=\"font-size:150%;\">" + goodJobEmojis[goodJobEmojiIdx1] + "</span>" 
@@ -1975,7 +1975,7 @@ document.addEventListener("mousemove", function(event) {
                 //CORRECT ANSWER
                 if (option === activeCircle.id) {
       dispCorrectAnsMsg("Correct!");
-      playSound("./correct1.mp3", activeCircle.id);
+      playSound("./mp3/correct1.mp3", activeCircle.id);
       
       
                   activeCircle.remove();
