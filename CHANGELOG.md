@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.70_251015-2052 - enhancements to dewisiadau1.php - Bugfixes and functionality to help locate correct X and Y positions for circles in circleimagemob()
+-  Amendments as per the release description
+
 ## 0.0.69_251015-1451 - enhancements in dewisiadau1.php - Tidying up handling of HTML generation logic
 -  Amendments as per the release description
 

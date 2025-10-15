@@ -41,6 +41,7 @@ $LlTxtMaxWrds = "";
 $LlTxtInclude = "";
 $LlTxtExclude = "";
 $lbtnsdesc="";
+$lSplitStoryFiles="";
 $lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lsppwords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords=""; $lsartwords=""; $lsnewwords=""; $lsnbwords=""; $lspvwords=""; $l2ndMod=""; $b2ndMod = false; $a2ndMod = []; $lsvcb=""; $lvcbcount = 1;
 //===========================
 htmlfmtinit();
@@ -71,16 +72,22 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
         if($LlGwers != "") $lbtnsdesc .= '"'.$LlGwers.'": "'. $LlBtnsDesc. '",'. "\n";
       }
       if($lsvcb != "") 
-        file_put_contents("./". $LlFfeil. "_words.txt", $lsvcb);
+        file_put_contents("./". $LlFfeil. "_vcb.txt", $lsvcb);
+      //Note that the l2ndMod variable is used to hold the vocab
+      //list from the splitstory functionality.
       if($l2ndMod != ""){
         if($b2ndMod)
           file_put_contents("./". $LlFfeil. "_2ndmod.txt", $l2ndMod);
+      }
+      if($lSplitStoryFiles != ""){
+        file_put_contents("./". $LlFfeil. "_splitstory.txt", $lSplitStoryFiles);
       }
       //-----------------
       putnewtxt($lsnewwords, $l2ndMod, "");
       //-----------------
 
       $outstr = "";
+      $lSplitStoryFiles="";
       $LlTxtMinWrds = "";
       $LlTxtMaxWrds = "";
       $LlTxtInclude = "";
@@ -114,9 +121,8 @@ print_r($atmp1d);
            if(isset($atmp2a[2])) $splitimg = trim($atmp2a[2]);
 echo "___>SPLITIMG>>". $splitimg;
            $outstr = preputcleandata($outstr);
-           file_put_contents("./". $LlFfeil. $splitletter.".html", $outstr);
-
-           file_put_contents("./". $LlFfeil. "_splitstory_". $splitletter. ".txt", $lsnewwords. "\n\n\n______\n\n\n". $l2ndMod);
+           file_put_contents("./". $LlFfeil. $splitletter."0.html", $outstr);
+           if($LlGwers != "") $lbtnsdesc .= '"'.$LlGwers. $splitletter.'0": "'. $LlBtnsDesc. ' 0",'. "\n";
 
            putnewtxt($lsnewwords, $l2ndMod, $splitletter, $splitimg);
 
@@ -394,6 +400,7 @@ global $LlDidoli;
 global $LlPlygellSain;
 global $LlLlun1;
 global $lbtnsdesc;
+global $lSplitStoryFiles;
  if($lsnewwords != ""){
 //echo "____94>>". $lsnewwords. "\n";
    $atmp1 = explode(" ", $lsnewwords);
@@ -408,7 +415,8 @@ global $lbtnsdesc;
      $ln = preg_replace("/¬/", "@", $ln);
      //$atmp1b = preg_split("/[@&]/", $ln);
      $atmp1b = explode("@", $ln);
-     $lsimgjs .= '"'. $atmp1b[1]. '": [0, '. ($lcount * 5) ."],\n";
+     //$lsimgjs .= '"'. $atmp1b[1]. '": [0, '. ($lcount * 5) ."],\n";
+     $lsimgjs .= '"'. $atmp1b[1]. '": [0, 0'. "],\n";
      if(isset($atmp1b[2])){
        $lsnewwords .= $ln. " ";
 //echo "__________>>105>>>". $atmp1b[1]."___[". $atmp1b[2]. "]__". $ln. "\n";
@@ -416,6 +424,7 @@ global $lbtnsdesc;
      }
    }//endforeach
   // $retstr = trim($lsnewwords) . "\n\n". $retstr;
+   $l2ndMod = preg_replace("/^splitstory.*$/m", '', $l2ndMod);
    $retstr =
        "|ffeil=". $LlFfeil. $splitletter. "1\n".
        "|modiwl=". $LlGwers. $splitletter. "1\n".
@@ -426,20 +435,22 @@ global $lbtnsdesc;
        $retstr.
        "|--------------------------------------\n".
        "|======================================\n".
-       "|ffeil=". $LlFfeil. $splitletter. "2\n".
-       "|modiwl=". $LlGwers. $splitletter. "2\n".
+       "|ffeil=". $LlFfeil. $splitletter. "3\n".
+       "|modiwl=". $LlGwers. $splitletter. "3\n".
        "|teitl=u5\n".
        "|btnsdesc=".$LlBtnsDesc." ".strtoupper($splitletter)."2\n".
-       "|didoli=hapnam\n".
+       "|didoli=hapnamxx\n".
        "|plygellsain=". $LlPlygellSain. "\n".
        preg_replace("/^/m","|", $l2ndMod).
        "|--------------------------------------\n".
        "|======================================\n".
        "";
-   file_put_contents("./". $LlFfeil. $splitletter. "_new.txt", $retstr);
+   $lSplitStoryFiles .= "\n\n". $retstr. "\n\n";
+   //-------
+   $splitimg = preg_replace("/\./", "2i.", $splitimg);
    $lsimgjs = circleimagemob($lsimgjs, $splitimg);
-   if($LlGwers != "") $lbtnsdesc .= '"'.$LlGwers. $splitletter.'i": "'. $LlBtnsDesc. '",'. "\n";
-   file_put_contents("./". $LlFfeil. $splitletter. "i.html", $lsimgjs);
+   if($LlGwers != "") $lbtnsdesc .= '"'.$LlGwers. $splitletter.'2i": "'. $LlBtnsDesc. ' Pic",'. "\n";
+   file_put_contents("./". $LlFfeil. $splitletter. "2i__.html", $lsimgjs);
  }
 }//endfunc
 //---------------------------------------------------
@@ -724,7 +735,7 @@ $LlHtmlGwaelod=
 
 $LlCyn= '
   <div style="text-align:center;font-size:120%;font-weight:bold;">'. $LlBtnsDesc.'</div>
-<a id="alnkHome" style="font-size:140%;">🏠</a>
+<a id="alnkHome" style="z-index:9999;font-size:140%;">🏠</a>
 &ensp;
   <span style="font-size:140%;font-weight:bold;">
    '. $LlGwers. ' - Choose the correct answer for all selections.</span><br/>
@@ -745,7 +756,7 @@ $LlCyn= '
    .' <span style="font-weight:bold;"><br/><br/>'. acenau($LlCyfarwyddo) .'<br/></span>
 </span><br/> '.
 
-($LlLlun1 == "" ? "" : '<img style="max-width:90%;height:auto;" src="./'.$LlLlun1. '"></img>')
+($LlLlun1 == "" ? "" : '<img style="max-width:90%;max-height:250px;" src="./img/'.$LlLlun1. '"></img>')
 
 .'
 
@@ -1142,7 +1153,7 @@ $LlWedi='
     //const error = document.getElementById("error");
 
     console.log (String(input).toLowerCase()  == String(correctPassword).toLowerCase() ); 
-    if (String(input).toLowerCase()  == String(correctPassword).toLowerCase() ) {
+    if ((pstr===1) || (String(input).toLowerCase()  == String(correctPassword).toLowerCase() ) ){
       if (successcode == String("'. $LlCynTeitl. '").toLowerCase() ){
         document.getElementById("lock-screen").style.display = "none";
         document.getElementById("content").style.display = "block";
@@ -1153,6 +1164,7 @@ $LlWedi='
      //error.style.display = "block";
     }
   }
+  checkPassword(1);
 </script>
 
 <script>
@@ -1855,10 +1867,10 @@ return '
       
        <div id="dvMsg" ></div>
       
-      <a id="alnkHome" style="font-size:140%;">🏠</a>
+      <a id="alnkHome" style="z-index:9999;font-size:140%;">🏠</a>
       
         <button style="display:none;" onclick="checkAnswers()">Check Answers</button>
-        <button id="reset-btn">Restart</button>&emsp;<a id="nextlnk" href="./modiwl00.html" style="display:none;" >Next Assignment - </a>
+        <button id="reset-btn" style="z-index:9999;">Restart</button>&emsp;<a id="nextlnk" href="./modiwl00.html" style="display:none;" >Next Assignment - </a>
       
         <div id="goodJob">🎉 <b>Good Job! </b>🎉<br/><a id="alnkHome3" style="font-size:100%;text-decoration:none;">🏠</a>
       &ensp;<span style="font-size:70%;">Please make a note of your success code and module number as you will need it later:<br/>Success Code: <b>d2</b><br/>Module: <b>3-h1</b> <br>Time taken: <span id="spsecs"></span> secs
@@ -1896,6 +1908,27 @@ return '
         <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
       
         <script>
+
+
+document.addEventListener("mousemove", function(event) {
+  // Get the image element
+  const image = document.getElementById("main-image");  // Replace "myImage" with your image\'s ID or another selector
+  
+  // Get the position and size of the image relative to the viewport
+  const rect = image.getBoundingClientRect();
+
+  // Calculate the mouse position relative to the image
+  const mouseX = Number((event.clientX - rect.left ) /3).toFixed(2);  // Subtract image\'s left position
+  const mouseY = Number((event.clientY - rect.top ) /3).toFixed(2);   // Subtract image\'s top position
+
+  // Log the mouse position relative to the image
+  console.log("Mouse Position Relative to Image - X:", mouseX, "Y:", mouseY);
+});
+
+
+
+
+
           const avocabpics = {
 
 ' . $pstr.  '
