@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.69_251015-1451 - enhancements in dewisiadau1.php - Tidying up handling of HTML generation logic
+-  Amendments as per the release description
+
 ## 0.0.68_251015-0821 - Added zipfldr.sh - Shell script utility to back up an existing course folder to a zipfile
 -  Amendments as per the release description
 

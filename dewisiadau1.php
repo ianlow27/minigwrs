@@ -61,14 +61,15 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
     $line = preg_replace("/\" /", " }} ", $line);
     $line = preg_replace("/([!?,\.;:])/", " $1", $line);
 
-    if(substr($line, 1, 4) == "===="){
+    if((substr($line, 1, 4) == "====")
+     ||(substr($line, 1, 4) == "----")) {
 
 
       if($char1 != "&"){
         $outstr = preputcleandata($outstr);
         file_put_contents("./". $LlFfeil. ".html", $outstr);
+        if($LlGwers != "") $lbtnsdesc .= '"'.$LlGwers.'": "'. $LlBtnsDesc. '",'. "\n";
       }
-      if($LlGwers != "") $lbtnsdesc .= '"'.$LlGwers.'": "'. $LlBtnsDesc. '",'. "\n";
       if($lsvcb != "") 
         file_put_contents("./". $LlFfeil. "_words.txt", $lsvcb);
       if($l2ndMod != ""){
@@ -88,8 +89,8 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
       
       htmlfmtinit();
       
-    }else if(substr($line, 1, 4) == "----"){
-       $lswords="";
+    //}else if(substr($line, 1, 4) == "----"){
+    //   $lswords="";
     //--------------------------------------------
     //This checks if the line contains a module setting.
     // If it doesn't, then continue, because this is
@@ -109,7 +110,9 @@ print_r($atmp1d);
          if      (mb_substr($line, 0,11)=="splitstory_"){
            $atmp2a = explode("_", preg_replace("/ /", "", $line));
            $splitletter = trim($atmp2a[1]);
-           $splitimg = trim($atmp2a[2]);
+           $splitimg = "";
+           if(isset($atmp2a[2])) $splitimg = trim($atmp2a[2]);
+echo "___>SPLITIMG>>". $splitimg;
            $outstr = preputcleandata($outstr);
            file_put_contents("./". $LlFfeil. $splitletter.".html", $outstr);
 
@@ -390,6 +393,7 @@ global $LlBtnsDesc;
 global $LlDidoli;
 global $LlPlygellSain;
 global $LlLlun1;
+global $lbtnsdesc;
  if($lsnewwords != ""){
 //echo "____94>>". $lsnewwords. "\n";
    $atmp1 = explode(" ", $lsnewwords);
@@ -434,6 +438,7 @@ global $LlLlun1;
        "";
    file_put_contents("./". $LlFfeil. $splitletter. "_new.txt", $retstr);
    $lsimgjs = circleimagemob($lsimgjs, $splitimg);
+   if($LlGwers != "") $lbtnsdesc .= '"'.$LlGwers. $splitletter.'i": "'. $LlBtnsDesc. '",'. "\n";
    file_put_contents("./". $LlFfeil. $splitletter. "i.html", $lsimgjs);
  }
 }//endfunc
