@@ -2,13 +2,55 @@
 <?php
 /* This is the 'homework' generator. For lines beginning with "|" and Welsh words suffixed with backtick (`)  followed by the word type, which is 1 of the following 12: it (initiator), rs (response), iv (infinitive), nn (noun), ex (excalamation), pn (pronoun), ix (inflexion), ct (connector), av (adverb), ps (preposition), id (idiom), or aj (adjective) then it generates a selection list for that word in the HTML. A new word can be specified using the not symbol (¬) followed by the English for the Welsh e.g. "music¬cerddoriaeth". This uses the library at CDN https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js to create a confetti effect when the student selects all the correct options.
  *
+ * [[[[USAGE GUIDE for dewisiadau1.php]]]]
+ *
+ * [[[Overview]]]
+ * When a new project is generated the "dws" command file is created inside the project folder (beginning with the "cwrs_" substring). If the name of the project is "proj1" then the project folder name is "cwrs_proj1". The project input file is itself "./cwrs_proj1/proj". To generate the lesson modules from the "proj" file, we need to make sure we are in the bash shell in the project folder, and simply run "dws" (short for dewisiadau), which will call ../dewisiadau1.php. Running "dws" creates the "modiwl???.html" HTML files that can be used as activities in a language course. Of course depending on the configuration inputted into the project file, e.g. "proj1" different types of activities can be created such as essay submission, word selections for sentence completion, and word selections for image areas. This document explains how to configure the project file so as to generate the required HTML activity page. These activities can be accessed via the student exercise homepage, which is part of this project.
+ *
+ * [[[Types of HTML Activity Pages]]]
+ * The following types of activity pages can be generated:
+ * 1. Sound clip word selections
+ * 2. Simply story sentence word selections
+ * 3. Split story sentences word selections
+ * 4. Image area word selections
+ * 5. Essay submission
+ * 
+ * [[[Overview of Project Folder Structure]]]
+ *
+ *
+ *
+ * [[[Sound Clip Word Selections]]]
+ *
+ *
+ *
+ * [[[Simply Story Sentence Word Selections]]]
+ *
+ *
+ *
+ * [[[Split Story Sentences Word Selections]]]
+ *
+ *
+ * [[[Image Area Word Selections]]]
+ *
+ *
+ *
+ * [[[Essay Submission]]]
+ *
+ *
+ *
+ *
+ * [[[Student Exercise Homepage]]]
+ *
+ *
  *
  *
  */
 
 $LlTestun="testun";
+$LlModiwl="";
 if(isset($argv[1])) $LlTestun = $argv[1];
-echo $LlTestun;
+if(isset($argv[2])) $LlModiwl = $argv[2];
+echo $LlTestun. "__". $LlModiwl;
 sleep(1);
 //$cwrs =  "./". $LlTestun. "_cwrs";
 //if (file_exists( $cwrs)) {
@@ -18,6 +60,7 @@ sleep(1);
 //    echo "The directory $cwrs was successfully created.";
 //}
 unlink('./geiriau.txt');
+$DGeiriau = array();
 //============================================
 include "../cyutils.php";
 include "../htmlfmt.php";
@@ -64,7 +107,10 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
 
     if((substr($line, 1, 4) == "====")
      ||(substr($line, 1, 4) == "----")) {
-
+//-------------------------
+$atmp2d = explode("-", $LlGwers);
+if($LlModiwl !== "") if($atmp2d[0] != $LlModiwl) continue;
+//-------------------------
 
       if($char1 != "&"){
         $outstr = preputcleandata($outstr, $LlGwers);
@@ -103,6 +149,10 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
     // If it doesn't, then continue, because this is
     //  a data line
     }else if(htmlfmtsettings($line, $origline) == ""){
+//-------------------------
+$atmp2d = explode("-", $LlGwers);
+if($LlModiwl !== "") if($atmp2d[0] != $LlModiwl) continue;
+//-------------------------
        if(mb_substr($line, 0,6) == "txtbx_"){
           $atmp1d = explode("_", $line);
           if(isset($atmp1d[1])) $LlTxtMinWrds = trim($atmp1d[1]);
@@ -201,6 +251,7 @@ global $LlTxtMinWrds;
 global $LlTxtMaxWrds;
 global $LlTxtInclude;
 global $LlTxtExclude;
+global $DGeiriau;
 
   // If line starts with ! then reset all punctuation
   // i.e. by removing incorrect spacing etc.
@@ -211,6 +262,17 @@ global $LlTxtExclude;
   $awords = explode(" ", $line);
   $lnout = "";
   $lnwords = "";
+  if(mb_substr($line,0,8)=="plyssnd_"){
+    $atmp2f = preg_split("/[\s`]/", mb_substr($line,8));
+    if(isset($DGeiriau[$atmp2f[0]])){
+echo "ERROR!!!(268)---vocab word already used before>[". $atmp2f[0]. "] in [". $line ."]\n";
+//sleep(3);
+//die();
+    }else {
+      $DGeiriau[$atmp2f[0]] = $atmp2f[count($atmp2f)-2];
+    }
+  
+  }
   foreach($awords as $word){
     $origword = $word;
     if(trim($word)=="") continue;
@@ -324,6 +386,12 @@ die();
 //echo "__________________283b>>".  $lsnewwords. "\n";
           if($lsnewwords != "") $lsnewwords .= ' ';
           $lsnewwords .=  strtolower($atmp1[0]. $atmp1[1]);
+
+
+//echo ">>>>1[".$lsnewwords ."]______________\n";
+//sleep(2);
+
+
           $bnewword = true;
           if($l2ndMod != "") $l2ndMod .= ' ';
           $l2ndMod .= 
@@ -1227,7 +1295,8 @@ $LlWedi='
       };
     
       audio.onerror = function () {
-        const fallbackAudio = new Audio(pstr.replace(/\'/g, ""));
+        //const fallbackAudio = new Audio(pstr.replace(/\'/g, ""));
+        const fallbackAudio = new Audio("./mp3/correct1.mp3");
         fallbackAudio.play();
       };
     }
@@ -1688,6 +1757,11 @@ function dwsfmt($pstr, $popt){
 //---------------------------------------------
 function circleimagemob($pstr, $splitimg, $pLlGwers){
 
+file_put_contents("./js/". $pLlGwers. "__.js", '
+const avocabpics = {
+' . $pstr.  '
+  };');
+
 return '
       <!DOCTYPE html>
       <html lang="en">
@@ -1850,6 +1924,7 @@ return '
             margin-bottom: 15px;
           }
         </style>
+        <script src="./js/'. $pLlGwers . '.js"></script>
       </head>
       <body>
       <div id="lock-screen">
@@ -1939,7 +2014,7 @@ document.addEventListener("mousemove", function(event) {
 
 
 
-          const avocabpics = {
+          const xxxxavocabpics = {
 
 ' . $pstr.  '
 
@@ -2143,7 +2218,8 @@ document.addEventListener("mousemove", function(event) {
             };
           
             audio.onerror = function () {
-              const fallbackAudio = new Audio(pstr.replace(/\'/g, ""));
+              //const fallbackAudio = new Audio(pstr.replace(/\'/g, ""));
+              const fallbackAudio = new Audio("./mp3/correct1.mp3");
               fallbackAudio.play();
             };
           }

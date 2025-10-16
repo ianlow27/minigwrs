@@ -7,11 +7,20 @@
 
 ## NOTES
 
-## 0.0.74_251016-1339 - enhancements to dewisiadau1.php - minor bugfixes in the following areas of functionality: splitstory, circleimagemob, essay format submission and redirection links, etc.
+## 0.0.75_251016-1830 - enhancements to dewisiadau1.php - circleimagemob, now uses external JavaScript files to store coordinates of circles, and removal of underscores in splitstory non-selection words, and start of previously-used words check using the hash array DGeiriau.
 -  Amendments as per the release description
 
+## 0.0.74_251016-1339 - enhancements to dewisiadau1.php - minor bugfixes in the following areas of functionality: splitstory, circleimagemob, essay format submission and redirection links, etc.
+* 251016 - traethawd - ar ôl yr ymroddiad o'r traethawd mae'n angen i ddychwelyd i home/?.html nid home/home/?.html
+* 251016 - hollti chwedl - angen i ddiweddaru gyda'r seren ar y dudalen gartref
+* 251016 - llun - angen i roi y rhanbarth llefariad yn y dewisiadau
+* 251016 - llun - angen i roi y cyfarwyddiad ynno
+* 251016 - traethawd - angen i ddefnyddio y gwririo ar gyfer geiriau angenrhediol yn brinach oherwydd y gall hwn lleisteirio y gorchwyl
+* 251016 - essay check words issue, need to search only for words with boundaries and leave out words in words
+
 ## 0.0.73_251015-2351 - bugfixes to dewisiadau1.php - Original idea was to keep all mp3 files in the mp3 folder, but the audio for Letters of the Alphabet and Dipthongs need to be kept in separate folders need to casing of letters, hence the retention of the mp3_1-h2 and mp3_1-h3 subfolders while all other audio files are in mp3.
--  Amendments as per the release description
+* 251015 - splitstory
+* 251015 - circleimage
 
 ## 0.0.72_251015-2234 - enhancements to dewisiadau1.php - corrections to placements of dvMsg message, and bugfixes
 -  Amendments as per the release description
