@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.76_251016-1837 - enhancements to dewisiadau1.php - for circleimagemob HTML files i.e. those ending 2i.html, as the circle coordinates are now in external JavaScript files in the js subfolder, there is no need to add __.html suffix. These are now .html without the underscores that were initially added to prevent overwriting the coordinates when they were held in the HTML file.
+-  Amendments as per the release description
+
 ## 0.0.75_251016-1830 - enhancements to dewisiadau1.php - circleimagemob, now uses external JavaScript files to store coordinates of circles, and removal of underscores in splitstory non-selection words, and start of previously-used words check using the hash array DGeiriau.
 -  Amendments as per the release description
 

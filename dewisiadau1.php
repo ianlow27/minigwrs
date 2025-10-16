@@ -525,7 +525,7 @@ global $lSplitStoryFiles;
    $splitimg = preg_replace("/\./", "2i.", $splitimg);
    $lsimgjs = circleimagemob($lsimgjs, $splitimg, $LlGwers. $splitletter. '2i');
    if($LlGwers != "") $lbtnsdesc .= '"'.$LlGwers. $splitletter. '2i": "'. $LlBtnsDesc. ' Pic",'. "\n";
-   file_put_contents("./". $LlFfeil. $splitletter. "2i__.html", $lsimgjs);
+   file_put_contents("./". $LlFfeil. $splitletter. "2i.html", $lsimgjs);
  }
 }//endfunc
 //---------------------------------------------------
