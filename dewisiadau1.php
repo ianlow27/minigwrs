@@ -67,7 +67,7 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
 
 
       if($char1 != "&"){
-        $outstr = preputcleandata($outstr);
+        $outstr = preputcleandata($outstr, $LlGwers);
         file_put_contents("./". $LlFfeil. ".html", $outstr);
         if($LlGwers != "") $lbtnsdesc .= '"'.$LlGwers.'": "'. $LlBtnsDesc. '",'. "\n";
       }
@@ -120,9 +120,9 @@ print_r($atmp1d);
            $splitimg = "";
            if(isset($atmp2a[2])) $splitimg = trim($atmp2a[2]);
 echo "___>SPLITIMG>>". $splitimg;
-           $outstr = preputcleandata($outstr);
+           $outstr = preputcleandata($outstr, $LlGwers. $splitletter. '0');
            file_put_contents("./". $LlFfeil. $splitletter."0.html", $outstr);
-           if($LlGwers != "") $lbtnsdesc .= '"'.$LlGwers. $splitletter.'0": "'. $LlBtnsDesc. ' 0",'. "\n";
+           if($LlGwers != "") $lbtnsdesc .= '"'.$LlGwers. $splitletter. '0": "'. $LlBtnsDesc. ' 0",'. "\n";
 
            putnewtxt($lsnewwords, $l2ndMod, $splitletter, $splitimg);
 
@@ -416,8 +416,14 @@ global $lSplitStoryFiles;
      $ln = preg_replace("/¬/", "@", $ln);
      //$atmp1b = preg_split("/[@&]/", $ln);
      $atmp1b = explode("@", $ln);
+//echo "LN FOR PICS>>>>\n";
+//print_r($atmp1b);
+//sleep(2);
+
      //$lsimgjs .= '"'. $atmp1b[1]. '": [0, '. ($lcount * 5) ."],\n";
-     $lsimgjs .= '"'. $atmp1b[1]. '": [0, 0'. "],\n";
+     $lsimgjs .= '"'. $atmp1b[1].
+      (isset($atmp1b[2]) ? " (". $atmp1b[2].")" : "")
+      .'": [0, 0'. "],\n";
      if(isset($atmp1b[2])){
        $lsnewwords .= $ln. " ";
 //echo "__________>>105>>>". $atmp1b[1]."___[". $atmp1b[2]. "]__". $ln. "\n";
@@ -449,13 +455,13 @@ global $lSplitStoryFiles;
    $lSplitStoryFiles .= "\n\n". $retstr. "\n\n";
    //-------
    $splitimg = preg_replace("/\./", "2i.", $splitimg);
-   $lsimgjs = circleimagemob($lsimgjs, $splitimg);
-   if($LlGwers != "") $lbtnsdesc .= '"'.$LlGwers. $splitletter.'2i": "'. $LlBtnsDesc. ' Pic",'. "\n";
+   $lsimgjs = circleimagemob($lsimgjs, $splitimg, $LlGwers. $splitletter. '2i');
+   if($LlGwers != "") $lbtnsdesc .= '"'.$LlGwers. $splitletter. '2i": "'. $LlBtnsDesc. ' Pic",'. "\n";
    file_put_contents("./". $LlFfeil. $splitletter. "2i__.html", $lsimgjs);
  }
 }//endfunc
 //---------------------------------------------------
-function preputcleandata($outstr){
+function preputcleandata($outstr, $pLlGwers){
 global $lsitwords; global $lsltwords; global $lsanswords; global $lsartwords; global $lsrswords; global $lsixwords; global $lsnnwords; global $lsnbwords; global $lsnewwords; global $lsexwords; global $lspnwords; global $lsivwords; global $lsctwords; global $lsavwords; global $lsppwords; global $lspvwords; global $lsidwords; global $lsajwords; 
 global $LlFfeil;
 //--------------
@@ -487,7 +493,7 @@ global $LlFfeil;
   "";
   $outstr2 = acenau($outstr2);
 
-  $outstr = ffurfweddu((dewisiadausetsections($outstr, $outstr2, $LlFfeil )));
+  $outstr = ffurfweddu((dewisiadausetsections($outstr, $outstr2, $LlFfeil, $pLlGwers )));
   return $outstr;
 //--------------
 }//endfunc
@@ -500,7 +506,7 @@ function resetpunc($lnout){
 
 }//endfunc
 //---------------------------------------------------
-function dewisiadausetsections($outstr, $outstr2, $pmod="test1"){
+function dewisiadausetsections($outstr, $outstr2, $pmod="test1", $pLlGwers){
 
 global $LlCwrs;
 global $LlGwers;
@@ -719,7 +725,7 @@ $LlHtmlPenniad=
 <!--
 <div style="xxtext-align:center;font-weight:bold;font-size:250%;xxcolor:#00f;xxfont-style:italic;xxtext-decoration:underline;margin-top:10px;">'. acenau($LlCwrs). '</div>
 
-<div style="xxtext-align:center;font-weight:bold;font-size:150%;xxcolor:#00f;xxfont-style:italic;text-decoration:underline;margin-top:10px;">'. acenau($LlGwers)  . '</div>
+<div style="xxtext-align:center;font-weight:bold;font-size:150%;xxcolor:#00f;xxfont-style:italic;text-decoration:underline;margin-top:10px;">'. acenau($pLlGwers)  . '</div>
 
 <div style="xxtext-align:center;font-weight:bold;font-size:150%;xxcolor:#0a0;font-style:italic;margin-top:0px;margin-bottom:15px;">'. preg_replace("/\//", "<br>", acenau($LlTeitl)  ). '</div>
 
@@ -740,7 +746,7 @@ $LlCyn= '
 <a id="alnkHome" style="z-index:9999;font-size:140%;">🏠</a>
 &ensp;
   <span style="font-size:140%;font-weight:bold;">
-   '. $LlGwers. ' - Choose the correct answer for all selections.</span><br/>
+   '. $pLlGwers. ' - Choose the correct answer for all selections.</span><br/>
   <span style="font-size:90%;xxfont-weight:bold;">
    <!-- You can check your answers by clicking on the \'Check Answers\' button. 
    When you have completed all selections correctly, a message will appear. Make a note of the "Success code" and time taken in seconds. -->' .
@@ -783,7 +789,7 @@ $LlCynB = '
   <div id="goodJob">'
     .'🎉 <b>Good Job! </b>🎉'.
    '<br/><a id="alnkHome3" style="z-index:9999;font-size:100%;text-decoration:none;">🏠</a>
-&ensp;<span style="font-size:70%;">Please make a note of your success code and module number as you will need it later:<br/>Success Code: <b>' .  strtolower($LlTeitl ). '</b><br/>Module: <b>'. strtolower($LlGwers)
+&ensp;<span style="font-size:70%;">Please make a note of your success code and module number as you will need it later:<br/>Success Code: <b>' .  strtolower($LlTeitl ). '</b><br/>Module: <b>'. strtolower($pLlGwers)
     .'</b> <br>Time taken: <span id="spsecs"></span> secs
        <br>Average time: <span id="avgSecs"></span> secs
        <br><span style="font-size:350%;" id="speedEmoji"></span>
@@ -998,12 +1004,12 @@ $LlWedi='
 //----------------------------------
                } else if(word.substring(0,8) == "<shwjpg>"){
                  wrdtmp = "";
-                 word = word.replace(/<shwjpg>/, "<img style=\'max-width:90%;height:auto;\' src=\'./img_'. $LlGwers. '/");
+                 word = word.replace(/<shwjpg>/, "<img style=\'max-width:90%;height:auto;\' src=\'./img_'. $pLlGwers. '/");
                  word = word.replace(/<\/shwjpg>/, ".jpg\' />");
                  word = removeAccents(word);
                } else if(word.substring(0,8) == "<shwpng>"){
                  wrdtmp = "";
-                 word = word.replace(/<shwpng>/, "<img style=\'max-width:90%;height:auto;\' src=\'./img_'. $LlGwers. '/");
+                 word = word.replace(/<shwpng>/, "<img style=\'max-width:90%;height:auto;\' src=\'./img_'. $pLlGwers. '/");
                  word = word.replace(/<\/shwpng>/, ".jpg\' />");
                  word = removeAccents(word);
                } 
@@ -1299,11 +1305,11 @@ window.onload = getEncryptedParameter;
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         
         // The message to be sent to the PHP page
-        var xxmessage = "The module is '. $LlGwers. ', the passcode code is " + correctPassword  + ", the time taken is " + secondsElapsed + " seconds";
+        var xxmessage = "The module is '. $pLlGwers. ', the passcode code is " + correctPassword  + ", the time taken is " + secondsElapsed + " seconds";
 
         var message = 
         "" + usrInitials + "" +
-        " ('. $LlGwers. '), " +
+        " ('. $pLlGwers. '), " +
         " " + selwordcount  + " qstn," +
         " " + secondsElapsed + " sec," +
         " avg " + (secondsElapsed/selwordcount).toFixed(2) + " sec";
@@ -1319,7 +1325,7 @@ window.onload = getEncryptedParameter;
         xhr.send("message=" + encodeURIComponent(message) 
               + "&subject=" + encodeURIComponent(subject)
               + "&usr=" + encodeURIComponent(usrInitials)
-              + "&modref=" + encodeURIComponent("'. $LlGwers.'")
+              + "&modref=" + encodeURIComponent("'. $pLlGwers.'")
               + "&homepage=" + encodeURIComponent(homePage)
               );
 
@@ -1551,8 +1557,17 @@ $LlTextboxScript='
             const includeWords = mustInclude.split("|");
             const excludeWords = mustExclude.split("|");
 
-            const missing = includeWords.filter(word => !essay.includes(word));
-            const foundExcluded = excludeWords.filter(word => essay.includes(word));
+            //const missing = includeWords.filter(word => !essay.includes(word));
+            const missing = includeWords.filter(word => {
+              const regex = new RegExp(`\\\\b${word}\\\\b`, "i"); 
+              return !regex.test(essay);
+            }); // !essay.includes(word));
+
+            //const foundExcluded = excludeWords.filter(word => essay.includes(word));
+            const foundExcluded = excludeWords.filter(word => {
+              const regex = new RegExp(`\\\\b${word}\\\\b`, "i"); 
+              return regex.test(essay);
+            }); // !essay.includes(word));
 
             if (missing.length > 0) {
                 messageEl.textContent = "Error: Your essay is missing the following required words: " + missing.join(", ");
@@ -1566,7 +1581,7 @@ $LlTextboxScript='
 
             const wordCount = essay.trim().split(/\s+/).filter(word => word.length > 0).length;
             if (wordCount < '. $LlTxtMinWrds .' || wordCount > '. $LlTxtMaxWrds .') {
-                messageEl.textContent = `Error: Essay must be between 200 and 1000 words. Your essay has ${wordCount} word(s).`;
+                messageEl.textContent = `Error: Essay must be between '. $LlTxtMinWrds. ' and '.  $LlTxtMaxWrds  .' words. Your essay has ${wordCount} word(s).`;
                 return;
             }
 
@@ -1574,14 +1589,15 @@ $LlTextboxScript='
             const pathParts = window.location.pathname.split("/");
             const filename = pathParts[pathParts.length - 1];
             const moduleRefMatch = filename.match(/module0*(\d+-\w+)\.html/i);
-            let moduleRef = "'. $LlGwers. '";
+            let moduleRef = "'. $pLlGwers. '";
 
             // Get "u" parameter from URL
             const urlParams = new URLSearchParams(window.location.search);
             const homepage1 = urlParams.get("u") || "unknown";
             const  initials = getLeftOfp5w(homepage1);
             //const homeURL =  "https://2lnk.net/ianswelshclass/home/" + homepage1 + ".html";
-            const homeURL =  "./home/" + homepage1 + ".html";
+            //const homeURL =  "./home/" + homepage1 + ".html";
+            const homeURL =  "./" + homepage1 + ".html";
 
             // Create form to submit
             const form = document.createElement("form");
@@ -1670,7 +1686,7 @@ function dwsfmt($pstr, $popt){
   return '"_'. $popt. '_"'. $retstr;
 }//endfunc
 //---------------------------------------------
-function circleimagemob($pstr, $splitimg){
+function circleimagemob($pstr, $splitimg, $pLlGwers){
 
 return '
       <!DOCTYPE html>
@@ -1883,7 +1899,7 @@ return '
       
       
       
-        <h2>Find the Objects</h2>
+        <h3>Click on the green circles and select the correct meaning</h3>
       
         <div id="container">
           <img src="./img/'. $splitimg .'" id="main-image" alt="Main image">
@@ -1893,7 +1909,7 @@ return '
         <!-- Modal for answer selection -->
         <div id="modal">
           <div id="modal-content">
-            <h3>Select the correct object</h3>
+            <h3>Select the correct word</h3>
             <!-- Option buttons injected here -->
           </div>
         </div>
@@ -2214,6 +2230,51 @@ document.addEventListener("mousemove", function(event) {
       
       
       
+<script>
+    // JavaScript function to send the Ajax request
+    function sendMessage(correctPassword, secondsElapsed, usrInitials) {
+        // Create a new XMLHttpRequest object
+        var xhr = new XMLHttpRequest();
+        
+        // Open a POST request to the PHP page
+        xhr.open("POST", "./home/send_email.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        
+        // The message to be sent to the PHP page
+        var xxmessage = "The module is '. $pLlGwers. ', the passcode code is " + correctPassword  + ", the time taken is " + secondsElapsed + " seconds";
+
+        var message = 
+        "" + usrInitials + "" +
+        " ('. $pLlGwers. '), " +
+        " " + selwordcount  + " qstn," +
+        " " + secondsElapsed + " sec," +
+        " avg " + (secondsElapsed/selwordcount).toFixed(2) + " sec";
+
+
+
+
+
+        var subject = "Welsh Homework Student Results";
+        
+        // Send the request
+        // xhr.send("message=" + encodeURIComponent(message));
+        xhr.send("message=" + encodeURIComponent(message) 
+              + "&subject=" + encodeURIComponent(subject)
+              + "&usr=" + encodeURIComponent(usrInitials)
+              + "&modref=" + encodeURIComponent("'. $pLlGwers.'")
+              + "&homepage=" + encodeURIComponent(homePage)
+              );
+
+        // Handle the response
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                console.log("Message sent successfully!");
+            } else {
+                console.log("Failed to send message.");
+            }
+        };
+    }
+</script>
       
       
       
