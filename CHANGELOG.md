@@ -7,8 +7,15 @@
 
 ## NOTES
 
-## 0.0.77_251018-1824 - enhancements to dewisiadau1.php, and utils components classhome.js and yzp5wa1b2c.html - 1) list missing mp3 audio clips for words in missingmp3.txt, 2) list missing images for circleimagemob in missinga2i.txt, 3) list previously used vocab words in prevusedwds.txt, and 4) in students' exercise homepage make the module buttons of the same module number, the same colour.
+## 0.0.78_251018-2214 - enhancements to dewisiadau1.php - bugfixes
 -  Amendments as per the release description
+
+## 0.0.77_251018-1824 - enhancements to dewisiadau1.php, and utils components classhome.js and yzp5wa1b2c.html - 1) list missing mp3 audio clips for words in missingmp3.txt, 2) list missing images for circleimagemob in missinga2i.txt, 3) list previously used vocab words in prevusedwds.txt, and 4) in students' exercise homepage make the module buttons of the same module number, the same colour.
+* 251018 - angen cadw rhestr o eiriau dygswyd o'r blaen
+* 251018 - angen ar gyfer modiwlau o'r un rhif i fod lliw botwm yr un
+* 251018 - cenhedlu rhestr o eiriau Cymraeg diffygiedig oddiwrth y blygell mp3
+* 251017 - img_colliedig: 1-4a_Gemini_Generated_Image_o2mwxvo2mwxvo2mw_A.jpg
+* 251017 - mp3 colliedig: ymysg, ymysg, ger, tu_flaen_i, islaw, uwchben, ar_gyfer, o_gwmpas, oddi_wrth, dros, at, rhwng, ar_yr_ochr_i, i_lawr, i_fyny, oddeutu, trwy, tu_ôl_i, yn_ystod, o'r_gorau, cyfenw, blynedd, un_deg_naw, hir, byw, ers, deg, hoffi, oed,
 
 ## 0.0.76_251016-1837 - enhancements to dewisiadau1.php - for circleimagemob HTML files i.e. those ending 2i.html, as the circle coordinates are now in external JavaScript files in the js subfolder, there is no need to add __.html suffix. These are now .html without the underscores that were initially added to prevent overwriting the coordinates when they were held in the HTML file.
 * 251016 - circleimagemob - angen i cysylltu neu fewnforio y ffeil JS allanol ar gyfer y cyfesurynnau o'r cylchoedd

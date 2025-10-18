@@ -1345,6 +1345,7 @@ $LlWedi='
     function playSound(pstr, correctAns) {
       let audioFile =  pstr.replace(/\'/g, "");
       if(typeof correctAns != "undefined" ){
+        correctAns = correctAns.split(/ /)[0];
         audioFile = "./mp3/" + removeAccents(correctAns).toLowerCase() + ".mp3";
       }
       const audio = new Audio(audioFile);
@@ -2280,6 +2281,7 @@ document.addEventListener("mousemove", function(event) {
           function playSound(pstr, correctAns) {
             let audioFile =  pstr.replace(/\'/g, "");
             if(typeof correctAns != "undefined" ){
+              correctAns = correctAns.split(/ /)[0];
               audioFile = "./mp3/" + removeAccents(correctAns).toLowerCase() + ".mp3";
             }
             const audio = new Audio(audioFile);
@@ -2422,7 +2424,34 @@ document.addEventListener("mousemove", function(event) {
 </script>
       
       
+<script>
       
+    function removeAccents(pstr){
+        if (pstr.match(/[âêîôûŵŴŷáÁỳàäëïÏöÖë\']+/)){
+          pstr = pstr.replace(/â/, "a");
+          pstr = pstr.replace(/ê/, "e");
+          pstr = pstr.replace(/î/, "i");
+          pstr = pstr.replace(/ô/, "o");
+          pstr = pstr.replace(/û/, "u");
+          pstr = pstr.replace(/ŵ/, "w");
+          pstr = pstr.replace(/Ŵ/, "W");
+          pstr = pstr.replace(/ŷ/, "y");
+          pstr = pstr.replace(/á/, "a");
+          pstr = pstr.replace(/Á/, "A");
+          pstr = pstr.replace(/ỳ/, "y");
+          pstr = pstr.replace(/à/, "a");
+          pstr = pstr.replace(/ä/, "a");
+          pstr = pstr.replace(/ë/, "e");
+          pstr = pstr.replace(/ï/, "i");
+          pstr = pstr.replace(/Ï/, "I");
+          pstr = pstr.replace(/ö/, "o");
+          pstr = pstr.replace(/ë/, "e");
+          pstr = pstr.replace(/\'/,"-");
+        }
+        return pstr;
+
+    }//endfunc
+</script>
       
       <script>
         let loadTime = "";
@@ -2434,13 +2463,16 @@ document.addEventListener("mousemove", function(event) {
       
         let correctPassword = "K\.?s{4(:@(3613~,?45!KJd^%$@£!)0{{1(Jksi3(*!%$@:"; // Change this to your desired password
       
+        //uncomment this to place circles on image:
+        //checkPassword(2);
         function checkPassword(pstr) {
           const input = document.getElementById("password-input").value.toLowerCase();;
           const successcode = document.getElementById("successcode").value.toLowerCase();;
           //const error = document.getElementById("error");
       
           console.log (String(input).toLowerCase()  == String(correctPassword).toLowerCase() ); 
-          if (String(input).toLowerCase()  == String(correctPassword).toLowerCase() ) {
+          //if (String(input).toLowerCase()  == String(correctPassword).toLowerCase() ) {
+          if ((pstr == 2) || ((String(input).toLowerCase()  == String(correctPassword).toLowerCase() ))) {
             if (successcode == String("").toLowerCase() ){
               document.getElementById("lock-screen").style.display = "none";
               document.getElementById("content").style.display = "block";
