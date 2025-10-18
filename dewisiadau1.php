@@ -78,13 +78,16 @@ include "../mjemojis.php";
 //============================================
 //===========================
 //GLOBALS;
-$outstr = "<!DOCTYPE><html><body>";
+$outstr = ""; //<!DOCTYPE><html><body>";
 $LlTxtMinWrds = "";
 $LlTxtMaxWrds = "";
 $LlTxtInclude = "";
 $LlTxtExclude = "";
 $lbtnsdesc="";
 $lSplitStoryFiles="";
+$LlMissingMp3="";
+$LlPrevUsedWords="";
+$LlMissingA2iImg="";
 $lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lsppwords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords=""; $lsartwords=""; $lsnewwords=""; $lsnbwords=""; $lspvwords=""; $l2ndMod=""; $b2ndMod = false; $a2ndMod = []; $lsvcb=""; $lvcbcount = 1;
 //===========================
 htmlfmtinit();
@@ -159,7 +162,6 @@ if($LlModiwl !== "") if($atmp2d[0] != $LlModiwl) continue;
           if(isset($atmp1d[2])) $LlTxtMaxWrds = trim($atmp1d[2]);
           if(isset($atmp1d[3])) $LlTxtInclude = trim($atmp1d[3]);
           if(isset($atmp1d[4])) $LlTxtExclude = trim($atmp1d[4]);
-          //$outstr .= $lnout."\n";
 
 print_r($atmp1d);
 //sleep(1);
@@ -181,10 +183,7 @@ $outstr = "";
 $l2ndMod = "";
 
 
-
          }else if(mb_substr($line, 0,4) =="plys"){
-    //echo ">>>>>>". mb_substr($line, 0,4). "\n";
-    //sleep(1);
     
           $tmpln1 = preg_replace("/ /", " = ", mb_substr($line, 8). "\n");
           $tmpln1 = preg_replace("/`ix/", " (vbifx)", $tmpln1);
@@ -206,18 +205,24 @@ $l2ndMod = "";
           $lsvcb .= $lvcbcount++ . ") ". $tmpln1;
         }
   
-        $lnout = parsewords($line, $char1);
-        //if(preg_match("/\{mj/", $lnout)){
-        //  $lnout = mjemojis($lnout);
-        // }
-        $outstr .= $lnout."\n";
-        $l2ndMod .= "\n"; //any onward module after current
+
+       if(mb_substr($line, 0,11)=="splitstory_"){
+       }else {
+         $lnout = parsewords($line, $char1);
+         $outstr .= $lnout."\n";
+         $l2ndMod .= "\n"; //any onward module after current
+       }
       } 
     }
   }
 
 }//endforeach
 
+
+
+file_put_contents("./missingmp3.txt", sortuniq($LlMissingMp3,","));
+file_put_contents("./missinga2i.txt", $LlMissingA2iImg);
+file_put_contents("./prevusedwds.txt", sortuniq($LlPrevUsedWords,","));
 
 file_put_contents("./btnsdesc.js", 'const abtnsdesc = {'.  $lbtnsdesc. '};');
 
@@ -252,6 +257,9 @@ global $LlTxtMaxWrds;
 global $LlTxtInclude;
 global $LlTxtExclude;
 global $DGeiriau;
+global $LlMissingMp3;
+global $LlPrevUsedWords;
+global $LlMissingA2iImg;
 
   // If line starts with ! then reset all punctuation
   // i.e. by removing incorrect spacing etc.
@@ -264,12 +272,21 @@ global $DGeiriau;
   $lnwords = "";
   if(mb_substr($line,0,8)=="plyssnd_"){
     $atmp2f = preg_split("/[\s`]/", mb_substr($line,8));
-    if(isset($DGeiriau[$atmp2f[0]])){
-echo "ERROR!!!(268)---vocab word already used before>[". $atmp2f[0]. "] in [". $line ."]\n";
+    $lcy1 =  $atmp2f[0];
+    $len1 = $atmp2f[count($atmp2f)-2];
+    if(isset($DGeiriau[$lcy1])){
+echo "ERROR!!!(268)---vocab word already used before>[". $lcy1. "] in [". $len1. "]___[".  $line ."]\n";
+      if($LlPrevUsedWords != "") $LlPrevUsedWords .= ", ";
+      $LlPrevUsedWords .= $lcy1. "_". $len1;
 //sleep(3);
 //die();
     }else {
-      $DGeiriau[$atmp2f[0]] = $atmp2f[count($atmp2f)-2];
+      $DGeiriau[$lcy1] =  $len1; //$atmp2f[count($atmp2f)-2];
+    }
+    $lnoaccent =  removeAccents(acenau($lcy1));
+    if(!file_exists("./mp3/". $lnoaccent. ".mp3")){
+      if($LlMissingMp3 != "") $LlMissingMp3 .= ", ";
+      $LlMissingMp3 .= $lnoaccent;
     }
   
   }
@@ -277,8 +294,18 @@ echo "ERROR!!!(268)---vocab word already used before>[". $atmp2f[0]. "] in [". $
     $origword = $word;
     if(trim($word)=="") continue;
     $bnewword = false;
-    if((preg_match("/`/", $word)) && (!preg_match("/`@/", $word)) ){
-      $atmp1 = explode("`", $word);
+    if(((preg_match("/`/", $word)) 
+     || (preg_match("/¬/", $word))) 
+   && (!preg_match("/`@/", $word)) ){
+      //$atmp1 = preg_split("/[`¬]{1,1}/", $word);
+      $atmp1 = mb_split("[`¬]{1,1}", $word);
+      if(preg_match("/¬/", $word)){
+        $lnoaccent =  removeAccents(acenau($atmp1[0]));
+        if(!file_exists("./mp3/". $lnoaccent. ".mp3")){
+          if($LlMissingMp3 != "") $LlMissingMp3 .= ", ";
+          $LlMissingMp3 .= $lnoaccent;
+        }
+      }
       $type = "nn";
       if(isset($atmp1[1])){ $type = $atmp1[1]; }
       $word = $atmp1[0]. "`";
@@ -343,7 +370,7 @@ echo "ERROR!!!(268)---vocab word already used before>[". $atmp2f[0]. "] in [". $
         }else if($type == "nf"){
           $lsnnwords .= mb_substr($word,0,-1). " ";
         }else {
-echo "ERROR!!!(251)---speechtype code not found>[". $origword. "] in [". $line ."]\n";
+echo "ERROR!!!(251)---speechtype code not found>[". $type."] [". $origword. "] in [". $line ."]\n";
 die();
 
           $lsnnwords .= mb_substr($word,0,-1). " ";
@@ -459,6 +486,31 @@ echo "____________". $lnwords. "____\n";
   return $lnout;
 }//endfunc
 //---------------------------------------------------
+function removeAccents($pstr){
+  if (mb_ereg_match("[âêîôûŵŴŷáÁỳàäëïÏöÖë\']*", $pstr)){
+    $pstr = mb_ereg_replace("â", "a", $pstr);
+    $pstr = mb_ereg_replace("ê", "e", $pstr);
+    $pstr = mb_ereg_replace("î", "i", $pstr);
+    $pstr = mb_ereg_replace("ô", "o", $pstr);
+    $pstr = mb_ereg_replace("û", "u", $pstr);
+    $pstr = mb_ereg_replace("ŵ", "w", $pstr);
+    $pstr = mb_ereg_replace("Ŵ", "W", $pstr);
+    $pstr = mb_ereg_replace("ŷ", "y", $pstr);
+    $pstr = mb_ereg_replace("á", "a", $pstr);
+    $pstr = mb_ereg_replace("Á", "A", $pstr);
+    $pstr = mb_ereg_replace("ỳ", "y", $pstr);
+    $pstr = mb_ereg_replace("à", "a", $pstr);
+    $pstr = mb_ereg_replace("ä", "a", $pstr);
+    $pstr = mb_ereg_replace("ë", "e", $pstr);
+    $pstr = mb_ereg_replace("ï", "i", $pstr);
+    $pstr = mb_ereg_replace("Ï", "I", $pstr);
+    $pstr = mb_ereg_replace("ö", "o", $pstr);
+    $pstr = mb_ereg_replace("ë", "e", $pstr);
+    $pstr = mb_ereg_replace("\'","-", $pstr);
+  }
+  return $pstr;
+}//endfunc
+//---------------------------------------------------
 function putnewtxt($lsnewwords,$l2ndMod,$splitletter="",$splitimg=""){
 global $LlFfeil;
 global $LlGwers;
@@ -469,6 +521,7 @@ global $LlPlygellSain;
 global $LlLlun1;
 global $lbtnsdesc;
 global $lSplitStoryFiles;
+global $LlMissingA2iImg;
  if($LlPlygellSain == "") $LlPlygellSain = "mp3";
  if($lsnewwords != ""){
 //echo "____94>>". $lsnewwords. "\n";
@@ -526,6 +579,12 @@ global $lSplitStoryFiles;
    $lsimgjs = circleimagemob($lsimgjs, $splitimg, $LlGwers. $splitletter. '2i');
    if($LlGwers != "") $lbtnsdesc .= '"'.$LlGwers. $splitletter. '2i": "'. $LlBtnsDesc. ' Pic",'. "\n";
    file_put_contents("./". $LlFfeil. $splitletter. "2i.html", $lsimgjs);
+
+   if(!file_exists("./img/". $LlGwers. $splitletter. "2i.jpg")){
+      if($LlMissingA2iImg != "") $LlMissingA2iImg .= ", ";
+      $LlMissingA2iImg .=  $LlGwers. $splitletter. "2i.jpg";
+   }
+   
  }
 }//endfunc
 //---------------------------------------------------
@@ -1263,7 +1322,7 @@ $LlWedi='
 
 <script>
     function xxplaySoundxx(pstr, correctAns) {
-      correctAns = "./mp3/" + correctAns.replace(/[^a-zA-Z0-9]+/,"").toLowerCase() + ".mp3";
+      correctAns = "./mp3/" + removeAccents(correctAns).toLowerCase() + ".mp3";
       const audio = new Audio(correctAns);
 
       console.log(correctAns);
@@ -1286,7 +1345,7 @@ $LlWedi='
     function playSound(pstr, correctAns) {
       let audioFile =  pstr.replace(/\'/g, "");
       if(typeof correctAns != "undefined" ){
-        audioFile = "./mp3/" + correctAns.replace(/[^a-zA-Z0-9]+/, "").toLowerCase() + ".mp3";
+        audioFile = "./mp3/" + removeAccents(correctAns).toLowerCase() + ".mp3";
       }
       const audio = new Audio(audioFile);
     
@@ -1739,6 +1798,19 @@ $LlTextboxScript.
 
 
 $LlHtmlGwaelod;
+}//endfunc
+//---------------------------------------------
+function sortuniq($pstr, $pdelim){
+  $atmp1 = explode($pdelim, $pstr);
+  sort($atmp1);
+  $atmp1 = array_filter(array_unique($atmp1)); 
+  $retstr = "";
+  foreach($atmp1 as $ln){
+    if($retstr != "") $retstr .= $pdelim. ' ';
+    $retstr .= $ln;
+  }//endforeach
+  return $retstr;
+  
 }//endfunc
 //---------------------------------------------
 function dwsfmt($pstr, $popt){
@@ -2204,12 +2276,11 @@ document.addEventListener("mousemove", function(event) {
       
       
       
-      
       <script>
           function playSound(pstr, correctAns) {
             let audioFile =  pstr.replace(/\'/g, "");
             if(typeof correctAns != "undefined" ){
-              audioFile = "./mp3/" + correctAns.replace(/[^a-zA-Z0-9]+/, "").toLowerCase() + ".mp3";
+              audioFile = "./mp3/" + removeAccents(correctAns).toLowerCase() + ".mp3";
             }
             const audio = new Audio(audioFile);
           
@@ -2224,8 +2295,6 @@ document.addEventListener("mousemove", function(event) {
             };
           }
       </script>
-      
-      
       
       
       

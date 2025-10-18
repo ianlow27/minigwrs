@@ -7,8 +7,12 @@
 
 ## NOTES
 
-## 0.0.76_251016-1837 - enhancements to dewisiadau1.php - for circleimagemob HTML files i.e. those ending 2i.html, as the circle coordinates are now in external JavaScript files in the js subfolder, there is no need to add __.html suffix. These are now .html without the underscores that were initially added to prevent overwriting the coordinates when they were held in the HTML file.
+## 0.0.77_251018-1824 - enhancements to dewisiadau1.php, and utils components classhome.js and yzp5wa1b2c.html - 1) list missing mp3 audio clips for words in missingmp3.txt, 2) list missing images for circleimagemob in missinga2i.txt, 3) list previously used vocab words in prevusedwds.txt, and 4) in students' exercise homepage make the module buttons of the same module number, the same colour.
 -  Amendments as per the release description
+
+## 0.0.76_251016-1837 - enhancements to dewisiadau1.php - for circleimagemob HTML files i.e. those ending 2i.html, as the circle coordinates are now in external JavaScript files in the js subfolder, there is no need to add __.html suffix. These are now .html without the underscores that were initially added to prevent overwriting the coordinates when they were held in the HTML file.
+* 251016 - circleimagemob - angen i cysylltu neu fewnforio y ffeil JS allanol ar gyfer y cyfesurynnau o'r cylchoedd
+* 251016 - angen i dynnu maes y danricio yn y splitstory
 
 ## 0.0.75_251016-1830 - enhancements to dewisiadau1.php - circleimagemob, now uses external JavaScript files to store coordinates of circles, and removal of underscores in splitstory non-selection words, and start of previously-used words check using the hash array DGeiriau.
 -  Amendments as per the release description

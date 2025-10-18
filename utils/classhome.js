@@ -58,6 +58,12 @@ for (let r of modLinks1) {
   const baseName = path.substring(path.lastIndexOf('/') + 
      1).replace('.html', '').replace(/modiwl(0*)/,'');
   const moduleTitle = baseName;
+  const modNum = moduleTitle.split(/\-/)[0];
+  const colNum = (modNum % pastelColors.length);
+  if(isNaN(colNum)){
+     colNum = 0;
+  }
+console.log("_____" + (modNum % pastelColors.length) + "___" + pastelColors.length);
   const moduleLink = r +  "?u=" + basename; //encUsr;
     const div = document.createElement('a');
     div.className = 'grid-item';
@@ -73,7 +79,8 @@ for (let r of modLinks1) {
          +  lemoji;
     div.href = moduleLink;
     //div.target = '_blank';
-    div.style.backgroundColor = pastelColors[Math.floor(Math.random() * pastelColors.length)];
+    //div.style.backgroundColor = pastelColors[Math.floor(Math.random() * pastelColors.length)];
+    div.style.backgroundColor = pastelColors[colNum];
 
     grid.appendChild(div);
     //moduleNumber++;
