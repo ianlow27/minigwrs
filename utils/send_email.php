@@ -191,7 +191,7 @@ if( ($lspeeddesc == "cheetah")
     $modref . "html_". $lspeeddesc. "',", $fileContents );
 
 }else {
-  $modifiedContents = preg_replace( ["/$pattern1/", "/$pattern2/"],
+  $modifiedContents = preg_replace( ["/$pattern1/", "/$pattern2/", "/$pattern3/", "/$pattern4/", "/$pattern5/", "/$pattern6/", "/$pattern7/", "/$pattern8/", "/$pattern9/", "/$pattern10/", "/$pattern11/"],
     $modref . "html_done',", $fileContents );
 }
 //---------------------------------------------
