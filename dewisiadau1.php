@@ -88,7 +88,7 @@ $lSplitStoryFiles="";
 $LlMissingMp3="";
 $LlPrevUsedWords="";
 $LlMissingA2iImg="";
-$lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lsppwords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords=""; $lsartwords=""; $lsnewwords=""; $lsnbwords=""; $lspvwords=""; $l2ndMod=""; $b2ndMod = false; $a2ndMod = []; $lsvcb=""; $lvcbcount = 1;
+$lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lsppwords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords=""; $lsartwords=""; $lsnewwords=""; $lsnbwords=""; $lspvwords=""; $l2ndMod=""; $b2ndMod = false; $a2ndMod = []; $lsvcb=""; $lvcbcount = 1; $lsvcblist="";
 //===========================
 htmlfmtinit();
 foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
@@ -115,6 +115,7 @@ $atmp2d = explode("-", $LlGwers);
 if($LlModiwl !== "") if($atmp2d[0] != $LlModiwl) continue;
 //-------------------------
 
+      $lsvcblist .= "%%%<=". $LlGwers. "\n";
       if($char1 != "&"){
         $outstr = preputcleandata($outstr, $LlGwers);
         file_put_contents("./". $LlFfeil. ".html", $outstr);
@@ -122,6 +123,7 @@ if($LlModiwl !== "") if($atmp2d[0] != $LlModiwl) continue;
       }
       if($lsvcb != "") 
         file_put_contents("./". $LlFfeil. "_vcb.txt", $lsvcb);
+      
       //Note that the l2ndMod variable is used to hold the vocab
       //list from the splitstory functionality.
       if($l2ndMod != ""){
@@ -141,7 +143,7 @@ if($LlModiwl !== "") if($atmp2d[0] != $LlModiwl) continue;
       $LlTxtMaxWrds = "";
       $LlTxtInclude = "";
       $LlTxtExclude = "";
-      $lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lsppwords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords=""; $lsartwords=""; $lsnewwords=""; $lsnbwords=""; $lspvwords=""; $l2ndMod = ""; $b2ndMod = false; $a2ndMod = []; $lsvcb=""; $lvcbcount = 1;
+      $lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lsppwords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords=""; $lsartwords=""; $lsnewwords=""; $lsnbwords=""; $lspvwords=""; $l2ndMod = ""; $b2ndMod = false; $a2ndMod = []; $lsvcb=""; $lvcbcount = 1; 
       
       htmlfmtinit();
       
@@ -203,6 +205,8 @@ $l2ndMod = "";
           $tmpln1 = preg_replace("/`nb/", " (num)", $tmpln1);
           $tmpln1 = preg_replace("/_/", " ", $tmpln1);
           $lsvcb .= $lvcbcount++ . ") ". $tmpln1;
+          //$atmp2f = explode(" ", mb_substr($line, 8));
+          //$lsvcblist .= trim($atmp2f[0]). " ";
         }
   
 
@@ -220,16 +224,28 @@ $l2ndMod = "";
 
 
 
+//$lsvcblist1 = mb_ereg_replace('^%%%<=.*$\n?', '', $lsvcblist);
+//$lsvcblist1 = mb_ereg_replace('(?m)^%%%<=.*\n?', '', $lsvcblist);
+//$lsvcblist1 = mb_ereg_replace('^%%%.*$', '', $lsvcblist); //, 'm');
+$avcblist = explode("\n", $lsvcblist);
+$lsvcblist = "";
+foreach($avcblist as $vcblist){
+  if(mb_substr($vcblist, 0,5)=="%%%<=") continue;
+  $atmp2g1 = explode("%%%<=", $vcblist);
+  if(!isset($atmp2g1[1])) continue;
+  $lsvcblist .= "%%%". $atmp2g1[1]. ": ". acenau($atmp2g1[0]). "\n";
+}//endfor
+file_put_contents("./vocablist.txt", $lsvcblist);
 file_put_contents("./missingmp3.txt", sortuniq($LlMissingMp3,","));
 file_put_contents("./missinga2i.txt", $LlMissingA2iImg);
 file_put_contents("./prevusedwds.txt", sortuniq($LlPrevUsedWords,","));
-
 file_put_contents("./btnsdesc.js", 'const abtnsdesc = {'.  $lbtnsdesc. '};');
 
 function parsewords($line, $cluelevel = "|"){
 //irinepicapia;
 global $lswords;
 global $lsvcb;
+global $lsvcblist;
 global $lvcbcount;
 global $lsitwords;
 global $lsltwords;
@@ -270,9 +286,17 @@ global $LlMissingA2iImg;
   $awords = explode(" ", $line);
   $lnout = "";
   $lnwords = "";
-  if(mb_substr($line,0,8)=="plyssnd_"){
-    $atmp2f = preg_split("/[\s`]/", mb_substr($line,8));
+  if      (mb_substr($line,0,7)=="plysnd_"){
+    $atmp2f = preg_split("/[\s`]/", mb_substr($line,7));
     $lcy1 =  $atmp2f[0];
+    $lsvcblist .= $lcy1. " ";
+  }else if(mb_substr($line,0,8)=="plyssnd_"){
+    $atmp2f = preg_split("/[\s`]/", mb_substr($line,8));
+if($atmp2f[0] == "Faint"){
+echo "_________276>>\n"; sleep(3);
+}
+    $lcy1 =  $atmp2f[0];
+    $lsvcblist .= $lcy1. " ";
     $len1 = $atmp2f[count($atmp2f)-2];
     if(isset($DGeiriau[$lcy1])){
 echo "ERROR!!!(268)---vocab word already used before>[". $lcy1. "] in [". $len1. "]___[".  $line ."]\n";
@@ -297,8 +321,10 @@ echo "ERROR!!!(268)---vocab word already used before>[". $lcy1. "] in [". $len1.
     if(((preg_match("/`/", $word)) 
      || (preg_match("/¬/", $word))) 
    && (!preg_match("/`@/", $word)) ){
-      //$atmp1 = preg_split("/[`¬]{1,1}/", $word);
       $atmp1 = mb_split("[`¬]{1,1}", $word);
+if($atmp1[0] == "Faint"){
+//echo "_________305>>\n"; sleep(3);
+}
       if(preg_match("/¬/", $word)){
         $lnoaccent =  removeAccents(acenau($atmp1[0]));
         if(!file_exists("./mp3/". $lnoaccent. ".mp3")){
@@ -413,6 +439,11 @@ die();
 //echo "__________________283b>>".  $lsnewwords. "\n";
           if($lsnewwords != "") $lsnewwords .= ' ';
           $lsnewwords .=  strtolower($atmp1[0]. $atmp1[1]);
+if(mb_ereg_match("aint", $lsnewwords)){ 
+ echo "NEWWORDS________________417>>". $lsnewwords. "\n";
+ sleep(2);
+}
+
 
 
 //echo ">>>>1[".$lsnewwords ."]______________\n";
@@ -535,7 +566,6 @@ global $LlMissingA2iImg;
    foreach($atmp1 as $ln){
      $lcount++;
      $ln = preg_replace("/¬/", "@", $ln);
-     //$atmp1b = preg_split("/[@&]/", $ln);
      $atmp1b = explode("@", $ln);
 //echo "LN FOR PICS>>>>\n";
 //print_r($atmp1b);
@@ -547,6 +577,11 @@ global $LlMissingA2iImg;
       .'": [0, 0'. "],\n";
      if(isset($atmp1b[2])){
        $lsnewwords .= $ln. " ";
+//if(preg_match("/Faint/i", $lsnewwords)){ 
+if(mb_ereg_match("aint", $lsnewwords)){ 
+ echo "NEWWORDS________________556>>". $lsnewwords. "\n";
+ sleep(2);
+}
 //echo "__________>>105>>>". $atmp1b[1]."___[". $atmp1b[2]. "]__". $ln. "\n";
        $retstr .=  "|plyssnd_". $atmp1b[1]. " (". $atmp1b[2] ." {*".mb_substr($ln,0,1)."__*}) ".$atmp1b[0]."`ans\n";
      }
@@ -1218,29 +1253,37 @@ $LlWedi='
       const avgSecs =  (secondsElapsed/selwordcount).toFixed(2);
       const repeatMsg = "Repeat this activity as often as you like to see whether you can be a faster animal.";
       let speedStr = "You are a squirrel! You are the 8th fastest!" + " " + repeatMsg;
-      let speedEmoji = "🐿";
+      let speedEmoji = "🐹";
+      let speedDesc = "squirrel";
     
       if      (avgSecs < 1.5){
          speedStr = "You are a cheetah! You are the fastest!";
          speedEmoji = "🐆";
+         speedDesc = "cheetah";
       }else if(avgSecs < 1.7){
          speedStr = "You are a lion! You are the 2ns fastest!" + " " + repeatMsg;
          speedEmoji = "🦁";
+         speedDesc = "lion";
       }else if(avgSecs < 1.9){
          speedStr = "You are a horse! You are the 3rd fastest!" + " " + repeatMsg;
          speedEmoji = "🐎";
+         speedDesc = "horse";
       }else if(avgSecs < 2.1){
          speedStr = "You are a hare! You are the 4th fastest!" + " " + repeatMsg;
          speedEmoji = "🐇";
+         speedDesc = "hare";
       }else if(avgSecs < 2.5){
-         speedStr = "You are an elk! You are the 5th fastest!" + " " + repeatMsg;
-         speedEmoji = "🫎";
-      }else if(avgSecs < 3){
-         speedStr = "You are a zebra! You are the 6th fastest!" + " " + repeatMsg;
-         speedEmoji = "🦓";
-      }else if(avgSecs < 3.5){
          speedStr = "You are a kangaroo! You are the 7th fastest!" + " " + repeatMsg;
          speedEmoji = "🦘";
+         speedDesc = "kangaroo";
+      }else if(avgSecs < 3){
+         speedStr = "You are an elk! You are the 5th fastest!" + " " + repeatMsg;
+         speedEmoji = "🫎";
+         speedDesc = "elk";
+      }else if(avgSecs < 3.5){
+         speedStr = "You are a zebra! You are the 6th fastest!" + " " + repeatMsg;
+         speedEmoji = "🦓";
+         speedDesc = "zebra";
       }
       document.getElementById("avgSecs").innerHTML = avgSecs;
       document.getElementById("speedMsg").innerHTML = speedStr;
@@ -1257,7 +1300,7 @@ $LlWedi='
         origin: { y: 0.6 }
       });
 
-      sendMessage(correctPassword, secondsElapsed, usrInitials);
+      sendMessage(correctPassword, secondsElapsed, usrInitials, speedDesc);
     }
 
     // Initialize
@@ -1425,7 +1468,7 @@ window.onload = getEncryptedParameter;
 
 <script>
     // JavaScript function to send the Ajax request
-    function sendMessage(correctPassword, secondsElapsed, usrInitials) {
+    function sendMessage(correctPassword, secondsElapsed, usrInitials, speedDesc) {
         // Create a new XMLHttpRequest object
         var xhr = new XMLHttpRequest();
         
@@ -1456,6 +1499,7 @@ window.onload = getEncryptedParameter;
               + "&usr=" + encodeURIComponent(usrInitials)
               + "&modref=" + encodeURIComponent("'. $pLlGwers.'")
               + "&homepage=" + encodeURIComponent(homePage)
+              + "&speeddesc=" + encodeURIComponent(speedDesc)
               );
 
         // Handle the response

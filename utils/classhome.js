@@ -43,14 +43,30 @@ let idx = 0;
 const modLinks1 = modLinks.reverse();
 for (let r of modLinks1) {
   //let orig_r = r;
-  let bdone = r.match(/html_done/);
-  let b2do = r.match(/html_2do/);
+  //let bdone = r.match(/html_done/);
+  //let b2do = r.match(/html_2do/);
   let lemoji = "&emsp;";
   //let lemoji = "тнР";
-  if (bdone){ lemoji = "⭐"; 
+  if (r.match(/html_done/)){ lemoji = "⭐"; 
     r = r.replace(/html_done/,"html")
-  }else if(b2do){ lemoji = "✏️"; 
+  }else if(r.match(/html_2do/)){ lemoji = "✏️"; 
     r = r.replace(/html_2do/,"html")
+  }else if(r.match(/html_cheetah/)){ lemoji = "🐆"; 
+    r = r.replace(/html_cheetah/,"html")
+  }else if(r.match(/html_lion/)){ lemoji = "🦁"; 
+    r = r.replace(/html_lion/,"html")
+  }else if(r.match(/html_horse/)){ lemoji = "🐎"; 
+    r = r.replace(/html_horse/,"html")
+  }else if(r.match(/html_hare/)){ lemoji = "🐇"; 
+    r = r.replace(/html_hare/,"html")
+  }else if(r.match(/html_elk/)){ lemoji = "🫎"; 
+    r = r.replace(/html_elk/,"html")
+  }else if(r.match(/html_zebra/)){ lemoji = "🦓"; 
+    r = r.replace(/html_zebra/,"html")
+  }else if(r.match(/html_kangaroo/)){ lemoji = "🦘"; 
+    r = r.replace(/html_kangaroo/,"html")
+  }else if(r.match(/html_squirrel/)){ lemoji = "🐹️"; 
+    r = r.replace(/html_squirrel/,"html")
   }
   idx++;
   //const url = new URL(r);
@@ -59,7 +75,7 @@ for (let r of modLinks1) {
      1).replace('.html', '').replace(/modiwl(0*)/,'');
   const moduleTitle = baseName;
   const modNum = moduleTitle.split(/\-/)[0];
-  const colNum = (modNum % pastelColors.length);
+  let colNum = (modNum % pastelColors.length);
   if(isNaN(colNum)){
      colNum = 0;
   }

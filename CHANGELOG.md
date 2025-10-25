@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.79_251025-2342 - updates to dewisiadau1.php and utils classhome.js and send_email.php - When completing an exercise instead of updating the student's homepage with a star the speed animal now displays with cheetah for the fastest and squirrel for the slowest
+-  Amendments as per the release description
+
 ## 0.0.78_251018-2214 - enhancements to dewisiadau1.php - bugfixes
 -  Amendments as per the release description
 
