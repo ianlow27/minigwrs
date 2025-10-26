@@ -4,7 +4,7 @@ if(isset($_POST['speeddesc'])){
   $lspeeddesc=$_POST['speeddesc'];
 }
 // The recipient email address
-$to = "XXX@XXX.XXX";
+$to = "???@???.???";
 // Additional headers
 $headers = "From: no-reply@test.com" . "\r\n" .
        "Reply-To: no-reply@test.com" . "\r\n" .

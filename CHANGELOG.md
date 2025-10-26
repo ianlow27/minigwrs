@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.81_251026-1245 - minor bugfix to utils/send_email.php
+-  Amendments as per the release description
+
 ## 0.0.80_251025-2358 - bugfix in utils/send_email.php
 -  Amendments as per the release description
 
