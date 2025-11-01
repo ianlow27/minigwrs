@@ -147,8 +147,6 @@ if($LlModiwl !== "") if($atmp2d[0] != $LlModiwl) continue;
       
       htmlfmtinit();
       
-    //}else if(substr($line, 1, 4) == "----"){
-    //   $lswords="";
     //--------------------------------------------
     //This checks if the line contains a module setting.
     // If it doesn't, then continue, because this is
@@ -176,7 +174,7 @@ print_r($atmp1d);
 echo "___>SPLITIMG>>". $splitimg;
            $outstr = preputcleandata($outstr, $LlGwers. $splitletter. '0');
            file_put_contents("./". $LlFfeil. $splitletter."0.html", $outstr);
-           if($LlGwers != "") $lbtnsdesc .= '"'.$LlGwers. $splitletter. '0": "'. $LlBtnsDesc. ' 0",'. "\n";
+           if($LlGwers != "") $lbtnsdesc .= '"'.$LlGwers. $splitletter. '0": "'. $LlBtnsDesc. ' '. strToUpper($splitletter). '0",'. "\n";
 
            putnewtxt($lsnewwords, $l2ndMod, $splitletter, $splitimg);
 
@@ -242,6 +240,10 @@ file_put_contents("./prevusedwds.txt", sortuniq($LlPrevUsedWords,","));
 file_put_contents("./btnsdesc.js", 'const abtnsdesc = {'.  $lbtnsdesc. '};');
 
 function parsewords($line, $cluelevel = "|"){
+
+$line = preg_replace("/([¬`])/u", "_$1", $line);
+
+
 //irinepicapia;
 global $lswords;
 global $lsvcb;
@@ -598,8 +600,8 @@ if(mb_ereg_match("aint", $lsnewwords)){
        $retstr.
        "|--------------------------------------\n".
        "|======================================\n".
-       "|ffeil=". $LlFfeil. $splitletter. "3\n".
-       "|modiwl=". $LlGwers. $splitletter. "3\n".
+       "|ffeil=". $LlFfeil. $splitletter. "2\n".
+       "|modiwl=". $LlGwers. $splitletter. "2\n".
        "|teitl=u5\n".
        "|btnsdesc=".$LlBtnsDesc." ".strtoupper($splitletter)."2\n".
        "|didoli=hapnamxx\n".
@@ -1020,7 +1022,7 @@ $LlWedi='
       for (let opt of options) {
         const option = document.createElement("option");
         option.value = opt;
-        option.textContent = opt;
+option.textContent = opt.replace(/_/g, " "); //!!!!
         select.appendChild(option);
       }
       select.dataset.correct = correctValue;
@@ -1116,6 +1118,7 @@ $LlWedi='
             //div.appendChild(span);
 
             word = word.replace(/`@/g, "");
+word = word.replace(/_/g, " "); //!!!!
             const span = document.createElement("span");
             let wrdtmp = "";
             if(word.charAt(0) == "<"){
@@ -1386,6 +1389,7 @@ $LlWedi='
     }
 
     function playSound(pstr, correctAns) {
+correctAns = correctAns.replace(/_$/, ""); //!!!!
       let audioFile =  pstr.replace(/\'/g, "");
       if(typeof correctAns != "undefined" ){
         correctAns = correctAns.split(/ /)[0];
@@ -1539,6 +1543,7 @@ const encouragingEmojis = [
 
 
   function dispCorrectAnsMsg(pmsg){
+pmsg = pmsg.replace(/_/g, " ");
     //const messageDiv = document.getElementById("correctAnsMsg");
     const dvMsg = document.getElementById("dvMsg");
     dvMsg.style.display = "block";
@@ -2273,6 +2278,7 @@ document.addEventListener("mousemove", function(event) {
       }
       
       function dispCorrectAnsMsg(pmsg){
+pmsg = pmsg.replace(/_/g, " ");
           const dvMsg = document.getElementById("dvMsg");
           dvMsg.style.display = "block";
       
@@ -2323,6 +2329,7 @@ document.addEventListener("mousemove", function(event) {
       
       <script>
           function playSound(pstr, correctAns) {
+correctAns = correctAns.replace(/_$/, ""); //!!!!
             let audioFile =  pstr.replace(/\'/g, "");
             if(typeof correctAns != "undefined" ){
               correctAns = correctAns.split(/ /)[0];

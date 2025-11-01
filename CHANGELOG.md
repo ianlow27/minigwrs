@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.82_251101-1747 - bugfixes in dewisiadau1.php - related to making tested words unique by appending underscores in PHP and then removing these underscores in the front-end rendering using JavaScript
+-  Amendments as per the release description
+
 ## 0.0.81_251026-1245 - minor bugfix to utils/send_email.php
 -  Amendments as per the release description
 
