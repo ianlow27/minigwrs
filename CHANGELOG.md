@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.83_251102-0957 - bugfixes in dewisiadau1.php - related to the selection of and rendering of the correct test words in the select options
+-  Amendments as per the release description
+
 ## 0.0.82_251101-1747 - bugfixes in dewisiadau1.php - related to making tested words unique by appending underscores in PHP and then removing these underscores in the front-end rendering using JavaScript
 -  Amendments as per the release description
 

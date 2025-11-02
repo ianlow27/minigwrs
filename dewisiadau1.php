@@ -189,6 +189,8 @@ $l2ndMod = "";
           $tmpln1 = preg_replace("/`ix/", " (vbifx)", $tmpln1);
           $tmpln1 = preg_replace("/`iv/", " (vbifv)", $tmpln1);
           $tmpln1 = preg_replace("/`nn/", " (noun)", $tmpln1);
+          $tmpln1 = preg_replace("/`nm/", " (nm)", $tmpln1);
+          $tmpln1 = preg_replace("/`nf/", " (nf)", $tmpln1);
           $tmpln1 = preg_replace("/`it/", " (init)", $tmpln1);
           $tmpln1 = preg_replace("/`lt/", " (lttr)", $tmpln1);
           $tmpln1 = preg_replace("/`av/", " (adv)", $tmpln1);
@@ -202,9 +204,8 @@ $l2ndMod = "";
           $tmpln1 = preg_replace("/`ex/", " (excl)", $tmpln1);
           $tmpln1 = preg_replace("/`nb/", " (num)", $tmpln1);
           $tmpln1 = preg_replace("/_/", " ", $tmpln1);
-          $lsvcb .= $lvcbcount++ . ") ". $tmpln1;
-          //$atmp2f = explode(" ", mb_substr($line, 8));
-          //$lsvcblist .= trim($atmp2f[0]). " ";
+          $tmpln1 = preg_replace("/  /", " ", $tmpln1);
+          $lsvcb .= $lvcbcount++ . ") ". acenau($tmpln1);
         }
   
 
@@ -222,9 +223,6 @@ $l2ndMod = "";
 
 
 
-//$lsvcblist1 = mb_ereg_replace('^%%%<=.*$\n?', '', $lsvcblist);
-//$lsvcblist1 = mb_ereg_replace('(?m)^%%%<=.*\n?', '', $lsvcblist);
-//$lsvcblist1 = mb_ereg_replace('^%%%.*$', '', $lsvcblist); //, 'm');
 $avcblist = explode("\n", $lsvcblist);
 $lsvcblist = "";
 foreach($avcblist as $vcblist){
@@ -585,7 +583,8 @@ if(mb_ereg_match("aint", $lsnewwords)){
  sleep(2);
 }
 //echo "__________>>105>>>". $atmp1b[1]."___[". $atmp1b[2]. "]__". $ln. "\n";
-       $retstr .=  "|plyssnd_". $atmp1b[1]. " (". $atmp1b[2] ." {*".mb_substr($ln,0,1)."__*}) ".$atmp1b[0]."`ans\n";
+       //KEEP => $retstr .=  "|plyssnd_". $atmp1b[1]. " (". $atmp1b[2] ." {*".mb_substr($ln,0,1)."__*}) ".$atmp1b[0]."`ans\n";
+       $retstr .=  "|plyssnd_". $atmp1b[1] . " ". $atmp1b[0]."`". $atmp1b[2]. "\n";
      }
    }//endforeach
   // $retstr = trim($lsnewwords) . "\n\n". $retstr;
@@ -1389,7 +1388,23 @@ word = word.replace(/_/g, " "); //!!!!
     }
 
     function playSound(pstr, correctAns) {
-correctAns = correctAns.replace(/_$/, ""); //!!!!
+if(typeof correctAns != "undefined"){
+  correctAns = correctAns.replace(/ /, "_"); //!!!!
+  correctAns = correctAns.replace(/_+$/, ""); //!!!!
+  correctAns = correctAns.replace(/ +$/, ""); //!!!!
+  correctAns = correctAns.replace(/_+.mp3$/, ".mp3"); //!!!!
+  correctAns = correctAns.replace(/ +.mp3$/, ".mp3"); //!!!!
+//alert("1[" + correctAns + "]");
+}
+if(typeof pstr != "undefined"){
+  pstr = pstr.replace(/ /, "_"); //!!!!
+  pstr = pstr.replace(/_+$/, ""); //!!!!
+  pstr = pstr.replace(/ +$/, ""); //!!!!
+  pstr = pstr.replace(/_+.mp3$/, ".mp3"); //!!!!
+  pstr = pstr.replace(/ +.mp3$/, ".mp3"); //!!!!
+//alert("2[" + pstr + "]");
+
+}
       let audioFile =  pstr.replace(/\'/g, "");
       if(typeof correctAns != "undefined" ){
         correctAns = correctAns.split(/ /)[0];
@@ -2329,7 +2344,23 @@ pmsg = pmsg.replace(/_/g, " ");
       
       <script>
           function playSound(pstr, correctAns) {
-correctAns = correctAns.replace(/_$/, ""); //!!!!
+if(typeof correctAns != "undefined"){
+  correctAns = correctAns.replace(/ /, "_"); //!!!!
+  correctAns = correctAns.replace(/_+$/, ""); //!!!!
+  correctAns = correctAns.replace(/ +$/, ""); //!!!!
+  correctAns = correctAns.replace(/_+.mp3$/, ".mp3"); //!!!!
+  correctAns = correctAns.replace(/ +.mp3$/, ".mp3"); //!!!!
+//alert("1[" + correctAns + "]");
+}
+if(typeof pstr != "undefined"){
+  pstr = pstr.replace(/ /, "_"); //!!!!
+  pstr = pstr.replace(/_+$/, ""); //!!!!
+  pstr = pstr.replace(/ +$/, ""); //!!!!
+  pstr = pstr.replace(/_+.mp3$/, ".mp3"); //!!!!
+  pstr = pstr.replace(/ +.mp3$/, ".mp3"); //!!!!
+//alert("2[" + pstr + "]");
+
+}
             let audioFile =  pstr.replace(/\'/g, "");
             if(typeof correctAns != "undefined" ){
               correctAns = correctAns.split(/ /)[0];
