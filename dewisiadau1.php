@@ -61,6 +61,7 @@ sleep(1);
 //}
 unlink('./geiriau.txt');
 $DGeiriau = array();
+$DSaesneg = array();
 //============================================
 include "../cyutils.php";
 include "../htmlfmt.php";
@@ -85,6 +86,7 @@ $LlTxtInclude = "";
 $LlTxtExclude = "";
 $lbtnsdesc="";
 $lSplitStoryFiles="";
+$lSplitStoryReadings="";
 $LlMissingMp3="";
 $LlPrevUsedWords="";
 $LlMissingA2iImg="";
@@ -133,12 +135,16 @@ if($LlModiwl !== "") if($atmp2d[0] != $LlModiwl) continue;
       if($lSplitStoryFiles != ""){
         file_put_contents("./". $LlFfeil. "_splitstory.txt", $lSplitStoryFiles);
       }
+      if($lSplitStoryReadings != ""){
+        file_put_contents("./". $LlFfeil. "_splitstoryreadings.txt", $lSplitStoryReadings);
+      }
       //-----------------
       putnewtxt($lsnewwords, $l2ndMod, "");
       //-----------------
 
       $outstr = "";
       $lSplitStoryFiles="";
+      $lSplitStoryReadings="";
       $LlTxtMinWrds = "";
       $LlTxtMaxWrds = "";
       $LlTxtInclude = "";
@@ -231,6 +237,12 @@ foreach($avcblist as $vcblist){
   if(!isset($atmp2g1[1])) continue;
   $lsvcblist .= "%%%". $atmp2g1[1]. ": ". acenau($atmp2g1[0]). "\n";
 }//endfor
+
+
+
+file_put_contents('./dgeiriau.txt', print_r($DGeiriau, true));
+file_put_contents('dgeiriau.json', json_encode($DGeiriau, JSON_PRETTY_PRINT));
+file_put_contents('dsaesneg.json', json_encode($DSaesneg, JSON_PRETTY_PRINT));
 file_put_contents("./vocablist.txt", $lsvcblist);
 file_put_contents("./missingmp3.txt", sortuniq($LlMissingMp3,","));
 file_put_contents("./missinga2i.txt", $LlMissingA2iImg);
@@ -273,6 +285,7 @@ global $LlTxtMaxWrds;
 global $LlTxtInclude;
 global $LlTxtExclude;
 global $DGeiriau;
+global $DSaesneg;
 global $LlMissingMp3;
 global $LlPrevUsedWords;
 global $LlMissingA2iImg;
@@ -306,6 +319,7 @@ echo "ERROR!!!(268)---vocab word already used before>[". $lcy1. "] in [". $len1.
 //die();
     }else {
       $DGeiriau[$lcy1] =  $len1; //$atmp2f[count($atmp2f)-2];
+      $DSaesneg[preg_replace("/_+$/u", "", $len1)] =  preg_replace("/_+$/u", "", $lcy1);
     }
     $lnoaccent =  removeAccents(acenau($lcy1));
     if(!file_exists("./mp3/". $lnoaccent. ".mp3")){
@@ -552,6 +566,7 @@ global $LlPlygellSain;
 global $LlLlun1;
 global $lbtnsdesc;
 global $lSplitStoryFiles;
+global $lSplitStoryReadings;
 global $LlMissingA2iImg;
  if($LlPlygellSain == "") $LlPlygellSain = "mp3";
  if($lsnewwords != ""){
@@ -596,7 +611,9 @@ if(mb_ereg_match("aint", $lsnewwords)){
        "|btnsdesc=".$LlBtnsDesc." ".strtoupper($splitletter)."1\n".
        "|didoli=hapnam\n".
        "|plygellsain=". $LlPlygellSain. "\n".
-       $retstr.
+       preg_replace("/_`/u", "`", 
+         preg_replace("/_ /u", " ", $retstr) 
+       ) .
        "|--------------------------------------\n".
        "|======================================\n".
        "|ffeil=". $LlFfeil. $splitletter. "2\n".
@@ -605,11 +622,35 @@ if(mb_ereg_match("aint", $lsnewwords)){
        "|btnsdesc=".$LlBtnsDesc." ".strtoupper($splitletter)."2\n".
        "|didoli=hapnamxx\n".
        "|plygellsain=". $LlPlygellSain. "\n".
-       preg_replace("/^/m","|", $l2ndMod).
+       preg_replace("/_`/u", "`", 
+       preg_replace("/ '([A-Za-z])/u", " ' $1", 
+         preg_replace("/^/m","|", $l2ndMod)
+       )).
        "|--------------------------------------\n".
        "|======================================\n".
        "";
    $lSplitStoryFiles .= "\n\n". $retstr. "\n\n";
+   //-------
+   //
+   $lSplitStoryReadings .= 
+       "|--------------------------------------\n".
+       "|======================================\n".
+       "|ffeil=". $LlFfeil. $splitletter. "2\n".
+       "|modiwl=". $LlGwers. $splitletter. "2\n".
+       "|teitl=u5\n".
+       "|btnsdesc=".$LlBtnsDesc." ".strtoupper($splitletter)."2\n".
+       "|didoli=hapnamxx\n".
+       "|plygellsain=". $LlPlygellSain. "\n".
+     preg_replace("/ ' /u", " '", 
+      preg_replace("/ ([\,\.\?;:!])/u", "$1", 
+       preg_replace("/_ /u", " ", 
+        preg_replace("/`([a-z]+)/u", "", 
+         preg_replace("/_`/u", "`", 
+          preg_replace("/ '([A-Za-z])/u", " ' $1", 
+           preg_replace("/^/m","|", $l2ndMod
+       ))))))).
+       "|--------------------------------------\n".
+       "|======================================\n";
    //-------
    $splitimg = preg_replace("/\./", "2i.", $splitimg);
    $lsimgjs = circleimagemob($lsimgjs, $splitimg, $LlGwers. $splitletter. '2i');

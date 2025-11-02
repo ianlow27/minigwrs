@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.84_251102-1704 - Enhancements to dewisiadau1.php and newydd.php - This mainly involves adding new functionality and housekeeping related infrastructure related to the splitstory functionality whereby words that were introduced in an earlier part of the story that is split are replaced by their translated counterparts so that the student avoids having to learn the same words that were already learnt earlier in an earlier module or earlier part of the same split story module. The store of words is written to and read from the JSON file dsaesneg.json which is read into and written from the DSaesneg hash table array into the PHP code. Also underscores appended to new words were introduced in an earlier change so the necessary changes were made to remove these in the splitstory.txt output textfile that is reread into the main text file for processing. Also the new PHP module spltstoryupd.php contains the functionality that prevents the student learning the same words again. But for this the new story segment needs to be parsed from the input file ssuin.txt and outputted to the file ssuout.txt which in turn needs to be rewritten into the main text input file for dws. Therefore dws is the main processing script and ssu is the subscript to preprocess the story segment prior to running it again using dws. Similar to dws, ssu is created in the project folder by newydd.php.
+-  Amendments as per the release description
+
 ## 0.0.83_251102-0957 - bugfixes in dewisiadau1.php - related to the selection of and rendering of the correct test words in the select options
 -  Amendments as per the release description
 

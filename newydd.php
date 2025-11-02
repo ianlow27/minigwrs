@@ -66,6 +66,16 @@ if(!is_numeric($argv[1])){
      file=$(echo \"$(pwd)\" | awk -F'/' '{print \$NF}' | cut -d'_' -f2 )
      php ../newydd.php  $1 $2 $3");
   //============================================
+	// ssu
+	file_put_contents($cwrs. "/ssu", "#!/bin/sh
+     #file=$(echo \"$(pwd)\" | awk -F'/' '{print \$NF}' | cut -d'_' -f2 )
+     php ../splitstoryupd.php  ssuin.txt
+     echo \"NOTE: replace you next split story with this - as this contains more Welsh words populated from earlier split stories:\"
+     echo
+     echo
+     cat ssuout.txt
+     ");
+  //============================================
 	// send_email.php for posting test results using dws (dewisiadau1.php)
 	file_put_contents($cwrs. "/send_email.php", 
 "
