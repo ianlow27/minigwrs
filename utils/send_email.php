@@ -4,14 +4,15 @@ if(isset($_POST['speeddesc'])){
   $lspeeddesc=$_POST['speeddesc'];
 }
 // The recipient email address
-$to = "???@???.???";
+$to = "ianl.arise@gmail.com";
+
 // Additional headers
-$headers = "From: no-reply@test.com" . "\r\n" .
-       "Reply-To: no-reply@test.com" . "\r\n" .
+$headers = "From: no-reply@2lnk.net" . "\r\n" .
+       "Reply-To: no-reply@2lnk.net" . "\r\n" .
        "X-Mailer: PHP/" . phpversion();
 // Check if the 'message' is passed
 date_default_timezone_set('Europe/London');
-$ldate = date("ymd-hi");
+$ldate = date("ymd-Hi");
 file_put_contents("./_11", $_POST['homepage'] );
 if(isset($_POST['message'])) {
     $message = $_POST['message'];
@@ -20,9 +21,11 @@ if(isset($_POST['message'])) {
     $subject =  "WlshHmwrk_". $ldate. ": ". $_POST['message'];
     // Send the email
     if(mail($to, $subject, $message, $headers)) {
+        file_put_contents("./_emailok_1",  $lspeeddesc);    
         echo "Email sent successfully!";
         addStarToButton($_POST['modref'], $_POST['homepage']);      
     } else {
+        file_put_contents("./_emailerr_1",  $lspeeddesc);    
         echo "Failed to send email.";
     }
 } else if(isset($_POST['essay'])) {
@@ -85,10 +88,11 @@ if(isset($_POST['message'])) {
 </html>        
         
         ';
-        
+        file_put_contents("./_emailok_2",  $lspeeddesc);    
         addStarToButton($_POST['module'], $_POST['homeurl']);          
         
     } else {
+        file_put_contents("./_emailerr_2",  $lspeeddesc);    
         echo "Failed to send email.";
     }
         
@@ -160,40 +164,26 @@ $modref = preg_replace_callback(
 
 $modref .= ".";
 
-//cheetah, lion, horse, hare, elk, zebra, kangaroo, squirrel      
-// Prepare patterns and replacement
-$pattern1 = preg_quote($modref . "html_2do',", '/');
-$pattern2 = preg_quote($modref . "html',", '/');
-$pattern3 = preg_quote($modref . "html_done',", '/');
-$pattern4 = preg_quote($modref . "html_cheetah',", '/');
-$pattern5 = preg_quote($modref . "html_lion',", '/');
-$pattern6 = preg_quote($modref . "html_horse',", '/');
-$pattern7 = preg_quote($modref . "html_hare',", '/');
-$pattern8 = preg_quote($modref . "html_elk',", '/');
-$pattern9 = preg_quote($modref . "html_zebra',", '/');
-$pattern10 = preg_quote($modref . "html_kangaroo',", '/');
-$pattern11 = preg_quote($modref . "html_squirrel',", '/');
 
 file_put_contents("./_6", $modref . "__". $lspeeddesc);
-
-
 //---------------------------------------------
-if( ($lspeeddesc == "cheetah")
-|| ($lspeeddesc == "lion")
-|| ($lspeeddesc == "horse")
-|| ($lspeeddesc == "hare")
-|| ($lspeeddesc == "elk")
-|| ($lspeeddesc == "zebra")
-|| ($lspeeddesc == "kangaroo")
-|| ($lspeeddesc == "squirrel")
-){
-  $modifiedContents = preg_replace( ["/$pattern1/", "/$pattern2/", "/$pattern3/", "/$pattern4/", "/$pattern5/", "/$pattern6/", "/$pattern7/", "/$pattern8/", "/$pattern9/", "/$pattern10/", "/$pattern11/"],
-    $modref . "html_". $lspeeddesc. "',", $fileContents );
+$escapedModref = preg_quote($modref, '/');
+$ldt = date("md");
 
-}else {
-  $modifiedContents = preg_replace( ["/$pattern1/", "/$pattern2/", "/$pattern3/", "/$pattern4/", "/$pattern5/", "/$pattern6/", "/$pattern7/", "/$pattern8/", "/$pattern9/", "/$pattern10/", "/$pattern11/"],
-    $modref . "html_done',", $fileContents );
-}
+$escapedModref = preg_quote($modref, '/');
+$escapedAnimal = preg_quote($lspeeddesc, '/'); // e.g. "cheetah"
+
+// Match any of these:
+// ../module123.html
+// ../module123.html_done
+// ../module123.html_cheetah
+// ../module123.html_cheetah_1102
+$pattern = "/{$escapedModref}html(?:_(?:{$escapedAnimal}|done|[a-zA-Z0-9]+)[^']*)?'/";
+
+$replacement = $modref . "html_" . $lspeeddesc . "_" . $ldt . "'";
+
+$modifiedContents = preg_replace($pattern, $replacement, $fileContents);
+
 //---------------------------------------------
 
 file_put_contents("./_7", "");

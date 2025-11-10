@@ -24,6 +24,9 @@ document.getElementById('diarylnk1').innerHTML = name1 + "'s Google Doc Welsh Le
 document.getElementById('diarylnk1').href = diaryurl1;
 //document.getElementById('diarylnk1').target = "blank";
 
+document.getElementById('essaySubmit').innerHTML = "Submit an Essay"; //1109
+document.getElementById('essaySubmit').href = "./essay_submit.html?u=" + basename; //1109
+
 document.getElementById('instruct1').innerHTML = "<br/>Complete these activities in ascending numerical order (bottom-right buttons to top-left) as often as you like in your free time: " 
 +"✏️= to do "
 +"&ensp;"
@@ -46,27 +49,40 @@ for (let r of modLinks1) {
   //let bdone = r.match(/html_done/);
   //let b2do = r.match(/html_2do/);
   let lemoji = "&emsp;";
+  let ldt = "";
+  
   //let lemoji = "тнР";
   if (r.match(/html_done/)){ lemoji = "⭐"; 
-    r = r.replace(/html_done/,"html")
+    ldt = r.replace(/(.+)html_done(.*)/,"$2").replace(/_/,"");
+    r = r.replace(/html_done(.*)/,"html")
   }else if(r.match(/html_2do/)){ lemoji = "✏️"; 
-    r = r.replace(/html_2do/,"html")
+    ldt = r.replace(/(.+)html_2do(.*)/,"$2").replace(/_/,"");
+    r = r.replace(/html_2do(.*)/,"html")
   }else if(r.match(/html_cheetah/)){ lemoji = "🐆"; 
-    r = r.replace(/html_cheetah/,"html")
+    ldt = r.replace(/(.+)html_cheetah(.*)/,"$2").replace(/_/,"");
+    r = r.replace(/html_cheetah(.*)/,"html")
   }else if(r.match(/html_lion/)){ lemoji = "🦁"; 
-    r = r.replace(/html_lion/,"html")
+    ldt = r.replace(/(.+)html_lion(.*)/,"$2").replace(/_/,"");
+    r = r.replace(/html_lion(.*)/,"html")
   }else if(r.match(/html_horse/)){ lemoji = "🐎"; 
-    r = r.replace(/html_horse/,"html")
+    ldt = r.replace(/(.+)html_horse(.*)/,"$2").replace(/_/,"");
+    r = r.replace(/html_horse(.*)/,"html")
   }else if(r.match(/html_hare/)){ lemoji = "🐇"; 
-    r = r.replace(/html_hare/,"html")
+    ldt = r.replace(/(.+)html_hare(.*)/,"$2").replace(/_/,"");
+    r = r.replace(/html_hare(.*)/,"html")
   }else if(r.match(/html_elk/)){ lemoji = "🫎"; 
-    r = r.replace(/html_elk/,"html")
+    ldt = r.replace(/(.+)html_elk(.*)/,"$2").replace(/_/,"");
+    r = r.replace(/html_elk(.*)/,"html")
   }else if(r.match(/html_zebra/)){ lemoji = "🦓"; 
-    r = r.replace(/html_zebra/,"html")
+    ldt = r.replace(/(.+)html_zebra(.*)/,"$2").replace(/_/,"");
+    r = r.replace(/html_zebra(.*)/,"html")
   }else if(r.match(/html_kangaroo/)){ lemoji = "🦘"; 
-    r = r.replace(/html_kangaroo/,"html")
+    ldt = r.replace(/(.+)html_kangaroo(.*)/,"$2").replace(/_/,"");
+    r = r.replace(/html_kangaroo(.*)/,"html")
   }else if(r.match(/html_squirrel/)){ lemoji = "🐹️"; 
-    r = r.replace(/html_squirrel/,"html")
+    ldt = r.replace(/(.+)html_squirrel(.*)/,"$2").replace(/_/,"");
+    r = r.replace(/html_squirrel(.*)/,"html")
+//alert(ldt);
   }
   idx++;
   //const url = new URL(r);
@@ -92,7 +108,7 @@ console.log("_____" + (modNum % pastelColors.length) + "___" + pastelColors.leng
                 + abtnsdesc[moduleTitle]
                 + "</span><br/>" 
               : "" )
-         +  lemoji;
+         +  lemoji + "<span style='font-size:75%;font-weight:normal;'>" +ldt+ "</span>";
     div.href = moduleLink;
     //div.target = '_blank';
     //div.style.backgroundColor = pastelColors[Math.floor(Math.random() * pastelColors.length)];
