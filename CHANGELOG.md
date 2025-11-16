@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.86_251117-0019 - enhancements to dewisiadau1.php and newydd.php - minor corrections of wording in the generated HTML files to make the instructions for the student more helpful and intuitive. Also minor bugfixes in the listing of missing MP3 files in the mp3 folder in the missingmp3.txt output file.
+-  Amendments as per the release description
+
 ## 0.0.85_251110-0155 - Enhancements to Utils (./home) folder files: classhome.js, send_email.php, yzp5wa1b2c.html, and new file essay_submit.html - These changes relate to 2 changes: 1) In the student exercises homepage, add a new link that opens up essay_submit.html that allows the student to submit essays, and 2) whenever an exercise is completed to record the montha and date e.g. 1110 for 10th of November and to display this on the button on the student's exercises homepage.
 -  Amendments as per the release description
 

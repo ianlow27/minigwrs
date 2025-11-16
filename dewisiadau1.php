@@ -244,6 +244,7 @@ file_put_contents('./dgeiriau.txt', print_r($DGeiriau, true));
 file_put_contents('dgeiriau.json', json_encode($DGeiriau, JSON_PRETTY_PRINT));
 file_put_contents('dsaesneg.json', json_encode($DSaesneg, JSON_PRETTY_PRINT));
 file_put_contents("./vocablist.txt", $lsvcblist);
+$LlMissingMp3 = preg_replace("/_,/u", ",", $LlMissingMp3);
 file_put_contents("./missingmp3.txt", sortuniq($LlMissingMp3,","));
 file_put_contents("./missinga2i.txt", $LlMissingA2iImg);
 file_put_contents("./prevusedwds.txt", sortuniq($LlPrevUsedWords,","));
@@ -321,7 +322,7 @@ echo "ERROR!!!(268)---vocab word already used before>[". $lcy1. "] in [". $len1.
       $DGeiriau[$lcy1] =  $len1; //$atmp2f[count($atmp2f)-2];
       $DSaesneg[preg_replace("/_+$/u", "", $len1)] =  preg_replace("/_+$/u", "", $lcy1);
     }
-    $lnoaccent =  removeAccents(acenau($lcy1));
+    $lnoaccent =  strtolower(removeAccents(acenau($lcy1)));
     if(!file_exists("./mp3/". $lnoaccent. ".mp3")){
       if($LlMissingMp3 != "") $LlMissingMp3 .= ", ";
       $LlMissingMp3 .= $lnoaccent;
@@ -340,7 +341,7 @@ if($atmp1[0] == "Faint"){
 //echo "_________305>>\n"; sleep(3);
 }
       if(preg_match("/¬/", $word)){
-        $lnoaccent =  removeAccents(acenau($atmp1[0]));
+        $lnoaccent =  strtolower(removeAccents(acenau($atmp1[0])));
         if(!file_exists("./mp3/". $lnoaccent. ".mp3")){
           if($LlMissingMp3 != "") $LlMissingMp3 .= ", ";
           $LlMissingMp3 .= $lnoaccent;
@@ -553,6 +554,7 @@ function removeAccents($pstr){
     $pstr = mb_ereg_replace("ë", "e", $pstr);
     $pstr = mb_ereg_replace("\'","-", $pstr);
   }
+  $pstr = preg_replace("/_$/u", "", $pstr);
   return $pstr;
 }//endfunc
 //---------------------------------------------------
@@ -962,7 +964,7 @@ $LlCyn= '
 <span style="font-size:140%;">
 🎞️
 </span>
-<b>The video for this activity can be found by <a href="'. $LlFideo. '"  target="blank" >clicking on this link</a>.</b>  </span> '
+<b>Please watch this video for this activity before starting by <a href="'. $LlFideo. '"  target="blank" >clicking on this link</a>.</b>  </span> '
    )
 
    .' <span style="font-weight:bold;"><br/><br/>'. acenau($LlCyfarwyddo) .'<br/></span>

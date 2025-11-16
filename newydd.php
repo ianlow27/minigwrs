@@ -212,10 +212,10 @@ Note: ***^a2> prefix allows settings to be read by r! a2
 ***^a2>teitl=". $argv1. "-2 28 Gair
 //`1) achos =  because~conj
 |==================================
-|ffeil=modiwl". $lessonNum. "-4a
-|modiwl=". $argv1. "-4a EN_XXXXXXXX
-|teitl=". $argv1. "-4a CY_XXXXXXX
-|Hi_there`! Sut wyt_ti? 
+//|ffeil=modiwl". $lessonNum. "-4a
+//|modiwl=". $argv1. "-4a EN_XXXXXXXX
+//|teitl=". $argv1. "-4a CY_XXXXXXX
+//|Hi_there`! Sut wyt_ti? 
 |=================================
 ";
 
