@@ -964,7 +964,7 @@ $LlCyn= '
 <span style="font-size:140%;">
 🎞️
 </span>
-<b>Please watch this video for this activity before starting by <a href="'. $LlFideo. '"  target="blank" >clicking on this link</a>.</b>  </span> '
+<b>Please watch this video before starting this activity before by <a href="'. $LlFideo. '"  target="blank" >clicking on this link</a>.</b>  </span> '
    )
 
    .' <span style="font-weight:bold;"><br/><br/>'. acenau($LlCyfarwyddo) .'<br/></span>

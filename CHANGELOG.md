@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.87_251124-0504 - enhancements to dewisiadau1.php and utils classhome.js and yzp5wa1b2c.html - Minor bugfixes to dewisiadau1.php, and addition of Vocabulary Lists links and minor styling improvements to classhome.js and yzp5wa1b2c.html around the display of the link buttons to the Google Docs and essay submission page.
+-  Amendments as per the release description
+
 ## 0.0.86_251117-0019 - enhancements to dewisiadau1.php and newydd.php - minor corrections of wording in the generated HTML files to make the instructions for the student more helpful and intuitive. Also minor bugfixes in the listing of missing MP3 files in the mp3 folder in the missingmp3.txt output file.
 -  Amendments as per the release description
 

@@ -20,8 +20,10 @@ function encryptString(str) {
 document.getElementById('title1').innerHTML = name1 + "'s Welsh Exercises";
 document.title = name1 + "'s Welsh Exercises";
 
-document.getElementById('diarylnk1').innerHTML = name1 + "'s Google Doc Welsh Learning Diary";
+document.getElementById('diarylnk1').innerHTML = name1 + "'s Welsh Learning Diary";
 document.getElementById('diarylnk1').href = diaryurl1;
+document.getElementById('vocablnk1').innerHTML = name1 + "'s Vocabulary Lists";
+document.getElementById('vocablnk1').href = vocaburl1;
 //document.getElementById('diarylnk1').target = "blank";
 
 document.getElementById('essaySubmit').innerHTML = "Submit an Essay"; //1109
