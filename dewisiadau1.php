@@ -323,7 +323,7 @@ echo "ERROR!!!(268)---vocab word already used before>[". $lcy1. "] in [". $len1.
       $DSaesneg[preg_replace("/_+$/u", "", $len1)] =  preg_replace("/_+$/u", "", $lcy1);
     }
     $lnoaccent =  strtolower(removeAccents(acenau($lcy1)));
-    if(!file_exists("./mp3/". $lnoaccent. ".mp3")){
+    if(!file_exists("../mp3/". $lnoaccent. ".mp3")){
       if($LlMissingMp3 != "") $LlMissingMp3 .= ", ";
       $LlMissingMp3 .= $lnoaccent;
     }
@@ -342,7 +342,7 @@ if($atmp1[0] == "Faint"){
 }
       if(preg_match("/¬/", $word)){
         $lnoaccent =  strtolower(removeAccents(acenau($atmp1[0])));
-        if(!file_exists("./mp3/". $lnoaccent. ".mp3")){
+        if(!file_exists("../mp3/". $lnoaccent. ".mp3")){
           if($LlMissingMp3 != "") $LlMissingMp3 .= ", ";
           $LlMissingMp3 .= $lnoaccent;
         }
@@ -659,7 +659,7 @@ if(mb_ereg_match("aint", $lsnewwords)){
    if($LlGwers != "") $lbtnsdesc .= '"'.$LlGwers. $splitletter. '2i": "'. $LlBtnsDesc. ' Pic",'. "\n";
    file_put_contents("./". $LlFfeil. $splitletter. "2i.html", $lsimgjs);
 
-   if(!file_exists("./img/". $LlGwers. $splitletter. "2i.jpg")){
+   if(!file_exists("../img/". $LlGwers. $splitletter. "2i.jpg")){
       if($LlMissingA2iImg != "") $LlMissingA2iImg .= ", ";
       $LlMissingA2iImg .=  $LlGwers. $splitletter. "2i.jpg";
    }
@@ -970,7 +970,7 @@ $LlCyn= '
    .' <span style="font-weight:bold;"><br/><br/>'. acenau($LlCyfarwyddo) .'<br/></span>
 </span><br/> '.
 
-($LlLlun1 == "" ? "" : '<img style="max-width:90%;max-height:250px;" src="./img/'.$LlLlun1. '"></img>')
+($LlLlun1 == "" ? "" : '<img style="max-width:90%;max-height:250px;" src="../img/'.$LlLlun1. '"></img>')
 
 .'
 
@@ -1169,7 +1169,7 @@ word = word.replace(/_/g, " "); //!!!!
 
 
                  //word = word.replace(/\'/g, "");
-                 word = word.replace(/<plysnd>/, "<button style=\'font-size: 18px; cursor: pointer; background: none; border: none; padding:0px; margin:0px;\' onclick=\"playSound(\'./'.
+                 word = word.replace(/<plysnd>/, "<button style=\'font-size: 18px; cursor: pointer; background: none; border: none; padding:0px; margin:0px;\' onclick=\"playSound(\'../'.
 
 (($LlPlygellSain == "") ? "mp3" : $LlPlygellSain)
 
@@ -1180,7 +1180,7 @@ word = word.replace(/_/g, " "); //!!!!
                  wrdtmp = " " + word;
                  wrdtmp = wrdtmp.replace(/<plyssnd>/, "");
                  wrdtmp = wrdtmp.replace(/<\/plyssnd>/, "");
-                 word = word.replace(/<plyssnd>/, "<button style=\'font-size: 18px; cursor: pointer; background: none; border: none; padding:0px; margin:0px;\' onclick=\"playSound(\'./'.
+                 word = word.replace(/<plyssnd>/, "<button style=\'font-size: 18px; cursor: pointer; background: none; border: none; padding:0px; margin:0px;\' onclick=\"playSound(\'../'.
 
 (($LlPlygellSain == "") ? "mp3" : $LlPlygellSain)
 
@@ -1193,7 +1193,7 @@ word = word.replace(/_/g, " "); //!!!!
                 word = word.replace(/<plysnd>/, "");
                 word = word.replace(/<\/plysnd>/, "");
                 let fname2 = removeAccents(word);
-                word = "<button style=\'font-size: 18px; cursor: pointer; background: none; border: none; padding:0px; margin:0px;\' onclick=\"playSound(\'./'.
+                word = "<button style=\'font-size: 18px; cursor: pointer; background: none; border: none; padding:0px; margin:0px;\' onclick=\"playSound(\'../'.
 
 (($LlPlygellSain == "") ? "mp3" : $LlPlygellSain)
 
@@ -1204,19 +1204,19 @@ word = word.replace(/_/g, " "); //!!!!
                 word = word.replace(/<\/plyssnd>/, "");
                 wrdtmp = " " + word;
                 let fname2 = removeAccents(word);
-                word = "<button style=\'font-size: 18px; cursor: pointer; background: none; border: none; padding:0px; margin:0px;\' onclick=\"playSound(\'./'.
+                word = "<button style=\'font-size: 18px; cursor: pointer; background: none; border: none; padding:0px; margin:0px;\' onclick=\"playSound(\'../'.
 (($LlPlygellSain == "") ? "mp3" : $LlPlygellSain)
 .'/" + fname2 + ".mp3\')\">▶️</button>";
 
 //----------------------------------
                } else if(word.substring(0,8) == "<shwjpg>"){
                  wrdtmp = "";
-                 word = word.replace(/<shwjpg>/, "<img style=\'max-width:90%;height:auto;\' src=\'./img_'. $pLlGwers. '/");
+                 word = word.replace(/<shwjpg>/, "<img style=\'max-width:90%;height:auto;\' src=\'../img_'. $pLlGwers. '/");
                  word = word.replace(/<\/shwjpg>/, ".jpg\' />");
                  word = removeAccents(word);
                } else if(word.substring(0,8) == "<shwpng>"){
                  wrdtmp = "";
-                 word = word.replace(/<shwpng>/, "<img style=\'max-width:90%;height:auto;\' src=\'./img_'. $pLlGwers. '/");
+                 word = word.replace(/<shwpng>/, "<img style=\'max-width:90%;height:auto;\' src=\'../img_'. $pLlGwers. '/");
                  word = word.replace(/<\/shwpng>/, ".jpg\' />");
                  word = removeAccents(word);
                } 
@@ -1410,7 +1410,7 @@ word = word.replace(/_/g, " "); //!!!!
 
 <script>
     function xxplaySoundxx(pstr, correctAns) {
-      correctAns = "./mp3/" + removeAccents(correctAns).toLowerCase() + ".mp3";
+      correctAns = "../mp3/" + removeAccents(correctAns).toLowerCase() + ".mp3";
       const audio = new Audio(correctAns);
 
       console.log(correctAns);
@@ -1432,6 +1432,7 @@ word = word.replace(/_/g, " "); //!!!!
 
     function playSound(pstr, correctAns) {
 if(typeof correctAns != "undefined"){
+  correctAns = String(correctAns).toLowerCase();
   correctAns = correctAns.replace(/ /, "_"); //!!!!
   correctAns = correctAns.replace(/_+$/, ""); //!!!!
   correctAns = correctAns.replace(/ +$/, ""); //!!!!
@@ -1440,6 +1441,7 @@ if(typeof correctAns != "undefined"){
 //alert("1[" + correctAns + "]");
 }
 if(typeof pstr != "undefined"){
+  pstr = String(pstr).toLowerCase();
   pstr = pstr.replace(/ /, "_"); //!!!!
   pstr = pstr.replace(/_+$/, ""); //!!!!
   pstr = pstr.replace(/ +$/, ""); //!!!!
@@ -1451,7 +1453,7 @@ if(typeof pstr != "undefined"){
       let audioFile =  pstr.replace(/\'/g, "");
       if(typeof correctAns != "undefined" ){
         correctAns = correctAns.split(/ /)[0];
-        audioFile = "./mp3/" + removeAccents(correctAns).toLowerCase() + ".mp3";
+        audioFile = "../mp3/" + removeAccents(correctAns).toLowerCase() + ".mp3";
       }
       const audio = new Audio(audioFile);
     
@@ -1461,7 +1463,7 @@ if(typeof pstr != "undefined"){
     
       audio.onerror = function () {
         //const fallbackAudio = new Audio(pstr.replace(/\'/g, ""));
-        const fallbackAudio = new Audio("./mp3/correct1.mp3");
+        const fallbackAudio = new Audio("../mp3/correct1.mp3");
         fallbackAudio.play();
       };
     }
@@ -1512,11 +1514,11 @@ function getEncryptedParameter() {
 
 
         alnkHome = document.getElementById("alnkHome");
-        alnkHome.href = "./home/" + homePage + ".html";
+        alnkHome.href = "../home/" + homePage + ".html";
         alnkHome2 = document.getElementById("alnkHome2");
-        alnkHome2.href = "./home/" + homePage + ".html";
+        alnkHome2.href = "../home/" + homePage + ".html";
         alnkHome3 = document.getElementById("alnkHome3");
-        alnkHome3.href = "./home/" + homePage + ".html";
+        alnkHome3.href = "../home/" + homePage + ".html";
 
 
     } else {
@@ -1535,7 +1537,7 @@ window.onload = getEncryptedParameter;
         var xhr = new XMLHttpRequest();
         
         // Open a POST request to the PHP page
-        xhr.open("POST", "./home/send_email.php", true);
+        xhr.open("POST", "../home/send_email.php", true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         
         // The message to be sent to the PHP page
@@ -1714,7 +1716,7 @@ function handleSelectChange(event) {
     if(!bplayed) {
     }
 //--------------------------------------------------------
-    if(!bplayed) playSound("./mp3/correct1.mp3", userAnswer);
+    if(!bplayed) playSound("../mp3/correct1.mp3", userAnswer);
 //---------------------------------------------
 
     dispCorrectAnsMsg(
@@ -1832,13 +1834,13 @@ $LlTextboxScript='
             const homepage1 = urlParams.get("u") || "unknown";
             const  initials = getLeftOfp5w(homepage1);
             //const homeURL =  "https://2lnk.net/ianswelshclass/home/" + homepage1 + ".html";
-            //const homeURL =  "./home/" + homepage1 + ".html";
+            //const homeURL =  "../home/" + homepage1 + ".html";
             const homeURL =  "./" + homepage1 + ".html";
 
             // Create form to submit
             const form = document.createElement("form");
             form.method = "POST";
-            form.action = "./home/send_email.php";
+            form.action = "../home/send_email.php";
 
             const essayInput = document.createElement("input");
             essayInput.type = "hidden";
@@ -2157,7 +2159,7 @@ return '
         <h3>Click on the green circles and select the correct meaning</h3>
       
         <div id="container">
-          <img src="./img/'. $splitimg .'" id="main-image" alt="Main image">
+          <img src="../img/'. $splitimg .'" id="main-image" alt="Main image">
           <!-- Circles will be injected here -->
         </div>
       
@@ -2212,7 +2214,7 @@ document.addEventListener("mousemove", function(event) {
           // Add a circle for each vocab item
           function createCircle(id, leftPct, topPct) {
             const circle = document.createElement("img");
-            circle.src = "./img/circle.png";
+            circle.src = "../img/circle.png";
             circle.className = "circle";
             circle.id = id;
             circle.style.left = `calc(${leftPct}% - 24px)`; // Adjust for 48px size
@@ -2240,7 +2242,7 @@ document.addEventListener("mousemove", function(event) {
                 //CORRECT ANSWER
                 if (option === activeCircle.id) {
       dispCorrectAnsMsg("Correct!");
-      playSound("./mp3/correct1.mp3", activeCircle.id);
+      playSound("../mp3/correct1.mp3", activeCircle.id);
       
       
                   activeCircle.remove();
@@ -2388,6 +2390,7 @@ pmsg = pmsg.replace(/_/g, " ");
       <script>
           function playSound(pstr, correctAns) {
 if(typeof correctAns != "undefined"){
+  correctAns = String(correctAns).toLowerCase();
   correctAns = correctAns.replace(/ /, "_"); //!!!!
   correctAns = correctAns.replace(/_+$/, ""); //!!!!
   correctAns = correctAns.replace(/ +$/, ""); //!!!!
@@ -2396,6 +2399,7 @@ if(typeof correctAns != "undefined"){
 //alert("1[" + correctAns + "]");
 }
 if(typeof pstr != "undefined"){
+  pstr = String(pstr).toLowerCase();
   pstr = pstr.replace(/ /, "_"); //!!!!
   pstr = pstr.replace(/_+$/, ""); //!!!!
   pstr = pstr.replace(/ +$/, ""); //!!!!
@@ -2417,7 +2421,7 @@ if(typeof pstr != "undefined"){
           
             audio.onerror = function () {
               //const fallbackAudio = new Audio(pstr.replace(/\'/g, ""));
-              const fallbackAudio = new Audio("./mp3/correct1.mp3");
+              const fallbackAudio = new Audio("../mp3/correct1.mp3");
               fallbackAudio.play();
             };
           }
@@ -2509,7 +2513,7 @@ if(typeof pstr != "undefined"){
         var xhr = new XMLHttpRequest();
         
         // Open a POST request to the PHP page
-        xhr.open("POST", "./home/send_email.php", true);
+        xhr.open("POST", "../home/send_email.php", true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         
         // The message to be sent to the PHP page
@@ -2660,11 +2664,11 @@ if(typeof pstr != "undefined"){
       
       
               alnkHome = document.getElementById("alnkHome");
-              alnkHome.href = "./home/" + homePage + ".html";
+              alnkHome.href = "../home/" + homePage + ".html";
               alnkHome2 = document.getElementById("alnkHome2");
-              alnkHome2.href = "./home/" + homePage + ".html";
+              alnkHome2.href = "../home/" + homePage + ".html";
               alnkHome3 = document.getElementById("alnkHome3");
-              alnkHome3.href = "./home/" + homePage + ".html";
+              alnkHome3.href = "../home/" + homePage + ".html";
       
       
           } else {

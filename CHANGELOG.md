@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.88_251206-1223 - enhancements to dewisiadau1.php - Restructured the folders so that the main modules sit underneath the parent folder on the same level as home and mp3. This allows for individual folders to be set up for different students.
+-  Amendments as per the release description
+
 ## 0.0.87_251124-0504 - enhancements to dewisiadau1.php and utils classhome.js and yzp5wa1b2c.html - Minor bugfixes to dewisiadau1.php, and addition of Vocabulary Lists links and minor styling improvements to classhome.js and yzp5wa1b2c.html around the display of the link buttons to the Google Docs and essay submission page.
 -  Amendments as per the release description
 
