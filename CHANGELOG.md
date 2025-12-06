@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.89_251206-1551 - enhancements to UTILS files classhome.js, send_email.php, and example student hompage yzp5wa1b2c.html - Changes in line with the restructuring of the directories, i.e. putting the main modules in the 'main' subfolder.
+-  Amendments as per the release description
+
 ## 0.0.88_251206-1223 - enhancements to dewisiadau1.php - Restructured the folders so that the main modules sit underneath the parent folder on the same level as home and mp3. This allows for individual folders to be set up for different students.
 -  Amendments as per the release description
 

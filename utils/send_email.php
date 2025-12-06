@@ -20,14 +20,26 @@ if(isset($_POST['message'])) {
     //$subject = $_POST['subject'] . " ". $ldate;
     $subject =  "WlshHmwrk_". $ldate. ": ". $_POST['message'];
     // Send the email
-    if(mail($to, $subject, $message, $headers)) {
-        file_put_contents("./_emailok_1",  $lspeeddesc);    
-        echo "Email sent successfully!";
+
+    //$mailok =  (in_array('mail', array_map('trim', explode(',', ini_get('disable_functions'))))) ;
+    
+
+   $mailok = mail("8fehsh2g_ad87d3h2f_ds9f734hhdf_sfjhf43f4@2lnk.net", "Test mail()", "Testing mail()", "From: test_asdkj3hjd_349s87ahdsjdh_fsa98fh43jfhdf_sdfdsjhasd@2lnk.net");
+
+
+    if(!$mailok){
         addStarToButton($_POST['modref'], $_POST['homepage']);      
     } else {
-        file_put_contents("./_emailerr_1",  $lspeeddesc);    
-        echo "Failed to send email.";
+        if(mail($to, $subject, $message, $headers)) {
+            file_put_contents("./_emailok_1",  $lspeeddesc);    
+            echo "Email sent successfully!";
+            addStarToButton($_POST['modref'], $_POST['homepage']);      
+        } else {
+            file_put_contents("./_emailerr_1",  $lspeeddesc);    
+            echo "Failed to send email.";
+        }
     }
+
 } else if(isset($_POST['essay'])) {
     $homeURL =  $_POST['homeurl'] ;
     $message =  $_POST['essay'] ;

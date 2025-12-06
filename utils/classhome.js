@@ -45,7 +45,7 @@ const pastelColors = [
 ];
 
 let idx = 0;
-const modLinks1 = modLinks.reverse();
+const modLinks1 = modLinks; //.reverse();
 for (let r of modLinks1) {
   //let orig_r = r;
   //let bdone = r.match(/html_done/);
