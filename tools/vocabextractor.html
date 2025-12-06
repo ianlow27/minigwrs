@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Welsh/English Extractor</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+    .row {
+        display: flex;
+        align-items: flex-start;
+    }
+    textarea {
+        width: 500px;
+        height: 150px;
+        margin-bottom: 10px;
+        font-size: 14px;
+    }
+    button {
+        margin-left: 10px;
+        height: 40px;
+        padding: 0 20px;
+        font-size: 14px;
+    }
+</style>
+</head>
+<body>
+
+<h2>Welsh–English Extractor</h2>
+
+<div class="row">
+    <textarea id="inputText" placeholder="Enter text here..."></textarea>
+    <button onclick="processText()">Submit</button>
+</div>
+
+<textarea id="outputText" placeholder="Output appears here..."></textarea>
+
+<script>
+function processText() {
+    const text = document.getElementById("inputText").value.toLowerCase();
+
+    // Regex finds words in parentheses
+    const englishMatches = [...text.matchAll(/\(([^)]+)\)/g)];
+
+    let pairs = [];
+
+    for (let match of englishMatches) {
+        let englishWord = match[1].trim();
+
+        // position of "(" in text
+        let idx = match.index;
+
+        // get text before this match
+        let before = text.substring(0, idx).trim();
+
+        // split by spaces
+        let parts = before.split(/\s+/);
+
+        // last word before the "(" is the Welsh word
+        let welshWord = parts[parts.length - 1].replace(/[^\w_À-ž'-]/g, "");
+
+        welshWord = welshWord.replace(/ /g, "_");
+        englishWord = englishWord.replace(/ /g, "_");
+
+        if (welshWord && englishWord) {
+            pairs.push({ welsh: welshWord, english: englishWord });
+        }
+    }
+
+    // Remove duplicates by using a map keyed by "welsh"
+    let map = new Map();
+    for (let p of pairs) {
+        map.set(p.welsh, p.english);
+    }
+
+    // Sort by Welsh word
+    let sorted = [...map.entries()].sort((a, b) =>
+        a[0].localeCompare(b[0])
+    );
+
+    // Build output text
+    let output = sorted.map(p => `${p[0]} = ${p[1]}`).join("\n");
+
+    document.getElementById("outputText").value = output;
+}
+</script>
+
+</body>
+</html>

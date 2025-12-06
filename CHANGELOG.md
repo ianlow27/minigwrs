@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.90_251206-2315 - added tools folder for useful teacher tools
+-  Amendments as per the release description
+
 ## 0.0.89_251206-1551 - enhancements to UTILS files classhome.js, send_email.php, and example student hompage yzp5wa1b2c.html - Changes in line with the restructuring of the directories, i.e. putting the main modules in the 'main' subfolder.
 -  Amendments as per the release description
 

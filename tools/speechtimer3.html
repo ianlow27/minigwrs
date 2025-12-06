@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Game Timer</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        overflow-x: hidden;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    img {
+        width: 500px;
+        height: auto;
+        margin-right: 20px;
+        border: 1px solid #ccc;
+    }
+
+    .button-panel {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    button {
+        width: 120px;
+        padding: 10px;
+        font-size: 16px;
+        background-color: #ccc;
+        border: none;
+        cursor: pointer;
+    }
+
+    select {
+        margin-top: 10px;
+        padding: 5px;
+    }
+
+    #score {
+        margin-top: 20px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    /* -------- Popup styles -------- */
+    #popupOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        display: none;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #popupBox {
+        background: white;
+        width: 70%;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    }
+
+    #popupText {
+        width: 100%;
+        height: 200px;
+    }
+
+    #submitPopup {
+        margin-top: 10px;
+        padding: 10px;
+        width: 150px;
+        font-size: 18px;
+    }
+
+    /* Confetti canvas */
+    #confettiCanvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+    }
+</style>
+</head>
+<body>
+
+<canvas id="confettiCanvas"></canvas>
+
+<div class="container">
+    <img id="img1" src="https://via.placeholder.com/250" alt="placeholder image">
+
+    <div class="button-panel">
+        <button id="startBtn">Start</button>
+        <button style="display:none;" id="silenceBtn">Silence</button>
+
+        <select id="startValue"></select>
+    </div>
+</div>
+
+<div id="score"></div>
+
+<!-- ---------- Popup ---------- -->
+<div id="popupOverlay">
+    <div id="popupBox">
+        <h2>Enter Your Text</h2>
+        <textarea id="popupText"></textarea>
+        <br>
+        <button id="submitPopup">Submit</button>
+    </div>
+</div>
+
+
+<script>
+    const btn = document.getElementById("startBtn");
+
+    // When the window gains focus, focus the button
+    window.addEventListener("focus", () => {
+        btn.focus();
+    });
+
+    // Optional: also focus on page load
+    window.addEventListener("load", () => {
+        btn.focus();
+    });
+</script>
+
+
+
+  <script>
+    // Get URL parameters
+    const params = new URLSearchParams(window.location.search);
+    const pic = params.get("pic");
+
+    // If "pic" parameter exists, set the image source
+    if (pic) {
+      const imgElement = document.getElementById("img1");
+      imgElement.src = "./pic/" + pic;
+    }
+  </script>
+
+<script>
+/* -------------------------------------------
+   Populate dropdown (default = 45)
+-------------------------------------------- */
+const select = document.getElementById("startValue");
+for (let v = 10; v <= 300; v += 5) {
+    let opt = document.createElement("option");
+    opt.value = v;
+    opt.textContent = v;
+    if (v === 15) opt.selected = true;
+    select.appendChild(opt);
+}
+
+/* -------------------------------------------
+   Elements
+-------------------------------------------- */
+const startBtn = document.getElementById("startBtn");
+const silenceBtn = document.getElementById("silenceBtn");
+const scoreDiv = document.getElementById("score");
+
+const popupOverlay = document.getElementById("popupOverlay");
+const popupText = document.getElementById("popupText");
+const submitPopup = document.getElementById("submitPopup");
+
+let startTimer = null;
+let silenceTimer = null;
+
+let startCountdown = 45;   // default
+let silenceSeconds = 0;
+let silenceRunning = false;
+
+/* -------------------------------------------
+   START button logic
+-------------------------------------------- */
+startBtn.addEventListener("click", () => {
+    if (startTimer) return;
+
+    startCountdown = parseInt(select.value);
+    startBtn.textContent = startCountdown;
+    startBtn.style.backgroundColor = "green";
+
+    startTimer = setInterval(() => {
+        startCountdown--;
+        startBtn.textContent = startCountdown;
+
+        if (startCountdown <= 15) {
+            startBtn.style.backgroundColor = "red";
+        } else if (startCountdown <= 30) {
+            startBtn.style.backgroundColor = "orange";
+        }
+
+        if (startCountdown <= 0) {
+            clearInterval(startTimer);
+            startTimer = null;
+            startBtn.textContent = "Start";
+            startBtn.style.backgroundColor = "#ccc";
+            if (silenceRunning)  silenceBtn.click();
+
+
+            triggerPopup();
+        }
+    }, 1000);
+});
+
+/* -------------------------------------------
+   SILENCE button logic
+-------------------------------------------- */
+silenceBtn.addEventListener("click", () => {
+    if (!silenceRunning) {
+        silenceRunning = true;
+        silenceBtn.textContent = silenceSeconds;
+        silenceTimer = setInterval(() => {
+            silenceSeconds++;
+            silenceBtn.textContent = silenceSeconds;
+        }, 1000);
+    } else {
+        silenceRunning = false;
+        clearInterval(silenceTimer);
+        silenceBtn.textContent = "Silence";
+    }
+});
+
+/* -------------------------------------------
+   Popup handling
+-------------------------------------------- */
+function triggerPopup() {
+console.log(silenceSeconds + "____1");
+    popupText.value = "";
+    popupOverlay.style.display = "flex";
+	popupText.focus();
+    launchConfetti();
+}
+
+submitPopup.addEventListener("click", () => {
+    popupOverlay.style.display = "none";
+    computeScore(popupText.value);
+});
+
+/* -------------------------------------------
+   Score calculation (updated formula)
+-------------------------------------------- */
+function computeScore(text) {
+/*
+Point scoring:
+1) Minus 1 point for any verb inflexions, pronouns, and prepositions not in Welsh.
+2) 1 point for any verb infinitive, noun, adverb or adjective in English.
+3) 1 point for every word used.
+4) Student gets 10 points handicap.
+*/
+    const words = text.trim().split(/\s+/);
+
+    let totWords = 0;
+    let endsBacktick = 0;
+	let endsLogicnot = 0;
+    let letterCountNot = 0;
+
+    words.forEach(w => {
+	    totWords++;
+        if (w.endsWith("`")) endsBacktick++;
+		if (w.endsWith("¬")) endsLogicnot++;
+        //if (w.endsWith("¬")) letterCountNot += (w.length - 1);
+    });
+
+    const engmultiplier = 2;
+    const cymmultiplier = 5;
+    //const score = ( (endsBacktick * engmultiplier) + (letterCountNot * cymmultiplier) ) - (silenceSeconds);
+	const score = totWords + endsBacktick - endsLogicnot;
+
+    //scoreDiv.textContent = "Score: " + score;
+    scoreDiv.innerHTML = 
+	"* Minus points for vbinflx, pron, or prep in EN:  -" + endsLogicnot + "<br/>" +
+	"* Plus points for vbinftv, noun, adv or adj in EN:  +" + endsBacktick + "<br/>" +
+	"* Plus points for total number of word:  +" + totWords + "<br/>" +
+      //"English Words = " + endsBacktick + " X " + engmultiplier + "<br/>" +
+      //"Longest Welsh Word Letter Count = " + letterCountNot + " X " + cymmultiplier + "<br/>" +
+      //"- Minus total seconds silence = - " + silenceSeconds + "<br/>" + 
+      "TOTAL SCORE = (+10 for student) + " + score + "<br/>" +
+      "";
+}
+
+/* -------------------------------------------
+   Confetti effect (lightweight)
+-------------------------------------------- */
+function launchConfetti() {
+    const duration = 2000;
+    const end = Date.now() + duration;
+    const colors = ["#ff0", "#0f0", "#0ff", "#f0f", "#f00", "#00f"];
+
+    const canvas = document.getElementById("confettiCanvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const confettiPieces = [];
+
+    for (let i = 0; i < 150; i++) {
+        confettiPieces.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height - canvas.height,
+            w: 6,
+            h: 10,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            speed: Math.random() * 3 + 2
+        });
+    }
+
+    function frame() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        confettiPieces.forEach(p => {
+            p.y += p.speed;
+            if (p.y > canvas.height) p.y = -10;
+            ctx.fillStyle = p.color;
+            ctx.fillRect(p.x, p.y, p.w, p.h);
+        });
+
+        if (Date.now() < end) {
+            requestAnimationFrame(frame);
+        } else {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+    }
+
+    frame();
+}
+</script>
+
+</body>
+</html>
