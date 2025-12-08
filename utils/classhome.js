@@ -119,3 +119,16 @@ console.log("_____" + (modNum % pastelColors.length) + "___" + pastelColors.leng
     grid.appendChild(div);
     //moduleNumber++;
 }//endfor
+
+
+
+//Refresh icons after loading
+window.addEventListener("load", () => {
+  const navType = performance.getEntriesByType("navigation")[0].type;
+  if (navType === "navigate") {
+    setTimeout(() => {
+      location.reload();
+    }, 500);
+  }
+});  
+

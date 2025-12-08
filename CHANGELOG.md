@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.91_251208-0901 - updated UTILS classhome.js - reload homepage just once 500 ms after load to refresh icon result score after previous game
+-  Amendments as per the release description
+
 ## 0.0.90_251206-2315 - added tools folder for useful teacher tools
 -  Amendments as per the release description
 
