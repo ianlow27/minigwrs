@@ -27,7 +27,7 @@ document.getElementById('vocablnk1').href = vocaburl1;
 //document.getElementById('diarylnk1').target = "blank";
 
 document.getElementById('essaySubmit').innerHTML = "Submit an Essay"; //1109
-document.getElementById('essaySubmit').href = "./essay_submit.html?u=" + basename; //1109
+document.getElementById('essaySubmit').href = "./essay_submit.html?u=" + basename + "&upd=251223-1132"; //1109
 
 document.getElementById('instruct1').innerHTML = "<br/>Complete these activities in ascending numerical order (bottom-right buttons to top-left) as often as you like in your free time: " 
 +"✏️= to do "
@@ -46,6 +46,7 @@ const pastelColors = [
 
 let idx = 0;
 const modLinks1 = modLinks; //.reverse();
+
 for (let r of modLinks1) {
   //let orig_r = r;
   //let bdone = r.match(/html_done/);
@@ -98,7 +99,7 @@ for (let r of modLinks1) {
      colNum = 0;
   }
 console.log("_____" + (modNum % pastelColors.length) + "___" + pastelColors.length);
-  const moduleLink = r +  "?u=" + basename; //encUsr;
+  const moduleLink = r +  "?u=" + basename + "&upd=251223-1132"; //encUsr;
     const div = document.createElement('a');
     div.className = 'grid-item';
     let atmp1 = moduleTitle.split(/__/);
@@ -122,7 +123,29 @@ console.log("_____" + (modNum % pastelColors.length) + "___" + pastelColors.leng
 
 
 
-//Refresh icons after loading
+
+
+
+/*window.addEventListener("load", function () {
+  const savedScroll = sessionStorage.getItem("scrollPos");
+  if (savedScroll) {
+    const pos = JSON.parse(savedScroll);
+    window.scrollTo(pos.x, pos.y);
+    sessionStorage.removeItem("scrollPos");
+  }
+});*/
+
+
+/*  if (!location.search.includes("reloaded")) {
+    sessionStorage.setItem(
+      "scrollPos",
+      JSON.stringify({ x: window.scrollX, y: window.scrollY })
+    );
+    setTimeout(() => {
+      location.search = "?reloaded=1";
+    }, 1000);
+  }*/
+  
 window.addEventListener("load", () => {
   const navType = performance.getEntriesByType("navigation")[0].type;
   if (navType === "navigate") {
@@ -131,4 +154,8 @@ window.addEventListener("load", () => {
     }, 500);
   }
 });  
+
+
+
+
 

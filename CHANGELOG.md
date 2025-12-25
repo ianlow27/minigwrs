@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.92_251225-1243 - enhanecments to UTILS classhome.js - force page refresh through parameter in URL "upd=date-time"
+-  Amendments as per the release description
+
 ## 0.0.91_251208-0901 - updated UTILS classhome.js - reload homepage just once 500 ms after load to refresh icon result score after previous game
 -  Amendments as per the release description
 
