@@ -1939,7 +1939,7 @@ function dwsfmt($pstr, $popt){
 //---------------------------------------------
 function circleimagemob($pstr, $splitimg, $pLlGwers){
 
-file_put_contents("./js/". $pLlGwers. "__.js", '
+file_put_contents("../js/". $pLlGwers. "__.js", '
 const avocabpics = {
 ' . $pstr.  '
   };');
@@ -2106,7 +2106,7 @@ return '
             margin-bottom: 15px;
           }
         </style>
-        <script src="./js/'. $pLlGwers . '.js"></script>
+        <script src="../js/'. $pLlGwers . '.js"></script>
       </head>
       <body>
       <div id="lock-screen">

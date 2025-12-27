@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.93_251227-0958 - bugfix to dewisiadau1.php - Fixed issue with wrong relative path to JS folder following rearrangement of folder locations i.e. main sibling instead of parent to home
+-  Amendments as per the release description
+
 ## 0.0.92_251225-1243 - enhanecments to UTILS classhome.js - force page refresh through parameter in URL "upd=date-time"
 -  Amendments as per the release description
 
