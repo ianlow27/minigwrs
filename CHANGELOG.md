@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.95_260103-1140 - enhancement to UTILS classhome.js - Additional fixes
+-  Amendments as per the release description
+
 ## 0.0.94_260103-1137 - enhancements to UTILS classhome.js and yzp5wa1b2c.html - Added link to student's YouTube playlist
 -  Amendments as per the release description
 

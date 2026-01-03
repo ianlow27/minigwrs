@@ -25,7 +25,7 @@ document.getElementById('diarylnk1').href = diaryurl1;
 document.getElementById('vocablnk1').innerHTML = name1 + "'s Vocabulary Lists";
 document.getElementById('vocablnk1').href = vocaburl1;
 
-document.getElementById('youtubelnk1').innerHTML = name1 + "'s YouTube Playlist";
+document.getElementById('youtubelnk1').innerHTML = name1 + "'s Video Playlist";
 document.getElementById('youtubelnk1').href = youtubeurl1;
 
 //document.getElementById('diarylnk1').target = "blank";
