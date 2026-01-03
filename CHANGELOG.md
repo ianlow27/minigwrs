@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.94_260103-1137 - enhancements to UTILS classhome.js and yzp5wa1b2c.html - Added link to student's YouTube playlist
+-  Amendments as per the release description
+
 ## 0.0.93_251227-0958 - bugfix to dewisiadau1.php - Fixed issue with wrong relative path to JS folder following rearrangement of folder locations i.e. main sibling instead of parent to home
 -  Amendments as per the release description
 

@@ -24,6 +24,10 @@ document.getElementById('diarylnk1').innerHTML = name1 + "'s Welsh Learning Diar
 document.getElementById('diarylnk1').href = diaryurl1;
 document.getElementById('vocablnk1').innerHTML = name1 + "'s Vocabulary Lists";
 document.getElementById('vocablnk1').href = vocaburl1;
+
+document.getElementById('youtubelnk1').innerHTML = name1 + "'s YouTube Playlist";
+document.getElementById('youtubelnk1').href = youtubeurl1;
+
 //document.getElementById('diarylnk1').target = "blank";
 
 document.getElementById('essaySubmit').innerHTML = "Submit an Essay"; //1109
@@ -38,6 +42,18 @@ document.getElementById('instruct1').innerHTML = "<br/>Complete these activities
 const grid = document.getElementById('grid');
 
 // Sample pastel color palette
+// #FFEBEE salmon
+// #FFF8E1 light-yellow
+// #E8F5E9 light-green
+// #E3F2FD cyan
+// #F3E5F5 light-puce
+// #FBE9E7 light-orange
+// #E0F7FA light-blue
+// #FFFDE7 lemon
+// #EDE7F6 light-purple
+// #F9FBE7 light-lemon
+// #F1F8E9 very-light-green
+// #E1F5FE light-mid-blue
 const pastelColors = [
   '#FFEBEE', '#FFF8E1', '#E8F5E9', '#E3F2FD', '#F3E5F5',
   '#FBE9E7', '#E0F7FA', '#FFFDE7', '#EDE7F6', '#F9FBE7',
