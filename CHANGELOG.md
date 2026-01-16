@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.96_260116-1935 - enhancements to dewisiadau1.php - added handling to differentiate between female and male nouns in the vocabulary and textual passage tests
+-  Amendments as per the release description
+
 ## 0.0.95_260103-1140 - enhancement to UTILS classhome.js - Additional fixes
 -  Amendments as per the release description
 

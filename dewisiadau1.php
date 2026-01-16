@@ -90,7 +90,7 @@ $lSplitStoryReadings="";
 $LlMissingMp3="";
 $LlPrevUsedWords="";
 $LlMissingA2iImg="";
-$lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lsppwords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords=""; $lsartwords=""; $lsnewwords=""; $lsnbwords=""; $lspvwords=""; $l2ndMod=""; $b2ndMod = false; $a2ndMod = []; $lsvcb=""; $lvcbcount = 1; $lsvcblist="";
+$lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnmwords=""; $lsnfwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lsppwords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords=""; $lsartwords=""; $lsnewwords=""; $lsnbwords=""; $lspvwords=""; $l2ndMod=""; $b2ndMod = false; $a2ndMod = []; $lsvcb=""; $lvcbcount = 1; $lsvcblist="";
 //===========================
 htmlfmtinit();
 foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
@@ -149,7 +149,7 @@ if($LlModiwl !== "") if($atmp2d[0] != $LlModiwl) continue;
       $LlTxtMaxWrds = "";
       $LlTxtInclude = "";
       $LlTxtExclude = "";
-      $lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lsppwords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords=""; $lsartwords=""; $lsnewwords=""; $lsnbwords=""; $lspvwords=""; $l2ndMod = ""; $b2ndMod = false; $a2ndMod = []; $lsvcb=""; $lvcbcount = 1; 
+      $lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsnmwords=""; $lsnfwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lsppwords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords=""; $lsartwords=""; $lsnewwords=""; $lsnbwords=""; $lspvwords=""; $l2ndMod = ""; $b2ndMod = false; $a2ndMod = []; $lsvcb=""; $lvcbcount = 1; 
       
       htmlfmtinit();
       
@@ -267,6 +267,8 @@ global $lsartwords;
 global $lsrswords;
 global $lsixwords;
 global $lsnnwords;
+global $lsnfwords;
+global $lsnmwords;
 global $lsnbwords;
 global $lsnewwords;
 global $lsexwords;
@@ -407,14 +409,14 @@ if($atmp1[0] == "Faint"){
         }else if($type == "aj"){
           $lsajwords .= mb_substr($word,0,-1). " ";
         }else if($type == "nm"){
-          $lsnnwords .= mb_substr($word,0,-1). " ";
+          $lsnmwords .= mb_substr($word,0,-1). " ";
         }else if($type == "nf"){
-          $lsnnwords .= mb_substr($word,0,-1). " ";
+          $lsnfwords .= mb_substr($word,0,-1). " ";
         }else {
 echo "ERROR!!!(251)---speechtype code not found>[". $type."] [". $origword. "] in [". $line ."]\n";
 die();
 
-          $lsnnwords .= mb_substr($word,0,-1). " ";
+          $lsnmwords .= mb_substr($word,0,-1). " ";
         }
 
 
@@ -668,7 +670,7 @@ if(mb_ereg_match("aint", $lsnewwords)){
 }//endfunc
 //---------------------------------------------------
 function preputcleandata($outstr, $pLlGwers){
-global $lsitwords; global $lsltwords; global $lsanswords; global $lsartwords; global $lsrswords; global $lsixwords; global $lsnnwords; global $lsnbwords; global $lsnewwords; global $lsexwords; global $lspnwords; global $lsivwords; global $lsctwords; global $lsavwords; global $lsppwords; global $lspvwords; global $lsidwords; global $lsajwords; 
+global $lsitwords; global $lsltwords; global $lsanswords; global $lsartwords; global $lsrswords; global $lsixwords; global $lsnfwords; global $lsnmwords; global $lsnnwords; global $lsnbwords; global $lsnewwords; global $lsexwords; global $lspnwords; global $lsivwords; global $lsctwords; global $lsavwords; global $lsppwords; global $lspvwords; global $lsidwords; global $lsajwords; 
 global $LlFfeil;
 //--------------
   $outstr = acenau($outstr);
@@ -686,6 +688,8 @@ global $LlFfeil;
   "\nconst respOptions = [". dwsfmt($lsrswords, "rsp"). "];\n".
   "\nconst infxOptions = [". dwsfmt($lsixwords, "vifx"). "];\n".
   "\nconst nounOptions = [". dwsfmt($lsnnwords, "noun"). "];\n".
+  "\nconst nounFOptions = [". dwsfmt($lsnfwords, "nf"). "];\n".
+  "\nconst nounMOptions = [". dwsfmt($lsnmwords, "nm"). "];\n".
   "\nconst numbOptions = [". dwsfmt($lsnbwords, "num"). "];\n".
   "\nconst exclOptions = [". dwsfmt($lsexwords, "excl"). "];\n".
   "\nconst pronOptions = [". dwsfmt($lspnwords, "pron"). "];\n".
@@ -1137,6 +1141,12 @@ option.textContent = opt.replace(/_/g, " "); //!!!!
             div.appendChild(select);
           } else if (prepOptions.includes(word)) {
             const select = createSelect(prepOptions, s.answers[answerIndex++]);
+            div.appendChild(select);
+          } else if (nounFOptions.includes(word)) {
+            const select = createSelect(nounFOptions, s.answers[answerIndex++]);
+            div.appendChild(select);
+          } else if (nounMOptions.includes(word)) {
+            const select = createSelect(nounMOptions, s.answers[answerIndex++]);
             div.appendChild(select);
           } else if (nounOptions.includes(word)) {
             const select = createSelect(nounOptions, s.answers[answerIndex++]);
@@ -1882,6 +1892,7 @@ $LlTextboxScript='
 }
 
 
+//echo "_____________________".$outstr."\n";
 
 return $LlHtmlBrig. $LlHtmlPenniad. 
 
