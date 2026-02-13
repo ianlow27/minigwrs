@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.97_260213-2302 - changes to dewisiadau1.php - Added word types for prefixes (prfx) and suffixes (sfx) as well as fixed type articles (at)
+-  Amendments as per the release description
+
 ## 0.0.96_260116-1935 - enhancements to dewisiadau1.php - added handling to differentiate between female and male nouns in the vocabulary and textual passage tests
 -  Amendments as per the release description
 
