@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.98_260309-2037 - Added new file wordcount.html - This is a text box with a countdown that changes from green to amber to red that allows for the entry of text for a specified duration that can be selected from a drop down list. At the end of the duration the total number of words is displayed. This is intended to help language students write a verbal essay i.e. in which they dictate and the teacher writes down the words. The higher the count of words the better the score.
+-  Amendments as per the release description
+
 ## 0.0.97_260213-2302 - changes to dewisiadau1.php - Added word types for prefixes (prfx) and suffixes (sfx) as well as fixed type articles (at)
 -  Amendments as per the release description
 
