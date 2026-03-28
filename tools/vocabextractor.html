@@ -1,90 +1,134 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Welsh/English Extractor</title>
+<title>Vocabulary Extractor</title>
+
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-    }
-    .row {
-        display: flex;
-        align-items: flex-start;
-    }
-    textarea {
-        width: 500px;
-        height: 150px;
-        margin-bottom: 10px;
-        font-size: 14px;
-    }
-    button {
-        margin-left: 10px;
-        height: 40px;
-        padding: 0 20px;
-        font-size: 14px;
-    }
+body { font-family: Arial; padding:20px; }
+textarea { width:100%; height:220px; margin-bottom:15px; padding:10px; }
+button { padding:10px 20px; }
 </style>
 </head>
+
 <body>
 
-<h2>Welsh–English Extractor</h2>
+<h2>Input</h2>
+<textarea id="inputBox"></textarea>
 
-<div class="row">
-    <textarea id="inputText" placeholder="Enter text here..."></textarea>
-    <button onclick="processText()">Submit</button>
-</div>
+<button onclick="extract()">Extract</button>
 
-<textarea id="outputText" placeholder="Output appears here..."></textarea>
+<h2>Output</h2>
+<textarea id="outputBox"></textarea>
 
 <script>
-function processText() {
-    const text = document.getElementById("inputText").value.toLowerCase();
 
-    // Regex finds words in parentheses
-    const englishMatches = [...text.matchAll(/\(([^)]+)\)/g)];
+function clean(text){
+    return text
+        .replace(/^[^\wŷŶŵŴÀ-ÿ']+/, "")
+        .replace(/[)\s]+$/g,"")
+        .trim();
+}
 
-    let pairs = [];
+function extract(){
 
-    for (let match of englishMatches) {
-        let englishWord = match[1].trim();
+    let input = document.getElementById("inputBox").value;
+    const vocab = new Map();
 
-        // position of "(" in text
-        let idx = match.index;
+    // ----------------------------
+    // STEP 1: handle parentheses FIRST
+    // ----------------------------
+    const parenRegex = /\(([^)]*)\)/g;
+    let match;
 
-        // get text before this match
-        let before = text.substring(0, idx).trim();
+    while((match = parenRegex.exec(input)) !== null){
 
-        // split by spaces
-        let parts = before.split(/\s+/);
+        let content = match[1];
 
-        // last word before the "(" is the Welsh word
-        let welshWord = parts[parts.length - 1].replace(/[^\w_À-ž'-]/g, "");
+        // CASE A: contains "="
+        if(content.includes("=")){
 
-        welshWord = welshWord.replace(/ /g, "_");
-        englishWord = englishWord.replace(/ /g, "_");
+            content.split("/").forEach(part => {
 
-        if (welshWord && englishWord) {
-            pairs.push({ welsh: welshWord, english: englishWord });
+                if(part.includes("=")){
+
+                    let [left, right] = part.split("=");
+
+                    let word = clean(left).toLowerCase();
+                    let meaning = clean(right);
+
+                    if(word && meaning){
+                        vocab.set(word, meaning);
+                    }
+                }
+            });
+        }
+
+        // CASE B: no "=" → use preceding word
+        else{
+
+            let before = input.slice(0, match.index);
+            let wordMatch = before.match(/([A-Za-zŷŶŵŴÀ-ÿ_\-']+)\s*$/);
+
+            if(wordMatch){
+
+                let word = wordMatch[1].toLowerCase();
+                let meaning = clean(content);
+
+                if(word && meaning){
+                    vocab.set(word, meaning);
+                }
+            }
         }
     }
 
-    // Remove duplicates by using a map keyed by "welsh"
-    let map = new Map();
-    for (let p of pairs) {
-        map.set(p.welsh, p.english);
-    }
+    // ----------------------------
+    // STEP 2: REMOVE parentheses completely
+    // ----------------------------
+    input = input.replace(/\([^)]*\)/g, "");
 
-    // Sort by Welsh word
-    let sorted = [...map.entries()].sort((a, b) =>
-        a[0].localeCompare(b[0])
-    );
+    // ----------------------------
+    // STEP 3: replace "/" with newlines
+    // ----------------------------
+    input = input.replace(/\//g, "\n");
 
-    // Build output text
-    let output = sorted.map(p => `${p[0]} = ${p[1]}`).join("\n");
+    // ----------------------------
+    // STEP 4: process remaining "=" lines
+    // ----------------------------
+    let lines = input.split("\n");
 
-    document.getElementById("outputText").value = output;
+    lines.forEach(line => {
+
+        line = clean(line);
+
+        if(line.includes("=")){
+
+            let [left, ...rest] = line.split("=");
+            let right = rest.join("=");
+
+            let wordMatch = left.match(/([A-Za-zŷŶŵŴÀ-ÿ_\-']+)\s*$/);
+
+            if(wordMatch){
+
+                let word = wordMatch[1].toLowerCase();
+                let meaning = clean(right);
+
+                if(word && meaning){
+                    vocab.set(word, meaning);
+                }
+            }
+        }
+    });
+
+    // ----------------------------
+    // OUTPUT
+    // ----------------------------
+    document.getElementById("outputBox").value =
+        [...vocab.entries()]
+        .map(([w,m]) => w.toLowerCase() + " = " + m.toLowerCase())
+        .join("\n");
 }
+
 </script>
 
 </body>

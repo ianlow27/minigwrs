@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.99_260328-2044 - enhancements in dewisiadau1.php and tools and utils - ENHANCEMENTS 1) dewisiadau1.php - added word type mf or nmf which are nouns that can be both masculine and feminine, 2) tools vocabextractor.html added new functionality to extract vocabulary pairs out of text according to text formats that employ brackets, forward-slashes and equal signs to demarcate vocabulary pairs within texts, 3) enhanced functionality in the wordcount.html HTML page
+-  Amendments as per the release description
+
 ## 0.0.98_260309-2037 - Added new file wordcount.html - This is a text box with a countdown that changes from green to amber to red that allows for the entry of text for a specified duration that can be selected from a drop down list. At the end of the duration the total number of words is displayed. This is intended to help language students write a verbal essay i.e. in which they dictate and the teacher writes down the words. The higher the count of words the better the score.
 -  Amendments as per the release description
 
