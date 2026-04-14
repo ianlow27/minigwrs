@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.100_260414-2356 - tweaks to utils/wordcount.html - instead of alert use prompt so that the final score message does not vanish if the user types space by mistake. Also simplified the calculation of the final score.
+-  Amendments as per the release description
+
 ## 0.0.99_260328-2044 - enhancements in dewisiadau1.php and tools and utils - ENHANCEMENTS 1) dewisiadau1.php - added word type mf or nmf which are nouns that can be both masculine and feminine, 2) tools vocabextractor.html added new functionality to extract vocabulary pairs out of text according to text formats that employ brackets, forward-slashes and equal signs to demarcate vocabulary pairs within texts, 3) enhanced functionality in the wordcount.html HTML page
 -  Amendments as per the release description
 

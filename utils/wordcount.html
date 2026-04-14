@@ -1050,19 +1050,23 @@ function calculateScore() {
         if (!word) return;
 
         if (word.startsWith("`")) {
+console.log("-___" + word + "__" + score);
+           /*
             const match = word.match(/^`(\d+)/);
             if (match) {
                 score -= parseInt(match[1]);
             } else {
                 score -= 1;
-            }
+            } */
+            score -= 1;
         } else {
+console.log("+___" + word + "__" + score);
             score += 1;
         }
     });
 
-    return score;
     //alert("Total Score = " + score);
+    return score;
 }
 
 
@@ -1091,8 +1095,8 @@ function calculateScore() {
             }); // !essay.includes(word));
 
             const wordCount = essay.trim().split(/\s+/).filter(word => word.length > 0).length;
-            alert( "Word count = " + wordCount + " words.\n"
-                + "Total score = " + calculateScore() );
+            prompt( "Word count = " + wordCount + " words.\n"
+                + "Total score = " + calculateScore()  + "\nCofiwch i achub testun!!");
             document.getElementById("essay").focus();
             return;
 
