@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.101_260523-1413 - minor bugfixes to dewisiadau1.php
+-  Amendments as per the release description
+
 ## 0.0.100_260414-2356 - tweaks to utils/wordcount.html - instead of alert use prompt so that the final score message does not vanish if the user types space by mistake. Also simplified the calculation of the final score.
 -  Amendments as per the release description
 

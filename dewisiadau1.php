@@ -149,7 +149,7 @@ if($LlModiwl !== "") if($atmp2d[0] != $LlModiwl) continue;
       $LlTxtMaxWrds = "";
       $LlTxtInclude = "";
       $LlTxtExclude = "";
-      $lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsmfwords=""; $lsnmwords=""; $lsnfwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lsppwords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords=""; $lsartwords=""; $lsnewwords=""; $lsnbwords=""; $lspvwords=""; $l2ndMod = ""; $b2ndMod = false; $a2ndMod = []; $lsvcb=""; $lvcbcount = 1;  $lspxwords=""; $lssxwords="";
+      $lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsmfwords=""; $lsnmwords=""; $lsnfwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lsppwords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords=""; $lsartwords=""; $lsnewwords=""; $lsnbwords=""; $lspvwords=""; $l2ndMod = ""; $b2ndMod = false; $__xxa2ndMod = []; $lsvcb=""; $lvcbcount = 1;  $lspxwords=""; $lssxwords="";
       
       htmlfmtinit();
       

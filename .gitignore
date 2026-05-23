@@ -22,5 +22,6 @@ transcy2kw.php
 *.htmlxxxx
 .html
 crs_*/*.html
+js/*
 test*
 ?
