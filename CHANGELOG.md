@@ -7,6 +7,9 @@
 
 ## NOTES
 
+## 0.0.102_260612-1518 - changes in UTILS file wordcount.html
+-  Amendments as per the release description
+
 ## 0.0.101_260523-1413 - minor bugfixes to dewisiadau1.php
 -  Amendments as per the release description
 
