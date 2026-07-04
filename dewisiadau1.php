@@ -95,11 +95,13 @@ $lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsmfwords=""; $lsnmwo
 htmlfmtinit();
 foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
   $origline = trim($line);
-  if((mb_substr($line, 0, 1)=="|")//select word from list
-   ||(mb_substr($line, 0, 1)=="`")//fill word in blank
-   ||(mb_substr($line, 0, 1)=="!")//reset spacing in line
-   ||(mb_substr($line, 0, 1)=="¬")//under word
-   ||(mb_substr($line, 0, 1)=="&")//word lists preprocessor
+  // Note: The first character of each processable line indicates
+  // the type of language exercise as indicated below
+  if((mb_substr($line, 0, 1)=="|") //Word Selection Exercise
+   ||(mb_substr($line, 0, 1)=="`") //Fill word in blank Exercise
+   ||(mb_substr($line, 0, 1)=="!") //reset spacing in line
+   ||(mb_substr($line, 0, 1)=="¬") //under word
+   ||(mb_substr($line, 0, 1)=="&") //Splitstory blank word exercise
    ){
     $char1 = mb_substr($line, 0, 1);
 

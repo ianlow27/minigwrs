@@ -16,7 +16,10 @@ button { padding:10px 20px; }
 <h2>Input</h2>
 <textarea id="inputBox"></textarea>
 
-<button onclick="extract()">Extract</button>
+<button title="mae ef yn dweud (say) bod hynny (that) yn iawn => dweud = say \n hynny = that \n" onclick="extract()">extractWord</button>
+
+<button title="car[s]¬stor[y/ies]¬hat[/s]¬pet[|ition|ty]¬constan[cy/cies|t/ts|ce]¬cove[/s|r/rs] => car \n cars \n story \n stories \n hat \n hats \n pet \n petition \n petty \n constancy \n constancies \n constant \n constants \n constance \n cove \n coves \n cover \n covers
+" onclick="expandWord()">expandWord</button>
 
 <h2>Output</h2>
 <textarea id="outputBox"></textarea>
@@ -128,6 +131,70 @@ function extract(){
         .map(([w,m]) => w.toLowerCase() + " = " + m.toLowerCase())
         .join("\n");
 }
+
+
+//=========================================================
+function expandWord() {
+
+    const input = document.getElementById("inputBox").value.trim();
+    const output = [];
+
+    if (!input) {
+        document.getElementById("outputBox").value = "";
+        return;
+    }
+
+    input.split("¬").forEach(word => {
+
+        word = word.trim();
+        if (!word) return;
+
+        const m = word.match(/^(.*)\[(.*)\]$/);
+
+        // No brackets
+        if (!m) {
+            output.push(word);
+            return;
+        }
+
+        const stem = m[1];
+        const inside = m[2];
+
+        // Split alternative endings
+        const pieces = inside.split("|");
+
+        pieces.forEach(piece => {
+
+            if (piece.includes("/")) {
+
+                let [sing, plur] = piece.split("/");
+
+                output.push(stem + sing);
+                output.push(stem + plur);
+
+            } else {
+
+                if (piece === "") {
+                    // Empty piece means original word
+                    output.push(stem);
+                }
+                else {
+                    // Single suffix
+                    output.push(stem + piece);
+                }
+
+            }
+
+        });
+
+    });
+
+    document.getElementById("outputBox").value = output.join("\n");
+}//endfunc
+//=======================================================
+
+
+
 
 </script>
 

@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocab Test</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .input-section {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 14px;
+            resize: vertical;
+            margin-bottom: 10px;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            margin: 1px;
+            padding: 10px;
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+            margin: 1px;
+            padding: 10px;
+        }
+
+        .btn-danger {
+            background: #ff6b6b;
+            color: white;
+            margin: 1px;
+            padding: 10px;
+        }
+
+        .quiz-section {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .quiz-row {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+        }
+
+        .english-word {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            flex: 1;
+        }
+
+        .speech-part {
+            font-size: 12px;
+            color: #d33;
+            font-weight: normal;
+            display: none;
+        }
+
+        select {
+            padding: 10px 15px;
+            font-size: 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+            min-width: 150px;
+            cursor: pointer;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 16px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 80vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            font-size: 1.3rem;
+            color: #333;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #888;
+            padding: 0;
+        }
+
+        .modal-body {
+            padding: 20px;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .vocab-list {
+            list-style: none;
+        }
+
+        .vocab-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 16px;
+        }
+
+        .vocab-list li:last-child {
+            border-bottom: none;
+        }
+
+        .vocab-word {
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .congratulations {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .congratulations h2 {
+            font-size: 2rem;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .congratulations p {
+            color: #666;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        .top-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="pageTitle">Vocab Test</h1>
+
+        <div class="top-buttons">
+            <button class="btn-secondary" id="showVocabBtn">Show Vocab</button>
+            <button class="btn-danger" id="clearAllBtn">Clear All</button>
+            <button class="btn-primary" id="closeBtn" onclick="window.close();">Close</button>        
+            
+        </div>
+
+        <div class="input-section" id="inputSection">
+            <textarea id="vocabInput" placeholder="Enter vocab text, e.g.: llong[au]:ship[s]`nm|hwylio:sail[iv]"></textarea>
+            <div class="btn-row">
+                <button class="btn-primary" id="addVocabBtn">Add Vocab</button>
+            </div>
+        </div>
+
+        <div class="quiz-section" id="quizSection"></div>
+        <div class="congratulations hidden" id="congratsSection">
+            <h2 style="font-size:300%;">🏆</h2>
+            <h2>🎉 Congratulations! 🎉</h2>
+            <p>You've completed all the vocab!</p>
+            <p style="margin-top:10px;" id="pCompleted"></p>
+            <button onclick="restartQuiz();" style="margin:20px;background-color:#afa;">Restart</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay hidden" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>All Vocabulary</h2>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <ul class="vocab-list" id="vocabList"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let STORAGE_KEY = 'vocabData';
+
+        function restartQuiz(){
+          localStorage.setItem(STORAGE_KEY+"_completed", "restart");
+          window.location.reload();
+
+        }
+        function getVocabData() {
+            const data = localStorage.getItem(STORAGE_KEY);
+            return data ? JSON.parse(data) : [];
+        }
+
+        function setVocabData(data) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+
+        function parseVocabText(text) {
+            const entries = [];
+            const parts = text.split('|');
+
+            for (const part of parts) {
+                if (!part.trim()) continue;
+
+                const backtickIndex = part.lastIndexOf('`');
+                if (backtickIndex === -1) continue;
+
+                const wordsPart = part.substring(0, backtickIndex);
+                const speechPart = part.substring(backtickIndex + 1).trim();
+
+                const colonIndex = wordsPart.indexOf(':');
+                if (colonIndex === -1) continue;
+
+                const vocabPart = wordsPart.substring(0, colonIndex);
+                const vocabForms = parseWordForms(vocabPart);
+                const englishParts = wordsPart.substring(colonIndex + 1).split(',');
+            for (const englishPart of englishParts) {
+console.log("1___"+englishPart);
+
+                const englishForms = parseWordForms(englishPart);
+//-----------------
+
+                const isNoun = ['nf', 'nm', 'nfm', 'nmf'].includes(speechPart);
+                const isVerb = speechPart === 'iv';
+
+                if (isNoun) {
+                    entries.push({
+                        vocab: vocabForms.singular,
+                        english: englishForms.singular,
+                        speechPart: speechPart + 's',
+                        id: generateId()
+                    });
+
+                    if (vocabForms.plural !== vocabForms.singular || englishForms.plural !== englishForms.singular) {
+                        entries.push({
+                            vocab: vocabForms.plural,
+                            english: englishForms.plural,
+                            speechPart: speechPart + 'p',
+                            id: generateId()
+                        });
+                    }
+                } else if (isVerb) {
+                    entries.push({
+                        vocab: vocabForms.singular,
+                        english: 'to ' + englishForms.singular,
+                        speechPart: speechPart,
+                        id: generateId()
+                    });
+                } else {
+                    entries.push({
+                        vocab: vocabForms.singular,
+                        english: englishForms.singular,
+                        speechPart: speechPart,
+                        id: generateId()
+                    });
+                }//endif isNoun
+//-----------------
+            }//endfor englishPart of englishParts
+            }//endfor part of parts
+
+            return entries;
+        }
+
+        function parseWordForms(word) {
+            word = word.replace(/_/g, " ");
+            const bracketMatch = word.match(/^(.+?)\[(.+?)\]$/);
+
+            if (!bracketMatch) {
+                return { singular: word, plural: word };
+            }
+
+            const base = bracketMatch[1];
+            const suffix = bracketMatch[2];
+
+            if (suffix.includes('/')) {
+                const [singularSuffix, pluralSuffix] = suffix.split('/');
+                return {
+                    singular: base + singularSuffix,
+                    plural: base + pluralSuffix
+                };
+            } else {
+                return {
+                    singular: base,
+                    plural: base + suffix
+                };
+            }
+        }
+
+        function generateId() {
+            return Math.random().toString(36).substr(2, 9);
+        }
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function renderQuiz(bShuffle = 1) {
+            const data = getVocabData();
+            const quizSection = document.getElementById('quizSection');
+            const congratsSection = document.getElementById('congratsSection');
+
+            quizSection.innerHTML = '';
+
+            if (data.length === 0) {
+                congratsSection.classList.remove('hidden');
+//alert(localStorage.getItem(STORAGE_KEY+"_completed"));
+if((localStorage.getItem(STORAGE_KEY+"_completed")=="restart")
+||(localStorage.getItem(STORAGE_KEY+"_completed")==null)){
+                triggerConfetti();
+//-----------
+const completedDate = localStorage.getItem(STORAGE_KEY + "_completed");
+if((completedDate !== null) && (completedDate !== "restart")){
+  const pCompleted = document.getElementById('pCompleted');
+//alert("4____" + completedDate);
+  pCompleted.innerHTML=completedDate;
+}
+//-----------
+}
+                return;
+            }
+
+            congratsSection.classList.add('hidden');
+
+            
+            let shuffledData = data;
+            let allVocabWords = data.map(d => [ d.vocab + " (" + d.speechPart+ ")"] );
+            //let allVocabWords = data.map(d => [ d.vocab]);
+ 
+            if(bShuffle){
+              shuffledData = shuffleArray(data);
+              allVocabWords = data.map(d => [ d.vocab + " (" + d.speechPart+ ")"] );
+             // allVocabWords = data.map(d => [ d.vocab ]);
+            }
+
+            for (const item of shuffledData) {
+                const row = document.createElement('div');
+                row.className = 'quiz-row';
+                row.dataset.id = item.id;
+                row.dataset.answer = item.vocab;
+
+                const englishDiv = document.createElement('div');
+                englishDiv.className = 'english-word';
+                englishDiv.innerHTML = `${item.english} <span class="speech-part">(${item.speechPart})</span>`;
+
+                const select = document.createElement('select');
+                select.innerHTML = '<option value="">Select...</option>';
+
+                for (const vocabWord of allVocabWords) {
+                    const option = document.createElement('option');
+                    option.value = vocabWord;
+                    option.textContent = vocabWord;
+                    select.appendChild(option);
+                }
+
+                select.addEventListener('change', function() {
+//alert(this.value + "___" + item.vocab + " ("+item.speechPart+")");
+                    if (this.value === item.vocab+" ("+item.speechPart+")") {
+                        row.style.animation = 'slideOut 0.3s ease forwards';
+                        setTimeout(() => {
+                            removeVocabItem(item.id);
+                            renderQuiz();
+                        }, 300);
+                    }
+                });
+
+                row.appendChild(englishDiv);
+                row.appendChild(select);
+                quizSection.appendChild(row);
+            }
+        }
+
+        function removeVocabItem(id) {
+            const data = getVocabData();
+            const filtered = data.filter(item => item.id !== id);
+            setVocabData(filtered);
+        }
+
+        function showVocabModal() {
+            const data = getVocabData();
+            const sorted = [...data].sort((a, b) => a.vocab.localeCompare(b.vocab));
+//alert(sorted.length);
+            const list = document.getElementById('vocabList');
+            list.innerHTML = '';
+if(sorted.length){
+
+
+            for (const item of sorted) {
+                const li = document.createElement('li');
+                li.innerHTML = `<span class="vocab-word">${item.vocab}</span> = ${item.english} (${item.speechPart})`;
+                list.appendChild(li);
+            }
+}else {
+  const urlParams = new URLSearchParams(window.location.search);
+  const vcbParam = urlParams.get('vcb');
+  const newEntries = parseVocabText(vcbParam);
+console.log(newEntries); //.length);
+  for (const item of newEntries){
+                const li = document.createElement('li');
+                li.innerHTML = `<span class="vocab-word">${item.vocab}</span> = ${item.english} (${item.speechPart})`;
+                list.appendChild(li);
+  }//endfor
+}//endif
+
+            document.getElementById('modalOverlay').classList.remove('hidden');
+        }
+
+        function hideModal() {
+            document.getElementById('modalOverlay').classList.add('hidden');
+        }
+
+        function triggerConfetti() {
+
+//------------------------------
+const dtNow = new Date().toLocaleString();
+//alert(dtNow);
+//localStorage.setItem(STORAGE_KEY + "_completed", "2026-06-25");
+localStorage.setItem(STORAGE_KEY + "_completed", dtNow);
+//------------------------------
+
+
+            const colors = ['#667eea', '#764ba2', '#ff6b6b', '#feca57', '#48dbfb', '#1dd1a1'];
+            const confettiCount = 150;
+
+            for (let i = 0; i < confettiCount; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.top = '-10px';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+
+                    document.body.appendChild(confetti);
+
+                    const duration = 3000 + Math.random() * 2000;
+                    const horizontalMovement = (Math.random() - 0.5) * 200;
+
+                    confetti.animate([
+                        { transform: `translateY(0) translateX(0) rotate(0deg)`, opacity: 1 },
+                        { transform: `translateY(100vh) translateX(${horizontalMovement}px) rotate(${Math.random() * 720}deg)`, opacity: 0 }
+                    ], {
+                        duration: duration,
+                        easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                    });
+
+                    setTimeout(() => confetti.remove(), duration);
+                }, i * 20);
+            }
+        }
+
+        function init() {
+  
+            const urlParams = new URLSearchParams(window.location.search);
+            const vcbParam = urlParams.get('vcb');
+            const titleParam = urlParams.get('title');
+            STORAGE_KEY = titleParam;
+            if(STORAGE_KEY === null) STORAGE_KEY = "vocabData";
+//---------------------
+const completedDate = localStorage.getItem(STORAGE_KEY + "_completed");
+//alert(STORAGE_KEY + "__" + completedDate);
+//---------------------
+
+            if (titleParam) {
+                document.getElementById('pageTitle').textContent = titleParam;
+                document.title = titleParam;
+            }
+
+            if (vcbParam) {
+                document.getElementById('inputSection').classList.add('hidden');
+//alert(1 + "_"+completedDate);
+if(completedDate === null){
+//alert(3);
+
+}
+
+if((completedDate === "restart")||(completedDate === null)){
+//alert(2);
+                const existingData = getVocabData();
+                if (existingData.length === 0) {
+                    const newEntries = parseVocabText(vcbParam);
+                    setVocabData(newEntries);
+                }
+}else {
+  const pCompleted = document.getElementById('pCompleted');
+  pCompleted.innerHTML=completedDate;
+}
+            }
+
+            renderQuiz(1);
+        }
+
+        document.getElementById('addVocabBtn').addEventListener('click', function() {
+            const textarea = document.getElementById('vocabInput');
+            const text = textarea.value.trim();
+
+            if (!text) return;
+
+            const newEntries = parseVocabText(text);
+            const existingData = getVocabData();
+            setVocabData([...existingData, ...newEntries]);
+
+            textarea.value = '';
+            renderQuiz();
+        });
+
+        document.getElementById('showVocabBtn').addEventListener('click', showVocabModal);
+        document.getElementById('modalClose').addEventListener('click', hideModal);
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) hideModal();
+        });
+
+        document.getElementById('clearAllBtn').addEventListener('click', function() {
+            if (confirm('Are you sure you want to clear all vocabulary?')) {
+                localStorage.removeItem(STORAGE_KEY+"_completed");
+                localStorage.removeItem(STORAGE_KEY);
+                //setVocabData([]);
+                //renderQuiz();
+                window.location.reload();
+            }
+        });
+
+        init();
+    </script>
+</body>
+</html>
