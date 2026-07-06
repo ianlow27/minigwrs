@@ -7,7 +7,7 @@
 <style>
 body { font-family: Arial; padding:20px; }
 textarea { width:100%; height:220px; margin-bottom:15px; padding:10px; }
-button { padding:10px 20px; }
+button { padding:1px 2px; }
 </style>
 </head>
 
@@ -15,6 +15,17 @@ button { padding:10px 20px; }
 
 <h2>Input</h2>
 <textarea id="inputBox"></textarea>
+
+
+<!--
+àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝ
+âêîôûÂÊÎÔÛŴŵŶŷãñõÃÑÕ
+äëïöüÿÄËÏÖÜŸ
+-->
+<button onclick="navigator.clipboard.writeText('´');">´</button>
+<button onclick="navigator.clipboard.writeText('ŵ');">ŵ</button>
+<button onclick="navigator.clipboard.writeText('ŷ');">ŷ</button>
+
 
 <button title="mae ef yn dweud (say) bod hynny (that) yn iawn => dweud = say \n hynny = that \n" onclick="extract()">extractWord</button>
 

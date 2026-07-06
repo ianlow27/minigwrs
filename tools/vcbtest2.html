@@ -147,7 +147,7 @@
             font-size: 12px;
             color: #d33;
             font-weight: normal;
-            display: none;
+            xxdisplay: none;
         }
 
         select {
@@ -487,7 +487,7 @@ if((completedDate !== null) && (completedDate !== "restart")){
                 const select = document.createElement('select');
                 select.innerHTML = '<option value="">Select...</option>';
 
-                for (const vocabWord of allVocabWords) {
+                for (const vocabWord of allVocabWords.sort()) {
                     const option = document.createElement('option');
                     option.value = vocabWord;
                     option.textContent = vocabWord;
