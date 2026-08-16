@@ -80,6 +80,7 @@ include "../mjemojis.php";
 //===========================
 //GLOBALS;
 $outstr = ""; //<!DOCTYPE><html><body>";
+$IsPicWords = "";
 $LlTxtMinWrds = "";
 $LlTxtMaxWrds = "";
 $LlTxtInclude = "";
@@ -91,7 +92,11 @@ $LlMissingMp3="";
 $LlPrevUsedWords="";
 $LlMissingA2iImg="";
 $lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsmfwords=""; $lsnmwords=""; $lsnfwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lsppwords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords=""; $lsartwords=""; $lsnewwords=""; $lsnbwords=""; $lspvwords=""; $l2ndMod=""; $b2ndMod = false; $a2ndMod = []; $lsvcb=""; $lvcbcount = 1; $lsvcblist=""; $lspxwords=""; $lssxwords="";
-//===========================
+
+
+
+//----------------------------------->1
+// NOTE-1. READ EACH LINE OF THE INPUT TEXTFILE E.G. "filea" FROM DIRECTORY "cwrs_filea"
 htmlfmtinit();
 foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
   $origline = trim($line);
@@ -112,6 +117,7 @@ foreach(explode("\n", file_get_contents("./". $LlTestun)) as $line){
     $line = preg_replace("/\" /", " }} ", $line);
     $line = preg_replace("/([!?,\.;:])/", " $1", $line);
 
+    // NOTE-2. OUTPUT THE PROCESSED TEXT FROM THE INPUT TEXTFILES INTO OUTPUT HTML FILES
     if((substr($line, 1, 4) == "====")
      ||(substr($line, 1, 4) == "----")) {
 //-------------------------
@@ -121,7 +127,7 @@ if($LlModiwl !== "") if($atmp2d[0] != $LlModiwl) continue;
 
       $lsvcblist .= "%%%<=". $LlGwers. "\n";
       if($char1 != "&"){
-        $outstr = preputcleandata($outstr, $LlGwers);
+        $outstr = preputcleandata($outstr, $LlGwers, $IsPicWords);
         file_put_contents("./". $LlFfeil. ".html", $outstr);
         if($LlGwers != "") $lbtnsdesc .= '"'.$LlGwers.'": "'. $LlBtnsDesc. '",'. "\n";
       }
@@ -153,6 +159,7 @@ if($LlModiwl !== "") if($atmp2d[0] != $LlModiwl) continue;
       $LlTxtExclude = "";
       $lswords=""; $lsitwords=""; $lsrswords=""; $lsixwords=""; $lsmfwords=""; $lsnmwords=""; $lsnfwords=""; $lsnnwords=""; $lsexwords=""; $lspnwords=""; $lsivwords=""; $lsctwords=""; $lsavwords=""; $lsppwords=""; $lsidwords=""; $lsajwords=""; $lsltwords=""; $lsanswords=""; $lsartwords=""; $lsnewwords=""; $lsnbwords=""; $lspvwords=""; $l2ndMod = ""; $b2ndMod = false; $__xxa2ndMod = []; $lsvcb=""; $lvcbcount = 1;  $lspxwords=""; $lssxwords="";
       
+      // NOTE-3. AFTER OUTPUTTING THE HTML FILE, INITIALIZE THE NEXT OUTPUT HTML FILE
       htmlfmtinit();
       
     //--------------------------------------------
@@ -180,7 +187,7 @@ print_r($atmp1d);
            $splitimg = "";
            if(isset($atmp2a[2])) $splitimg = trim($atmp2a[2]);
 echo "___>SPLITIMG>>". $splitimg;
-           $outstr = preputcleandata($outstr, $LlGwers. $splitletter. '0');
+           $outstr = preputcleandata($outstr, $LlGwers. $splitletter. '0', $IsPicWords);
            file_put_contents("./". $LlFfeil. $splitletter."0.html", $outstr);
            if($LlGwers != "") $lbtnsdesc .= '"'.$LlGwers. $splitletter. '0": "'. $LlBtnsDesc. ' '. strToUpper($splitletter). '0",'. "\n";
 
@@ -224,7 +231,32 @@ $l2ndMod = "";
   
 
        if(mb_substr($line, 0,11)=="splitstory_"){
+       }else if (mb_substr($line, 0,8)=="picwrds "){
+         $IsPicWords = "YES";
+         $line = preg_replace("/ ([!?,\.;:])/", "$1", $line);
+         $atmp2f = preg_split("/\s/", mb_substr($line,8));
+         foreach($atmp2f as $tmp2f){
+           $tmp2fa = preg_replace(
+                      "/_/", " ", 
+                        preg_replace(
+                        "/'/", "\'", 
+                          $tmp2f
+                        )
+                    );
+           $tmp2fb = preg_replace(
+                      "/[\.\,\?\!]/", "",
+                        preg_replace(
+                        "/'/", "\'", 
+                          strtolower($tmp2f)
+                        )
+                    );
+           $outstr .= ' { text: "'. $tmp2fa. 
+               '", image: "'. $tmp2fb. ".png\" },\n";
+         }//endforeach
+         $outstr .= ' { text: "", image: "" },'. "\n";
+
        }else {
+         // NOTE-4. PROCESS THE INPUT TEXT INTO OUTPUT TEXT
          $lnout = parsewords($line, $char1);
          $outstr .= $lnout."\n";
          $l2ndMod .= "\n"; //any onward module after current
@@ -234,6 +266,7 @@ $l2ndMod = "";
   }
 
 }//endforeach
+//-----------------------------------<1
 
 
 
@@ -258,10 +291,11 @@ file_put_contents("./missinga2i.txt", $LlMissingA2iImg);
 file_put_contents("./prevusedwds.txt", sortuniq($LlPrevUsedWords,","));
 file_put_contents("./btnsdesc.js", 'const abtnsdesc = {'.  $lbtnsdesc. '};');
 
+//========================================
+// This parses the words for selection lists
 function parsewords($line, $cluelevel = "|"){
 
 $line = preg_replace("/([¬`])/u", "_$1", $line);
-
 
 //irinepicapia;
 global $lswords;
@@ -319,9 +353,9 @@ global $LlMissingA2iImg;
     $lsvcblist .= $lcy1. " ";
   }else if(mb_substr($line,0,8)=="plyssnd_"){
     $atmp2f = preg_split("/[\s`]/", mb_substr($line,8));
-if($atmp2f[0] == "Faint"){
-echo "_________276>>\n"; sleep(3);
-}
+    if($atmp2f[0] == "Faint"){
+      echo "_________276>>\n"; sleep(3);
+    }
     $lcy1 =  $atmp2f[0];
     $lsvcblist .= $lcy1. " ";
     $len1 = $atmp2f[count($atmp2f)-2];
@@ -329,8 +363,7 @@ echo "_________276>>\n"; sleep(3);
 echo "ERROR!!!(268)---vocab word already used before>[". $lcy1. "] in [". $len1. "]___[".  $line ."]\n";
       if($LlPrevUsedWords != "") $LlPrevUsedWords .= ", ";
       $LlPrevUsedWords .= $lcy1. "_". $len1;
-//sleep(3);
-//die();
+
     }else {
       $DGeiriau[$lcy1] =  $len1; //$atmp2f[count($atmp2f)-2];
       $DSaesneg[preg_replace("/_+$/u", "", $len1)] =  preg_replace("/_+$/u", "", $lcy1);
@@ -349,10 +382,13 @@ echo "ERROR!!!(268)---vocab word already used before>[". $lcy1. "] in [". $len1.
     if(((preg_match("/`/", $word)) 
      || (preg_match("/¬/", $word))) 
    && (!preg_match("/`@/", $word)) ){
+
+
       $atmp1 = mb_split("[`¬]{1,1}", $word);
-if($atmp1[0] == "Faint"){
-//echo "_________305>>\n"; sleep(3);
-}
+
+      if($atmp1[0] == "Faint"){
+       //echo "_________305>>\n"; sleep(3);
+      }
       if(preg_match("/¬/", $word)){
         $lnoaccent =  strtolower(removeAccents(acenau($atmp1[0])));
         if(!file_exists("../mp3/". $lnoaccent. ".mp3")){
@@ -532,8 +568,8 @@ die();
 
   }//endforeach
 
-echo "_____". $lnout. "____\n";
-echo "____________". $lnwords. "____\n";
+//echo "_____". $lnout. "____\n";
+//echo "____________". $lnwords. "____\n";
 
 
 
@@ -549,7 +585,7 @@ echo "____________". $lnwords. "____\n";
   
 
   return $lnout;
-}//endfunc
+}//endfunc parsewords
 //---------------------------------------------------
 function removeAccents($pstr){
   if (mb_ereg_match("[âêîôûŵŴŷáÁỳàäëïÏöÖë\']*", $pstr)){
@@ -575,7 +611,7 @@ function removeAccents($pstr){
   }
   $pstr = preg_replace("/_$/u", "", $pstr);
   return $pstr;
-}//endfunc
+}//endfunc removeAccents
 //---------------------------------------------------
 function putnewtxt($lsnewwords,$l2ndMod,$splitletter="",$splitimg=""){
 global $LlFfeil;
@@ -684,9 +720,9 @@ if(mb_ereg_match("aint", $lsnewwords)){
    }
    
  }
-}//endfunc
+}//endfunc putnewtxt
 //---------------------------------------------------
-function preputcleandata($outstr, $pLlGwers){
+function preputcleandata($outstr, $pLlGwers, $IsPicWords){
 global $lsitwords; global $lsltwords; global $lsanswords; global $lsartwords; global $lsrswords; global $lsixwords; global $lsnfwords; global $lsnmwords; global $lsmfwords; global $lsnnwords; global $lsnbwords; global $lsnewwords; global $lsexwords; global $lspnwords; global $lsivwords; global $lsctwords; global $lsavwords; global $lsppwords; global $lspvwords; global $lsidwords; global $lsajwords;  global $lspxwords; global $lssxwords;
 global $LlFfeil;
 //--------------
@@ -723,10 +759,20 @@ global $LlFfeil;
   "";
   $outstr2 = acenau($outstr2);
 
-  $outstr = ffurfweddu((dewisiadausetsections($outstr, $outstr2, $LlFfeil, $pLlGwers )));
+//echo "_______2____". $outstr. "________". $outstr2. "______\n";
+echo "outstr_________[". $outstr. "]\n";
+  if ($IsPicWords == "YES"){
+    $outstr = ffurfweddu((picwordssetsections($outstr, $outstr2, $LlFfeil, $pLlGwers )));
+  }else {
+    $outstr = ffurfweddu((dewisiadausetsections($outstr, $outstr2, $LlFfeil, $pLlGwers )));
+  }
+
+
+
+
   return $outstr;
 //--------------
-}//endfunc
+}//endfunc preputcleandata
 //---------------------------------------------------
 function resetpunc($lnout){
       $lnout = preg_replace("/(\s*)\{\{(\s*)/", " \"", $lnout);
@@ -734,7 +780,7 @@ function resetpunc($lnout){
       $lnout = preg_replace("/ ([!?,\.;:])/", "$1", $lnout);
       return $lnout;
 
-}//endfunc
+}//endfunc resetpunc
 //---------------------------------------------------
 function dewisiadausetsections($outstr, $outstr2, $pmod="test1", $pLlGwers){
 
@@ -1408,6 +1454,7 @@ word = word.replace(/_/g, " "); //!!!!
     });
 
   let correctPassword = "K\.?s{4(:@(3613~,?45!KJd^%$@£!)0{{1(Jksi3(*!%$@:"; // Change this to your desired password
+  correctPassword = "234";
 
   function checkPassword(pstr) {
     const input = document.getElementById("password-input").value.toLowerCase();;
@@ -1948,7 +1995,72 @@ $LlTextboxScript.
 
 
 $LlHtmlGwaelod;
-}//endfunc
+}//endfunc dewisiadausetsections
+//---------------------------------------------
+function picwordssetsections($outstr, $outstr2, $pmod="test1", $pLlGwers){
+
+return '
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+.divpicwrd { display: inline-block; }
+.wrd { margin-bottom: 5px; width: 100px; }
+.picwrd { width: 100px; height: 100px; }
+</style>
+</head>
+<body>
+
+<div id="wordList"></div>
+
+<script>
+    const phrases = [
+    '.  $outstr. '];
+    
+/*
+    const phrases = [
+        { text: "Y mae", image: "y_mae.png" },
+        { text: "\'r afal", image: "\'r_afal.png" },
+        { text: "ar y bord.", image: "ar_y_bord.png" },
+        { text: "", image: "" },
+        { text: "Y mae \'r afal ar y bord.", image: "y_mae_\'r_afal_ar_y_bord.png" }
+    ];
+*/
+
+    const wordList = document.getElementById("wordList");
+    phrases.forEach(phrase => {
+
+        // If either text or image is blank, insert a <br>
+        if (!phrase.text || !phrase.image) {
+            wordList.appendChild(document.createElement("br"));
+            return;
+        }
+
+        const div = document.createElement("div");
+        div.className = "divpicwrd";
+
+        const word = document.createElement("div");
+        word.className = "wrd";
+        word.textContent = phrase.text;
+
+        const image = document.createElement("img");
+        image.className = "picwrd";
+        image.src = "../png/" + phrase.image;
+        image.alt = phrase.text;
+
+        div.appendChild(word);
+        div.appendChild(image);
+
+        wordList.appendChild(div);
+    });
+</script>
+</body>
+</html>
+';
+
+
+
+}//endfunc picwordssetsections
 //---------------------------------------------
 function sortuniq($pstr, $pdelim){
   $atmp1 = explode($pdelim, $pstr);
@@ -1961,7 +2073,7 @@ function sortuniq($pstr, $pdelim){
   }//endforeach
   return $retstr;
   
-}//endfunc
+}//endfunc sortuniq
 //---------------------------------------------
 function dwsfmt($pstr, $popt){
   $atmp1 = explode(" ", $pstr);
@@ -1975,7 +2087,7 @@ function dwsfmt($pstr, $popt){
   
   if ($retstr != "") $retstr = ", ". $retstr;
   return '"_'. $popt. '_"'. $retstr;
-}//endfunc
+}//endfunc dwsfmt
 //---------------------------------------------
 function circleimagemob($pstr, $splitimg, $pLlGwers){
 
@@ -2631,6 +2743,7 @@ if(typeof pstr != "undefined"){
       //    });
       
         let correctPassword = "K\.?s{4(:@(3613~,?45!KJd^%$@£!)0{{1(Jksi3(*!%$@:"; // Change this to your desired password
+  correctPassword = "234";
       
         //uncomment this to place circles on image:
         //checkPassword(2);
@@ -2745,7 +2858,7 @@ if(typeof pstr != "undefined"){
 ';
 
 
-}//endfunc
+}//endfunc circleimagemob
 //---------------------------------------------
 //---------------------------------------------
 //---------------------------------------------

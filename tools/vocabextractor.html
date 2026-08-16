@@ -37,6 +37,25 @@ button { padding:1px 2px; }
 
 <script>
 
+function addAccents(text){
+  return text 
+    .replace(/a\^/g, "â")
+    .replace(/e\^/g, "ê")
+    .replace(/i\^/g, "î")
+    .replace(/o\^/g, "ô")
+    .replace(/u\^/g, "û")
+    .replace(/w\^/g, "ŵ") .replace(/Y\^/g, "Ŵ") 
+    .replace(/y\^/g, "ŷ") .replace(/W\^/g, "Ŷ")
+    .replace(/a%/g, "ä") 
+    .replace(/e%/g, "ë") 
+    .replace(/i%/g, "ï") 
+    .replace(/o%/g, "ö") 
+    .replace(/u%/g, "ü")
+    .replace(/y%/g, "ÿ");
+
+}//endfunc
+//===============================
+
 function clean(text){
     return text
         .replace(/^[^\wŷŶŵŴÀ-ÿ']+/, "")
@@ -46,7 +65,7 @@ function clean(text){
 
 function extract(){
 
-    let input = document.getElementById("inputBox").value;
+    let input = addAccents(document.getElementById("inputBox").value);
     const vocab = new Map();
 
     // ----------------------------
@@ -138,8 +157,11 @@ function extract(){
     // OUTPUT
     // ----------------------------
     document.getElementById("outputBox").value =
+        [...new Set(
         [...vocab.entries()]
-        .map(([w,m]) => w.toLowerCase() + " = " + m.toLowerCase())
+        .map(([w,m]) => `${w.toLowerCase() + " = " + m.toLowerCase()}` )
+        .sort()
+        )]
         .join("\n");
 }
 
@@ -147,7 +169,8 @@ function extract(){
 //=========================================================
 function expandWord() {
 
-    const input = document.getElementById("inputBox").value.trim();
+    const input = addAccents(document.getElementById("inputBox").value.trim());
+    //const input = document.getElementById("inputBox").value.trim();
     const output = [];
 
     if (!input) {
