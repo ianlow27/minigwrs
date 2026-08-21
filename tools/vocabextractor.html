@@ -32,6 +32,11 @@ button { padding:1px 2px; }
 <button title="car[s]¬stor[y/ies]¬hat[/s]¬pet[|ition|ty]¬constan[cy/cies|t/ts|ce]¬cove[/s|r/rs] => car \n cars \n story \n stories \n hat \n hats \n pet \n petition \n petty \n constancy \n constancies \n constant \n constants \n constance \n cove \n coves \n cover \n covers
 " onclick="expandWord()">expandWord</button>
 
+<button title="mae ef yn dweud (say) bod hynny (that) yn iawn => dweud = say \n hynny = that \n" onclick="sortLines()">sortLines</button>
+<button title="" onclick="slashJoin()">slashJoin</button>
+<button title="" onclick="urlQuizJoin()">urlQuizJoin</button>
+<button title="" onclick="addAccentsFn()">addAccentsFn</button>
+
 <h2>Output</h2>
 <textarea id="outputBox"></textarea>
 
@@ -225,6 +230,53 @@ function expandWord() {
 
     document.getElementById("outputBox").value = output.join("\n");
 }//endfunc
+//=======================================================
+function sortLines(){
+  const input = addAccents(document.getElementById("inputBox").value.trim());
+
+  const lines = input.split("\n");
+  lines.sort();
+  const output = lines.join("\n");
+
+  document.getElementById("outputBox").value = output;
+}//endfunc sortLines
+//=======================================================
+function slashJoin(){
+  const input = addAccents(document.getElementById("inputBox").value.trim());
+
+  const lines = input.replace(/\n/g, " / ").replace(/ [\s]*/g, " ");
+  const output = lines;
+
+  document.getElementById("outputBox").value = output;
+}//endfunc slashJoin
+//=======================================================
+function urlQuizJoin(){
+  const input = addAccents(document.getElementById("inputBox").value.trim());
+
+  const lines = input.replace(/\n/g, " / ")
+        .replace(/ [\s]*/g, " ") 
+        .replace(/ = /g, ":") 
+        .replace(/ \/ /g, "|") 
+        .replace(/'/g, "\\'") 
+        .replace(/ /g, "\`") 
+         ;
+  const output = "|" + lines + "|";
+
+  document.getElementById("outputBox").value = output;
+}//endfunc urlQuizJoin
+//=======================================================
+function addAccentsFn(){
+  const input = addAccents(document.getElementById("inputBox").value.trim());
+
+  const lines = input;
+  const output = "" + lines + "";
+
+  document.getElementById("outputBox").value = output;
+}//endfunc addAccentsFn
+//=======================================================
+//=======================================================
+//=======================================================
+//=======================================================
 //=======================================================
 
 
