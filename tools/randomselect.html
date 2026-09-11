@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Option Spinner</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f1f3f6;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 850px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0 0 25px;
+            font-size: 32px;
+        }
+
+        /* -------------------------
+           Input section
+        ------------------------- */
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        #optionsInput {
+            flex: 1;
+            min-width: 0;
+            padding: 15px 18px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            font-size: 17px;
+            outline: none;
+        }
+
+        #optionsInput:focus {
+            border-color: #555;
+        }
+
+        button {
+            border: none;
+            border-radius: 8px;
+            padding: 14px 24px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.15s, opacity 0.15s;
+        }
+
+        button:hover:not(:disabled) {
+            transform: translateY(-1px);
+        }
+
+        button:active:not(:disabled) {
+            transform: translateY(1px);
+        }
+
+        #generateButton {
+            background: #222;
+            color: white;
+        }
+
+        /* -------------------------
+           Selected word display
+        ------------------------- */
+
+        #selectedWord {
+            width: 100%;
+            min-height: 95px;
+            background: #000;
+            color: white;
+            border-radius: 12px;
+            margin-bottom: 25px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 15px 25px;
+
+            font-size: clamp(28px, 6vw, 52px);
+            font-weight: 900;
+            text-align: center;
+
+            overflow-wrap: anywhere;
+
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        #selectedWord.placeholder {
+            font-size: 22px;
+            color: #777;
+        }
+
+        /* -------------------------
+           Wheel area
+        ------------------------- */
+
+        .wheel-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .wheel-wrapper {
+            position: relative;
+            width: min(650px, 90vw);
+            aspect-ratio: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            border-radius: 50%;
+            box-shadow:
+                0 8px 20px rgba(0,0,0,0.2),
+                inset 0 0 0 8px #222;
+        }
+
+        /* -------------------------
+           Pointer
+        ------------------------- */
+
+        .pointer {
+            position: absolute;
+            top: -3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-top: 48px solid #111;
+
+            z-index: 10;
+
+            filter: drop-shadow(0 3px 2px rgba(0,0,0,0.3));
+        }
+
+        .pointer::after {
+            content: "";
+            position: absolute;
+            left: -17px;
+            top: -48px;
+            width: 0;
+            height: 0;
+
+            border-left: 17px solid transparent;
+            border-right: 17px solid transparent;
+            border-top: 34px solid white;
+        }
+
+        /* -------------------------
+           Spin button
+        ------------------------- */
+
+        #spinButton {
+            margin-top: 25px;
+            background: #e63946;
+            color: white;
+            min-width: 180px;
+            font-size: 20px;
+            padding: 16px 30px;
+        }
+
+        #spinButton:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .remaining {
+            margin-top: 15px;
+            color: #555;
+            font-size: 15px;
+        }
+
+        /* -------------------------
+           Confetti
+        ------------------------- */
+
+        #confettiContainer {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 100;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 18px;
+            top: -30px;
+            animation-name: confettiFall;
+            animation-timing-function: linear;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                transform:
+                    translate3d(0, 0, 0)
+                    rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform:
+                    translate3d(var(--drift), 110vh, 0)
+                    rotate(var(--rotation));
+                opacity: 0.8;
+            }
+        }
+
+        /* -------------------------
+           Mobile
+        ------------------------- */
+
+        @media (max-width: 600px) {
+            body {
+                padding: 20px 12px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            .input-row {
+                flex-direction: column;
+            }
+
+            #generateButton {
+                width: 100%;
+            }
+
+            #selectedWord {
+                min-height: 80px;
+            }
+
+            .pointer {
+                border-left-width: 19px;
+                border-right-width: 19px;
+                border-top-width: 40px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Random Option Spinner</h1>
+
+    <div class="input-row">
+        <input
+            id="optionsInput"
+            type="text"
+            placeholder="apple, banana, cherry, dragonfruit, eggplant, guava"
+            autocomplete="off"
+        >
+
+        <button id="generateButton">
+            Generate
+        </button>
+    </div>
+
+    <div id="selectedWord" class="placeholder">
+        Your selected option will appear here
+    </div>
+
+    <div class="wheel-section">
+
+        <div class="wheel-wrapper">
+
+            <div class="pointer"></div>
+
+            <canvas id="wheelCanvas"></canvas>
+
+        </div>
+
+        <button id="spinButton" disabled>
+            Spin
+        </button>
+
+        <div class="remaining" id="remainingText">
+            Enter some options and press Generate
+        </div>
+
+    </div>
+
+</div>
+
+<div id="confettiContainer"></div>
+
+
+<script>
+    const canvas = document.getElementById("wheelCanvas");
+    const ctx = canvas.getContext("2d");
+
+    const optionsInput = document.getElementById("optionsInput");
+    const generateButton = document.getElementById("generateButton");
+    const spinButton = document.getElementById("spinButton");
+
+    const selectedWord = document.getElementById("selectedWord");
+    const remainingText = document.getElementById("remainingText");
+    const confettiContainer = document.getElementById("confettiContainer");
+
+    let options = [];
+    let isSpinning = false;
+
+    /*
+     * Current wheel rotation in radians.
+     *
+     * The pointer is fixed at the top of the canvas.
+     * The wheel itself rotates underneath it.
+     */
+    let wheelRotation = 0;
+
+    /*
+     * Resize canvas according to its displayed size.
+     */
+    function resizeCanvas() {
+        const size = canvas.clientWidth;
+        const pixelRatio = window.devicePixelRatio || 1;
+
+        canvas.width = size * pixelRatio;
+        canvas.height = size * pixelRatio;
+
+        ctx.setTransform(
+            pixelRatio,
+            0,
+            0,
+            pixelRatio,
+            0,
+            0
+        );
+
+        drawWheel();
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+
+
+    /*
+     * Draw the wheel.
+     */
+    function drawWheel() {
+
+        const size = canvas.clientWidth;
+
+        if (!size || options.length === 0) {
+            ctx.clearRect(0, 0, size, size);
+            return;
+        }
+
+        const center = size / 2;
+        const radius = size / 2 - 8;
+
+        ctx.clearRect(0, 0, size, size);
+
+        const sliceAngle = (Math.PI * 2) / options.length;
+
+        ctx.save();
+
+        ctx.translate(center, center);
+        ctx.rotate(wheelRotation);
+
+        /*
+         * Draw each segment.
+         */
+        options.forEach((option, index) => {
+
+            const startAngle =
+                -Math.PI / 2 +
+                index * sliceAngle;
+
+            const endAngle =
+                startAngle +
+                sliceAngle;
+
+            /*
+             * Use a repeating palette of colours.
+             */
+            const colours = [
+                "#e63946",
+                "#457b9d",
+                "#2a9d8f",
+                "#f4a261",
+                "#9b5de5",
+                "#f15bb5",
+                "#00b4d8",
+                "#8ac926",
+                "#ffca3a",
+                "#ff6b35"
+            ];
+
+            ctx.beginPath();
+
+            ctx.moveTo(0, 0);
+
+            ctx.arc(
+                0,
+                0,
+                radius,
+                startAngle,
+                endAngle
+            );
+
+            ctx.closePath();
+
+            ctx.fillStyle =
+                colours[index % colours.length];
+
+            ctx.fill();
+
+            ctx.strokeStyle = "#ffffff";
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+
+            /*
+             * Draw option text.
+             */
+            ctx.save();
+
+            const middleAngle =
+                startAngle + sliceAngle / 2;
+
+            ctx.rotate(middleAngle);
+
+            ctx.textAlign = "right";
+            ctx.textBaseline = "middle";
+
+            /*
+             * Scale font based on number of options.
+             */
+            let fontSize;
+
+            if (options.length <= 6) {
+                fontSize = Math.max(16, size * 0.035);
+            } else if (options.length <= 10) {
+                fontSize = Math.max(13, size * 0.028);
+            } else {
+                fontSize = Math.max(10, size * 0.021);
+            }
+
+            ctx.font =
+                `900 ${fontSize}px Arial, Helvetica, sans-serif`;
+
+            ctx.fillStyle = "#ffffff";
+
+            /*
+             * Add a subtle dark shadow behind text.
+             */
+            ctx.shadowColor = "rgba(0,0,0,0.45)";
+            ctx.shadowBlur = 3;
+
+            /*
+             * Keep text inside the wheel.
+             */
+            const textRadius = radius * 0.88;
+
+            let displayText = option;
+
+            /*
+             * For very narrow slices, shorten extremely
+             * long text rather than letting it overlap.
+             */
+            const maxTextWidth =
+                radius * 0.65;
+
+            while (
+                ctx.measureText(displayText).width > maxTextWidth &&
+                displayText.length > 4
+            ) {
+                displayText =
+                    displayText.substring(
+                        0,
+                        displayText.length - 4
+                    ) + "...";
+            }
+
+            ctx.fillText(
+                displayText,
+                textRadius,
+                0
+            );
+
+            ctx.restore();
+        });
+
+        /*
+         * Centre circle.
+         */
+        ctx.beginPath();
+
+        ctx.arc(
+            0,
+            0,
+            radius * 0.12,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fillStyle = "#111";
+        ctx.fill();
+
+        ctx.strokeStyle = "#fff";
+        ctx.lineWidth = 4;
+        ctx.stroke();
+
+        ctx.restore();
+
+
+        /*
+         * Outer wheel border.
+         */
+        ctx.beginPath();
+
+        ctx.arc(
+            center,
+            center,
+            radius,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.strokeStyle = "#222";
+        ctx.lineWidth = 8;
+        ctx.stroke();
+    }
+
+
+    /*
+     * Generate a new wheel from the text box.
+     */
+    function generateWheel() {
+
+        if (isSpinning) {
+            return;
+        }
+
+        const rawText = optionsInput.value;
+
+        options = rawText
+            .split(",")
+            .map(option => option.trim())
+            .filter(option => option.length > 0);
+
+        /*
+         * Remove duplicates while preserving order.
+         */
+        options = [...new Set(options)];
+
+        wheelRotation = 0;
+
+        if (options.length === 0) {
+
+            selectedWord.textContent =
+                "Please enter some options";
+
+            selectedWord.classList.add("placeholder");
+
+            spinButton.disabled = true;
+
+            remainingText.textContent =
+                "No options available";
+
+            drawWheel();
+
+            return;
+        }
+
+        selectedWord.textContent =
+            "Ready to spin!";
+
+        selectedWord.classList.remove("placeholder");
+
+        updateRemainingText();
+
+        spinButton.disabled =
+            options.length <= 1;
+
+        resizeCanvas();
+    }
+
+
+    /*
+     * Update remaining-option message.
+     */
+    function updateRemainingText() {
+
+        if (options.length === 1) {
+
+            remainingText.textContent =
+                "1 option remaining — this is the final option.";
+
+        } else {
+
+            remainingText.textContent =
+                `${options.length} options remaining`;
+        }
+    }
+
+
+    /*
+     * Spin the wheel.
+     */
+    function spinWheel() {
+
+        if (isSpinning || options.length <= 1) {
+            return;
+        }
+
+        isSpinning = true;
+        spinButton.disabled = true;
+        generateButton.disabled = true;
+
+        /*
+         * Random duration from 10 to 20 seconds.
+         */
+        const duration =
+            10000 + Math.random() * 10000;
+
+        /*
+         * Random number of full rotations.
+         *
+         * This is deliberately large so the wheel appears
+         * to spin vigorously during the long animation.
+         */
+        const fullRotations =
+            12 + Math.floor(Math.random() * 10);
+
+        /*
+         * Random final angle.
+         *
+         * The final rotation is selected so that a random
+         * option lands underneath the fixed top pointer.
+         */
+        const sliceAngle =
+            (Math.PI * 2) / options.length;
+
+        /*
+         * Choose which option should ultimately land
+         * underneath the pointer.
+         */
+        const selectedIndex =
+            Math.floor(Math.random() * options.length);
+
+        /*
+         * The centre of the selected slice before rotation.
+         *
+         * Our first slice starts at -PI/2.
+         */
+        const selectedSliceCenter =
+            -Math.PI / 2 +
+            selectedIndex * sliceAngle +
+            sliceAngle / 2;
+
+        /*
+         * The pointer is at -PI/2.
+         *
+         * Therefore rotate the selected slice centre
+         * to -PI/2.
+         */
+        const targetRotation =
+            -Math.PI / 2 -
+            selectedSliceCenter;
+
+        /*
+         * Make sure the wheel travels forwards through
+         * many complete rotations before reaching the target.
+         */
+        const currentNormalized =
+            wheelRotation % (Math.PI * 2);
+
+        let finalRotation =
+            wheelRotation +
+            fullRotations * Math.PI * 2;
+
+        /*
+         * Add the angular adjustment needed to land on
+         * the selected slice.
+         */
+        let adjustment =
+            targetRotation - currentNormalized;
+
+        /*
+         * Normalize adjustment to the positive direction.
+         */
+        while (adjustment < 0) {
+            adjustment += Math.PI * 2;
+        }
+
+        finalRotation += adjustment;
+
+
+        const startingRotation = wheelRotation;
+
+        const startTime = performance.now();
+
+
+        /*
+         * Cubic ease-out.
+         *
+         * Starts very quickly and gradually slows down
+         * until it reaches a complete stop.
+         */
+        function easeOutCubic(t) {
+            return 1 - Math.pow(1 - t, 3);
+        }
+
+
+        function animate(currentTime) {
+
+            const elapsed =
+                currentTime - startTime;
+
+            const progress =
+                Math.min(elapsed / duration, 1);
+
+            const eased =
+                easeOutCubic(progress);
+
+            wheelRotation =
+                startingRotation +
+                (finalRotation - startingRotation) * eased;
+
+            drawWheel();
+
+            if (progress < 1) {
+
+                requestAnimationFrame(animate);
+
+            } else {
+
+                /*
+                 * Ensure exact final position.
+                 */
+                wheelRotation = finalRotation;
+
+                drawWheel();
+
+                finishSpin(selectedIndex);
+            }
+        }
+
+        requestAnimationFrame(animate);
+    }
+
+
+    /*
+     * Called after the wheel has completely stopped.
+     */
+    function finishSpin(selectedIndex) {
+
+        const selected = options[selectedIndex];
+
+        selectedWord.textContent = selected;
+        selectedWord.classList.remove("placeholder");
+
+        /*
+         * Fire the confetti at the same time the result
+         * appears.
+         */
+        launchConfetti();
+
+        /*
+         * Remove the selected option from the wheel.
+         */
+        options.splice(selectedIndex, 1);
+
+        updateRemainingText();
+
+        /*
+         * Wait a fraction of a second before redrawing
+         * so the result/confetti are visually noticeable.
+         */
+        setTimeout(() => {
+
+            wheelRotation = 0;
+
+            drawWheel();
+
+            /*
+             * With one option left, disable Spin.
+             */
+            spinButton.disabled =
+                options.length <= 1;
+
+            generateButton.disabled = false;
+
+            isSpinning = false;
+
+            updateRemainingText();
+
+        }, 500);
+    }
+
+
+    /*
+     * Confetti effect.
+     */
+    function launchConfetti() {
+
+        confettiContainer.innerHTML = "";
+
+        const pieces = 180;
+
+        const colours = [
+            "#e63946",
+            "#457b9d",
+            "#2a9d8f",
+            "#f4a261",
+            "#9b5de5",
+            "#f15bb5",
+            "#00b4d8",
+            "#8ac926",
+            "#ffca3a",
+            "#ff6b35"
+        ];
+
+        for (let i = 0; i < pieces; i++) {
+
+            const piece =
+                document.createElement("div");
+
+            piece.className = "confetti";
+
+            piece.style.left =
+                Math.random() * 100 + "%";
+
+            piece.style.backgroundColor =
+                colours[
+                    Math.floor(
+                        Math.random() * colours.length
+                    )
+                ];
+
+            piece.style.width =
+                (5 + Math.random() * 9) + "px";
+
+            piece.style.height =
+                (8 + Math.random() * 15) + "px";
+
+            piece.style.animationDuration =
+                (2.5 + Math.random() * 3) + "s";
+
+            piece.style.animationDelay =
+                (Math.random() * 0.8) + "s";
+
+            piece.style.setProperty(
+                "--drift",
+                (-150 + Math.random() * 300) + "px"
+            );
+
+            piece.style.setProperty(
+                "--rotation",
+                (360 + Math.random() * 1080) + "deg"
+            );
+
+            confettiContainer.appendChild(piece);
+        }
+
+        /*
+         * Remove confetti after the animation has finished.
+         */
+        setTimeout(() => {
+            confettiContainer.innerHTML = "";
+        }, 6000);
+    }
+
+
+    /*
+     * Button events.
+     */
+    generateButton.addEventListener(
+        "click",
+        generateWheel
+    );
+
+    spinButton.addEventListener(
+        "click",
+        spinWheel
+    );
+
+
+    /*
+     * Allow pressing Enter in the input box
+     * to generate the wheel.
+     */
+    optionsInput.addEventListener(
+        "keydown",
+        event => {
+
+            if (event.key === "Enter") {
+                generateWheel();
+            }
+
+        }
+    );
+
+
+    /*
+     * Initial canvas setup.
+     */
+    resizeCanvas();
+
+</script>
+
+</body>
+</html>

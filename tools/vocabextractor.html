@@ -27,15 +27,16 @@ button { padding:1px 2px; }
 <button onclick="navigator.clipboard.writeText('ŷ');">ŷ</button>
 
 
-<button title="mae ef yn dweud (say) bod hynny (that) yn iawn => dweud = say \n hynny = that \n" onclick="extract()">extractWord</button>
+<button title="mae ef yn dweud (say^iv) bod hynny (that^cj) yn iawn => dweud = say^iv \n hynny = that^cj \n" onclick="extractWord()">extractWord</button>
 
 <button title="car[s]¬stor[y/ies]¬hat[/s]¬pet[|ition|ty]¬constan[cy/cies|t/ts|ce]¬cove[/s|r/rs] => car \n cars \n story \n stories \n hat \n hats \n pet \n petition \n petty \n constancy \n constancies \n constant \n constants \n constance \n cove \n coves \n cover \n covers
 " onclick="expandWord()">expandWord</button>
 
 <button title="mae ef yn dweud (say) bod hynny (that) yn iawn => dweud = say \n hynny = that \n" onclick="sortLines()">sortLines</button>
-<button title="" onclick="slashJoin()">slashJoin</button>
-<button title="" onclick="urlQuizJoin()">urlQuizJoin</button>
-<button title="" onclick="addAccentsFn()">addAccentsFn</button>
+<button title="achub = preserve^iv \n aflonyddu = disturb^iv \n amrywiol = various^aj => achub = preserve iv / aflonyddu = disturb iv / amrywiol = various aj" onclick="slashJoin()">slashJoin</button>
+<button title="achub = preserve^iv \n aflonyddu = disturb^iv \n amrywiol = various^aj => |achub:preserve`iv|aflonyddu:disturb`iv|amrywiol:various`aj|" onclick="urlQuizJoin()">urlQuizJoin</button>
+<button title="converts to Welsh accents" onclick="addAccentsFn()">addAccentsFn</button>
+<button title="converts lesson text to outputs of extractWord, slashJoin, and urlQuizJoin in 1 click" onclick="lessonTxt2slashJoinAndUrlQuizJoin()">lessonTxt2slashJoinAndUrlQuizJoin</button>
 
 <h2>Output</h2>
 <textarea id="outputBox"></textarea>
@@ -68,9 +69,11 @@ function clean(text){
         .trim();
 }
 
-function extract(){
+function extractWord(txtinput){
 
-    let input = addAccents(document.getElementById("inputBox").value);
+    let input = txtinput;
+    if (!txtinput) input = addAccents(document.getElementById("inputBox").value);
+
     const vocab = new Map();
 
     // ----------------------------
@@ -161,13 +164,18 @@ function extract(){
     // ----------------------------
     // OUTPUT
     // ----------------------------
-    document.getElementById("outputBox").value =
+    const txtout = 
         [...new Set(
         [...vocab.entries()]
         .map(([w,m]) => `${w.toLowerCase() + " = " + m.toLowerCase()}` )
         .sort()
         )]
         .join("\n");
+  if(!txtinput){
+    document.getElementById("outputBox").value = txtout
+  }else {
+    return txtout;
+  }
 }
 
 
@@ -231,38 +239,53 @@ function expandWord() {
     document.getElementById("outputBox").value = output.join("\n");
 }//endfunc
 //=======================================================
-function sortLines(){
-  const input = addAccents(document.getElementById("inputBox").value.trim());
+function sortLines(txtinput){
+  let input = txtinput;
+  if (!txtinput) input =  addAccents(document.getElementById("inputBox").value.trim());
 
   const lines = input.split("\n");
   lines.sort();
   const output = lines.join("\n");
 
-  document.getElementById("outputBox").value = output;
+  if(!txtinput){
+    document.getElementById("outputBox").value = output;
+  }else {
+    return output;
+  }
 }//endfunc sortLines
 //=======================================================
-function slashJoin(){
-  const input = addAccents(document.getElementById("inputBox").value.trim());
+function slashJoin(txtinput){
+  let input = txtinput;
+  if (!txtinput) input = addAccents(document.getElementById("inputBox").value.trim());
 
-  const lines = input.replace(/\n/g, " / ").replace(/ [\s]*/g, " ");
+  const lines = input.replace(/\n/g, " / ")
+      .replace(/\^/g, " ")
+      .replace(/ [\s]*/g, " ")
+      ;
   const output = lines;
 
-  document.getElementById("outputBox").value = output;
+  if (!txtinput) document.getElementById("outputBox").value = output;
+  else return output;
 }//endfunc slashJoin
 //=======================================================
-function urlQuizJoin(){
-  const input = addAccents(document.getElementById("inputBox").value.trim());
-
+function urlQuizJoin(txtinput){
+  let input = txtinput;
+  if (!txtinput) input = addAccents(document.getElementById("inputBox").value.trim());
   const lines = input.replace(/\n/g, " / ")
         .replace(/ [\s]*/g, " ") 
         .replace(/ = /g, ":") 
         .replace(/ \/ /g, "|") 
         .replace(/'/g, "\\'") 
         .replace(/ /g, "\`") 
+        .replace(/\^/g, "\`") 
          ;
   const output = "|" + lines + "|";
 
-  document.getElementById("outputBox").value = output;
+  if (!txtinput){
+    document.getElementById("outputBox").value = output;
+  }else {
+    return output;
+  }
 }//endfunc urlQuizJoin
 //=======================================================
 function addAccentsFn(){
@@ -274,6 +297,30 @@ function addAccentsFn(){
   document.getElementById("outputBox").value = output;
 }//endfunc addAccentsFn
 //=======================================================
+function lessonTxt2slashJoinAndUrlQuizJoin(){
+/*
+const input0 = addAccents(document.getElementById("inputBox").value.trim());
+const vcb0 =  sortLines(extractWord(input0));
+alert(vcb0);
+alert(urlQuizJoin(vcb0));
+return;
+*/
+
+
+   const input = addAccents(document.getElementById("inputBox").value.trim());
+   const vcb1 =  sortLines(extractWord(input));
+   let vcb2 = vcb1 
+      + "\n====================================================\n"
+      + slashJoin(vcb1)
+      + "\n====================================================\n"
+      + urlQuizJoin(vcb1)
+      + "\n====================================================\n"
+      ;
+
+
+
+  document.getElementById("outputBox").value = vcb2;
+}//endfunc lessonTxt2slashJoinAndUrlQuizJoin(){
 //=======================================================
 //=======================================================
 //=======================================================
