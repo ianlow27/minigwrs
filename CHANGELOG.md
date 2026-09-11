@@ -7,6 +7,21 @@
 
 ## NOTES
 
+## 0.0.106_260821-2358 - Additional JavaScript functions and buttons added to tools/vocabextractor.html
+-  Amendments as per the release description
+
+## 0.0.105_260816-1141 - In dewisiadau1.php added new functionality to create pic words HTML pages. These pages are for teaching and reading only and do not involve any selees. Also minor updates to tools/vocabextractor.html
+-  Amendments as per the release description
+
+## 0.0.104_260706-0316 - Enhan pages vcbtest2.html and vocabextractor.html
+-  Amendments as per the release description
+
+## 0.0.103_260704-1218 - Additional enhancements to dewisiadau1.php and tools/vocabextractor.html. Also added new file tools/vcbtest2.html which is able to accept vocab list for the vocab training exercise as the URL parameter 'vcb'. The title for the vcbtest2.html can be set using the URL parameter 'title'.
+-  Amendments as per the release description
+
+## 0.0.102_260612-1518 - changes in UTILS file wordcount.html
+-  Amendments as per the release description
+
 ## 0.0.102_260612-1518 - changes in UTILS file wordcount.html
 -  Amendments as per the release description
 
